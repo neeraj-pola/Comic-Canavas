@@ -1,0 +1,71 @@
+{
+  "note": "Real POST /generations + GET /generations/{id} responses captured live against a real Leonardo account on 2026-09-08 (Phoenix 1.0, modelId de7d3faf-762f-48e0-b3b7-9d0ac3a3fcf3, num_images=3, seed=12345), then frozen — task 4.3's live accept line. The generation id, image ids/urls, and account-scoped paths are real but already completed/expired; this is for shape verification, not a live fetch.",
+  "create_response": {
+    "sdGenerationJob": {
+      "generationId": "17b9b8e7-0d57-4d3c-81c3-a948282e1710",
+      "apiCreditCost": null,
+      "cost": {
+        "amount": "0.015",
+        "unit": "DOLLARS"
+      }
+    }
+  },
+  "poll_response_complete": {
+    "generations_by_pk": {
+      "generated_images": [
+        {
+          "url": "https://cdn.leonardo.ai/users/959b97a1-77a9-4d3c-9248-5b0256caba74/generations/17b9b8e7-0d57-4d3c-81c3-a948282e1710/segments/3:3:1/Phoenix_10_a_woman_in_her_late_20s_a_person_with_a_warm_smile__2.jpg",
+          "nsfw": false,
+          "id": "f98ffcad-06b4-4aa5-9b1c-9a84e3eb03af",
+          "likeCount": 0,
+          "motionMP4URL": null,
+          "threeDUrl": null,
+          "urls": {
+            "asset": "https://cdn.leonardo.ai/users/959b97a1-77a9-4d3c-9248-5b0256caba74/generations/17b9b8e7-0d57-4d3c-81c3-a948282e1710/segments/3:3:1/Phoenix_10_a_woman_in_her_late_20s_a_person_with_a_warm_smile__2.jpg",
+            "thumbnail": null
+          },
+          "generated_image_variation_generics": []
+        },
+        {
+          "url": "https://cdn.leonardo.ai/users/959b97a1-77a9-4d3c-9248-5b0256caba74/generations/17b9b8e7-0d57-4d3c-81c3-a948282e1710/segments/2:3:1/Phoenix_10_a_woman_in_her_late_20s_a_person_with_a_warm_smile__1.jpg",
+          "nsfw": true,
+          "id": "91e9f5c7-662a-4804-86de-d84bacda8085",
+          "likeCount": 0,
+          "motionMP4URL": null,
+          "threeDUrl": null,
+          "urls": {
+            "asset": "https://cdn.leonardo.ai/users/959b97a1-77a9-4d3c-9248-5b0256caba74/generations/17b9b8e7-0d57-4d3c-81c3-a948282e1710/segments/2:3:1/Phoenix_10_a_woman_in_her_late_20s_a_person_with_a_warm_smile__1.jpg",
+            "thumbnail": null
+          },
+          "generated_image_variation_generics": []
+        },
+        {
+          "url": "https://cdn.leonardo.ai/users/959b97a1-77a9-4d3c-9248-5b0256caba74/generations/17b9b8e7-0d57-4d3c-81c3-a948282e1710/segments/1:3:1/Phoenix_10_a_woman_in_her_late_20s_a_person_with_a_warm_smile__0.jpg",
+          "nsfw": false,
+          "id": "eceee35b-240b-49e7-94c1-8c5c65c408e7",
+          "likeCount": 0,
+          "motionMP4URL": null,
+          "threeDUrl": null,
+          "urls": {
+            "asset": "https://cdn.leonardo.ai/users/959b97a1-77a9-4d3c-9248-5b0256caba74/generations/17b9b8e7-0d57-4d3c-81c3-a948282e1710/segments/1:3:1/Phoenix_10_a_woman_in_her_late_20s_a_person_with_a_warm_smile__0.jpg",
+            "thumbnail": null
+          },
+          "generated_image_variation_generics": []
+        }
+      ],
+      "modelId": "de7d3faf-762f-48e0-b3b7-9d0ac3a3fcf3",
+      "prompt": "a woman in her late 20s, a person with a warm smile, simple clean linework, a cozy kitchen, a chipped ceramic mug on the counter, morning light through a window, wide shot",
+      "negativePrompt": "no artist names, no text, no watermark, no extra limbs",
+      "imageHeight": 512,
+      "imageWidth": 512,
+      "inferenceSteps": 15,
+      "seed": 12345,
+      "scheduler": "EULER_DISCRETE",
+      "sdVersion": "PHOENIX",
+      "status": "COMPLETE",
+      "presetStyle": null,
+      "guidanceScale": 7,
+      "id": "17b9b8e7-0d57-4d3c-81c3-a948282e1710"
+    }
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": "028_jargon_n8n_workflow",
+  "category": "jargon",
+  "known_people": ["Rebecca"],
+  "known_places": [],
+  "known_vocab": ["n8n", "Kubernetes"],
+  "transcript": "Spent basically the whole day fighting with an eight n, kept trying to get this workflow to trigger correctly and it just would not cooperate. Bex from platform finally pointed out I had the webhook pointed at the wrong Kubernetes namespace, which honestly explained everything. Felt so dumb but also relieved.",
+  "expected": {
+    "date": "2026-04-16",
+    "mood_arc": ["frustrated", "relieved"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "a desk debugging an automation workflow",
+        "event": "Spent the day fighting with n8n trying to get a workflow to trigger correctly",
+        "emotion": "frustrated",
+        "people": [],
+        "objects": ["n8n"],
+        "importance": 0.4,
+        "humor": 0.2,
+        "quote": "it just would not cooperate"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "a desk after a coworker spots the actual bug",
+        "event": "Rebecca from platform pointed out the webhook was pointed at the wrong Kubernetes namespace",
+        "emotion": "relieved",
+        "people": ["Rebecca"],
+        "objects": ["Kubernetes"],
+        "importance": 0.5,
+        "humor": 0.3,
+        "quote": "felt so dumb but also relieved"
+      }
+    ],
+    "people_mentioned": ["Rebecca"],
+    "flags": []
+  }
+}

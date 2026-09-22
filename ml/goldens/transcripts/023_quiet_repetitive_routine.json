@@ -1,0 +1,29 @@
+{
+  "id": "023_quiet_repetitive_routine",
+  "category": "quiet",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Same as most days honestly, work, then home, then dinner, nothing worth mentioning really happened.",
+  "expected": {
+    "date": "2026-03-30",
+    "mood_arc": ["neutral"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "an ordinary routine day of work followed by home and dinner",
+        "event": "Had a completely routine day of work, then home, then dinner",
+        "emotion": "neutral",
+        "people": [],
+        "objects": [],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "nothing worth mentioning really happened"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": ["too_short", "no_events"]
+  }
+}

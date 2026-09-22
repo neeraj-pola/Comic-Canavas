@@ -1,0 +1,15 @@
+{
+  "note": "A locally-generated 20x20 solid blue PNG, asked what color it is, on both providers -- task 1.10's live vision proof, frozen so make test replays it without a real call.",
+  "anthropic": {
+    "model": "claude-sonnet-4-6",
+    "response_text": "Blue",
+    "input_tokens": 24,
+    "output_tokens": 4
+  },
+  "openai": {
+    "model": "gpt-4o",
+    "response_text": "Blue",
+    "input_tokens": 274,
+    "output_tokens": 1
+  }
+}

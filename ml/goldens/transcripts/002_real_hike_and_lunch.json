@@ -1,0 +1,42 @@
+{
+  "id": "002_real_hike_and_lunch",
+  "category": "real",
+  "known_people": ["Jordan"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Went on that ridge hike with Jordan this morning, it was so much clearer out than the forecast said, could see the whole valley from the top. Legs are wrecked though. Grabbed burritos after and just sat in the park for like an hour doing nothing, which was honestly the best part of the day.",
+  "expected": {
+    "date": "2026-04-12",
+    "mood_arc": ["exhilarated", "content"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "outdoors",
+        "place_detail": "a ridge trail with a clear view over a valley",
+        "event": "Hiked a ridge trail with Jordan and got a clear view over the whole valley from the top",
+        "emotion": "exhilarated",
+        "people": ["Jordan"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "could see the whole valley from the top"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "outdoors",
+        "place_detail": "a park with benches, eating takeout after the hike",
+        "event": "Got burritos and sat in the park for an hour doing nothing after the hike",
+        "emotion": "content",
+        "people": ["Jordan"],
+        "objects": ["burritos"],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "the best part of the day"
+      }
+    ],
+    "people_mentioned": ["Jordan"],
+    "flags": []
+  }
+}

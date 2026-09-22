@@ -1,0 +1,113 @@
+{
+  "$defs": {
+    "Panel": {
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "beat_id": {
+          "title": "Beat Id",
+          "type": "string"
+        },
+        "bubble": {
+          "default": "",
+          "maxLength": 20,
+          "title": "Bubble",
+          "type": "string"
+        },
+        "caption_a": {
+          "maxLength": 60,
+          "title": "Caption A",
+          "type": "string"
+        },
+        "caption_b": {
+          "maxLength": 60,
+          "title": "Caption B",
+          "type": "string"
+        },
+        "cast": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Cast",
+          "type": "array"
+        },
+        "expression": {
+          "enum": [
+            "happy",
+            "content",
+            "sad",
+            "panic",
+            "angry",
+            "tired",
+            "surprised",
+            "neutral"
+          ],
+          "title": "Expression",
+          "type": "string"
+        },
+        "framing": {
+          "enum": [
+            "wide",
+            "medium",
+            "close"
+          ],
+          "title": "Framing",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "time_of_day": {
+          "title": "Time Of Day",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "beat_id",
+        "place",
+        "time_of_day",
+        "expression",
+        "action",
+        "framing",
+        "caption_a",
+        "caption_b"
+      ],
+      "title": "Panel",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "mood": {
+      "title": "Mood",
+      "type": "string"
+    },
+    "panels": {
+      "items": {
+        "$ref": "#/$defs/Panel"
+      },
+      "maxItems": 6,
+      "minItems": 2,
+      "title": "Panels",
+      "type": "array"
+    },
+    "quiet_day": {
+      "title": "Quiet Day",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "mood",
+    "quiet_day",
+    "panels"
+  ],
+  "title": "Script",
+  "type": "object"
+}

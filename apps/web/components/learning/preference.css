@@ -1,0 +1,407 @@
+/* Preference-learning charts. Theme tokens only (ink, mustard, charcoal,
+ * mute, rule) — same 1.5px ink outlines the rest of the app uses. */
+
+.dashboard-scope .pl-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 14px;
+}
+.dashboard-scope .pl-stat {
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  padding: 14px 16px;
+  background: var(--card);
+  display: grid;
+  gap: 6px;
+}
+.dashboard-scope .pl-stat .big {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+.dashboard-scope .pl-meter {
+  height: 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--field);
+}
+.dashboard-scope .pl-meter > i {
+  display: block;
+  height: 100%;
+  background: var(--mustard);
+  transition: width 0.4s ease;
+}
+.dashboard-scope .pl-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.dashboard-scope .pl-replay {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 12px;
+  align-items: center;
+}
+.dashboard-scope .pl-replay input[type="range"] {
+  width: 100%;
+  accent-color: var(--ink);
+}
+
+/* Diverging bars (HTML so widths animate smoothly while replaying). */
+.dashboard-scope .pl-group {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin: 14px 0 4px;
+}
+.dashboard-scope .pl-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) 1fr minmax(96px, 128px);
+  gap: 12px;
+  align-items: center;
+  padding: 6px 8px;
+  border-radius: 10px;
+  border: 1.5px solid transparent;
+  cursor: default;
+}
+.dashboard-scope .pl-row:hover,
+.dashboard-scope .pl-row:focus-visible,
+.dashboard-scope .pl-row.on {
+  background: var(--mustard-soft);
+  border-color: var(--ink);
+}
+.dashboard-scope .pl-row .lbl b {
+  display: block;
+  font-size: 13.5px;
+}
+.dashboard-scope .pl-row .lbl span {
+  font-size: 11.5px;
+  color: var(--mute);
+}
+.dashboard-scope .pl-plot {
+  position: relative;
+  height: 28px;
+}
+.dashboard-scope .pl-plot::before {
+  /* zero line */
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1.5px;
+  background: var(--ink);
+  opacity: 0.55;
+}
+.dashboard-scope .pl-plot .tick {
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--rule);
+}
+.dashboard-scope .pl-bar {
+  position: absolute;
+  top: 5px;
+  height: 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 6px;
+  transition:
+    left 0.45s ease,
+    width 0.45s ease,
+    opacity 0.3s ease;
+}
+.dashboard-scope .pl-bar.pos {
+  background: var(--mustard);
+}
+.dashboard-scope .pl-bar.neg {
+  background: var(--charcoal);
+}
+.dashboard-scope .pl-bar.unsure {
+  opacity: 0.4;
+  border-style: dashed;
+}
+.dashboard-scope .pl-whisker {
+  position: absolute;
+  top: 13px;
+  height: 2px;
+  background: var(--ink);
+  transition:
+    left 0.45s ease,
+    width 0.45s ease;
+}
+.dashboard-scope .pl-whisker::before,
+.dashboard-scope .pl-whisker::after {
+  content: "";
+  position: absolute;
+  top: -4px;
+  width: 2px;
+  height: 10px;
+  background: var(--ink);
+}
+.dashboard-scope .pl-whisker::before {
+  left: 0;
+}
+.dashboard-scope .pl-whisker::after {
+  right: 0;
+}
+.dashboard-scope .pl-note {
+  font-size: 12.5px;
+  font-weight: 700;
+}
+.dashboard-scope .pl-note.muted {
+  font-weight: 500;
+  color: var(--mute);
+}
+.dashboard-scope .pl-scale {
+  display: grid;
+  grid-template-columns: minmax(120px, 190px) 1fr minmax(96px, 128px);
+  gap: 12px;
+  padding: 0 8px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--mute);
+}
+.dashboard-scope .pl-scale div {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Last tap explained. */
+.dashboard-scope .pl-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.dashboard-scope .pl-pair figure {
+  margin: 0;
+  display: grid;
+  gap: 4px;
+}
+.dashboard-scope .pl-pair img {
+  width: 100%;
+  border-radius: 10px;
+  border: 1.5px solid var(--ink);
+  display: block;
+}
+.dashboard-scope .pl-pair figure.won img {
+  outline: 3px solid var(--mustard);
+  outline-offset: 1px;
+}
+.dashboard-scope .pl-pair figcaption {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+}
+
+/* Charts. */
+.dashboard-scope .pl-chart text {
+  font-family: var(--mono);
+  font-size: 11px;
+  fill: var(--mute);
+}
+.dashboard-scope .pl-chart .lab {
+  fill: var(--ink);
+  font-weight: 700;
+}
+.dashboard-scope .pl-tip {
+  min-height: 20px;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.dashboard-scope .pl-empty {
+  border: 1.5px dashed var(--ink);
+  border-radius: 14px;
+  padding: 26px;
+  display: grid;
+  gap: 8px;
+  background: var(--mustard-soft);
+}
+@media (max-width: 700px) {
+  .dashboard-scope .pl-row,
+  .dashboard-scope .pl-scale {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+  .dashboard-scope .pl-scale {
+    display: none;
+  }
+  .dashboard-scope .pl-replay {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-scope .pl-bar,
+  .dashboard-scope .pl-whisker,
+  .dashboard-scope .pl-meter > i {
+    transition: none;
+  }
+}
+
+/* Muted text on the mustard hover highlight fails 4.5:1 — use ink there. */
+.dashboard-scope .pl-row:hover .lbl span,
+.dashboard-scope .pl-row:focus-visible .lbl span,
+.dashboard-scope .pl-row.on .lbl span,
+.dashboard-scope .pl-row:hover .pl-note.muted,
+.dashboard-scope .pl-row:focus-visible .pl-note.muted,
+.dashboard-scope .pl-row.on .pl-note.muted {
+  color: var(--ink);
+}
+
+.dashboard-scope .pl-empty .kick,
+.dashboard-scope .pl-empty p {
+  color: var(--ink);
+}
+
+/* Bell curve card */
+.dashboard-scope .pl-fchips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.dashboard-scope .pl-fchip {
+  font: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  background: var(--card);
+  color: var(--ink);
+  padding: 4px 11px;
+  cursor: pointer;
+}
+.dashboard-scope .pl-fchip:hover {
+  background: var(--mustard-soft);
+}
+.dashboard-scope .pl-fchip[aria-pressed="true"] {
+  background: var(--mustard);
+}
+.dashboard-scope .pl-bellgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 210px;
+  gap: 16px;
+  align-items: start;
+}
+.dashboard-scope .pl-sure {
+  border: 1.5px solid var(--ink);
+  border-radius: 14px;
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+  background: var(--field);
+}
+.dashboard-scope .pl-sure .big {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+}
+.dashboard-scope .pl-bar.lean {
+  opacity: 0.68;
+}
+@media (max-width: 760px) {
+  .dashboard-scope .pl-bellgrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Knob curves: three small charts side by side, one per style knob. */
+.dashboard-scope .pl-knobs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 18px;
+}
+.dashboard-scope .pl-knob {
+  display: grid;
+  gap: 6px;
+}
+
+/* A small "i" trigger revealing extra detail on hover/focus/tap. */
+.dashboard-scope .pl-hint {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 6px;
+  outline-offset: 3px;
+}
+.dashboard-scope .pl-hint-i {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--mute);
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  cursor: default;
+}
+.dashboard-scope .pl-hint:hover .pl-hint-i,
+.dashboard-scope .pl-hint:focus .pl-hint-i,
+.dashboard-scope .pl-hint:focus-within .pl-hint-i {
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.dashboard-scope .pl-hint-pop {
+  /* Fixed + viewport coordinates measured by Hint's `place()`, clamped so it
+     never runs off the right or bottom edge (a static `left:0` under the
+     icon would overflow whenever the icon itself sits near an edge).
+     Light card colors (not a dark popover) — some browsers/extensions that
+     force dark mode or invert page colors can turn a dark-background,
+     white-text overlay unreadable; the app's normal light surface is safer. */
+  position: fixed;
+  z-index: 40;
+  left: var(--pop-left, 0px);
+  top: var(--pop-top, 0px);
+  width: 260px;
+  max-width: calc(100vw - 24px);
+  background: var(--card);
+  color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  line-height: 1.5;
+  display: grid;
+  gap: 6px;
+  box-shadow:
+    0 1px 0 rgba(21, 21, 21, 0.05),
+    0 10px 28px -16px rgba(21, 21, 21, 0.22);
+  visibility: hidden;
+  opacity: 0;
+  --ty: -4px;
+  transform: translateY(var(--ty));
+  transition:
+    opacity 0.14s ease,
+    transform 0.14s ease,
+    visibility 0.14s;
+  pointer-events: none;
+}
+.dashboard-scope .pl-hint-pop[data-above] {
+  --ty: 4px;
+}
+.dashboard-scope .pl-hint:hover .pl-hint-pop,
+.dashboard-scope .pl-hint:focus .pl-hint-pop,
+.dashboard-scope .pl-hint:focus-within .pl-hint-pop {
+  visibility: visible;
+  opacity: 1;
+  --ty: 0px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-scope .pl-hint-pop {
+    transition: none;
+  }
+}
+
+/* Written taste notes. */
+.dashboard-scope .pl-notes {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 6px;
+}

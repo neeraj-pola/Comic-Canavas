@@ -1,0 +1,55 @@
+{
+  "id": "009_real_gym_errands_call",
+  "category": "real",
+  "known_people": ["Jordan"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Actually made it to the gym before work for once, felt good even though I was dragging the whole time. Ran a bunch of errands at lunch, nothing exciting. Called Jordan in the evening, we hadn't really talked properly in weeks, ended up on the phone for almost two hours just catching up.",
+  "expected": {
+    "date": "2026-01-28",
+    "mood_arc": ["accomplished", "neutral", "happy"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "gym",
+        "place_detail": "a gym before the workday, tired but pushing through a workout",
+        "event": "Went to the gym before work despite feeling tired",
+        "emotion": "accomplished",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "felt good even though I was dragging the whole time"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "other",
+        "place_detail": "running routine errands around town during lunch",
+        "event": "Ran several routine errands during lunch",
+        "emotion": "neutral",
+        "people": [],
+        "objects": [],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "nothing exciting"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "at home on a long phone call with a sibling",
+        "event": "Called Jordan and caught up for almost two hours after weeks of not talking properly",
+        "emotion": "happy",
+        "people": ["Jordan"],
+        "objects": ["phone"],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "ended up on the phone for almost two hours just catching up"
+      }
+    ],
+    "people_mentioned": ["Jordan"],
+    "flags": []
+  }
+}

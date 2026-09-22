@@ -1,0 +1,127 @@
+/*
+ * Shared dashboard primitives ported from comiccanvas-dashboard.html,
+ * scoped under `.dashboard-scope` (its --r/--shadow token overrides live
+ * in app/globals.css). Includes the base type scale/resets and bento-grid
+ * primitives (`.card`, `.s3`..`.s12`, `.btn` variants, `.pill`, `.big`)
+ * pages need, ported as pages actually use them rather than porting the
+ * whole dashboard's CSS speculatively upfront.
+ */
+
+.dashboard-scope {
+  font-size: 15px;
+  line-height: 1.5;
+}
+.dashboard-scope h1,
+.dashboard-scope h2,
+.dashboard-scope h3 {
+  margin: 0;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+}
+.dashboard-scope h1 {
+  font-size: 30px;
+  font-weight: 800;
+}
+.dashboard-scope h2 {
+  font-size: 20px;
+  font-weight: 800;
+}
+.dashboard-scope h3 {
+  font-size: 15px;
+  font-weight: 700;
+}
+.dashboard-scope p {
+  margin: 0;
+}
+.dashboard-scope button,
+.dashboard-scope input,
+.dashboard-scope select,
+.dashboard-scope textarea {
+  font: inherit;
+  color: inherit;
+}
+.dashboard-scope a {
+  color: inherit;
+  text-decoration: none;
+}
+.dashboard-scope .mono {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mute);
+}
+.dashboard-scope .hl {
+  background: linear-gradient(transparent 58%, var(--mustard-soft) 58%);
+}
+.dashboard-scope .dc {
+  float: left;
+  font-weight: 800;
+  font-size: 2.7em;
+  line-height: 0.85;
+  padding: 0.04em 0.1em 0 0;
+}
+.dashboard-scope .kick {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mute);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard-scope .kick::before {
+  content: "";
+  width: 24px;
+  height: 3px;
+  background: var(--mustard);
+  border-radius: 2px;
+}
+.dashboard-scope .btn {
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.12s;
+  font: inherit;
+  color: inherit;
+}
+.dashboard-scope .btn:hover {
+  transform: translateY(-1px);
+}
+.dashboard-scope .btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  transform: none;
+}
+.dashboard-scope .btn.pri {
+  background: var(--mustard);
+  border-color: var(--mustard);
+}
+.dashboard-scope label.f {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.dashboard-scope input[type="text"],
+.dashboard-scope input[type="email"],
+.dashboard-scope input[type="password"],
+.dashboard-scope input[type="time"],
+.dashboard-scope select {
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  padding: 9px 12px;
+  background: #fff;
+  width: 100%;
+  font: inherit;
+}
+.dashboard-scope textarea:focus,
+.dashboard-scope input:focus,
+.dashboard-scope select:focus {
+  outline: 2px solid var(--mustard);
+  outline-offset: 1px;
+}

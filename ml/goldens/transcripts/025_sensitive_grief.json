@@ -1,0 +1,55 @@
+{
+  "id": "025_sensitive_grief",
+  "category": "sensitive",
+  "known_people": ["Grandma Rose"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "The funeral for Grandma Rose was today. I don't really know how to talk about it. My whole family was there, which helped a little, everyone sharing stories about her afterwards. I keep expecting to call her this weekend like I always do and then remembering I can't. It doesn't feel real yet.",
+  "expected": {
+    "date": "2026-02-21",
+    "mood_arc": ["grieving", "comforted", "numb"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "midday",
+        "place": "other",
+        "place_detail": "a funeral service for a grandmother",
+        "event": "Attended Grandma Rose's funeral with the whole family present",
+        "emotion": "grieving",
+        "people": ["Grandma Rose"],
+        "objects": [],
+        "importance": 1.0,
+        "humor": 0.0,
+        "quote": "I don't really know how to talk about it"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a family gathering after the funeral, sharing memories",
+        "event": "The family gathered afterwards sharing stories about Grandma Rose, which helped a little",
+        "emotion": "comforted",
+        "people": ["Grandma Rose"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "everyone sharing stories about her afterwards"
+      },
+      {
+        "id": "b3",
+        "time": "night",
+        "place": "bedroom",
+        "place_detail": "alone at night, the loss not yet feeling real",
+        "event": "Kept expecting to call Grandma Rose this weekend before remembering she was gone",
+        "emotion": "numb",
+        "people": ["Grandma Rose"],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "it doesn't feel real yet"
+      }
+    ],
+    "people_mentioned": ["Grandma Rose"],
+    "flags": ["sensitive"]
+  }
+}

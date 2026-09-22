@@ -1,0 +1,29 @@
+{
+  "id": "019_synthetic_volunteering",
+  "category": "synthetic",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Spent the morning volunteering at the food bank, sorting donations for a few hours. It's kind of repetitive work but there was a really nice moment where one of the regulars recognized me from last time and we chatted while we worked. Left feeling pretty good about the whole thing.",
+  "expected": {
+    "date": "2026-02-14",
+    "mood_arc": ["purposeful", "warm"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "other",
+        "place_detail": "a food bank warehouse sorting donated goods",
+        "event": "Volunteered at the food bank sorting donations, chatting with a regular who remembered them",
+        "emotion": "warm",
+        "people": [],
+        "objects": ["donations"],
+        "importance": 0.4,
+        "humor": 0.0,
+        "quote": "left feeling pretty good about the whole thing"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

@@ -1,0 +1,159 @@
+{
+  "$defs": {
+    "Beat": {
+      "properties": {
+        "emotion": {
+          "title": "Emotion",
+          "type": "string"
+        },
+        "event": {
+          "maxLength": 200,
+          "title": "Event",
+          "type": "string"
+        },
+        "humor": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Humor",
+          "type": "number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "importance": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Importance",
+          "type": "number"
+        },
+        "objects": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Objects",
+          "type": "array"
+        },
+        "people": {
+          "items": {
+            "type": "string"
+          },
+          "title": "People",
+          "type": "array"
+        },
+        "place": {
+          "enum": [
+            "bedroom",
+            "desk",
+            "kitchen",
+            "gym",
+            "outdoors",
+            "transit",
+            "cafe",
+            "other"
+          ],
+          "title": "Place",
+          "type": "string"
+        },
+        "place_detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place Detail"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "time": {
+          "enum": [
+            "morning",
+            "midday",
+            "afternoon",
+            "evening",
+            "night",
+            "unknown"
+          ],
+          "title": "Time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "time",
+        "place",
+        "event",
+        "emotion",
+        "importance",
+        "humor"
+      ],
+      "title": "Beat",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "beats": {
+      "items": {
+        "$ref": "#/$defs/Beat"
+      },
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Beats",
+      "type": "array"
+    },
+    "date": {
+      "format": "date",
+      "title": "Date",
+      "type": "string"
+    },
+    "flags": {
+      "items": {
+        "enum": [
+          "too_short",
+          "sensitive",
+          "no_events"
+        ],
+        "type": "string"
+      },
+      "title": "Flags",
+      "type": "array"
+    },
+    "mood_arc": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 6,
+      "minItems": 1,
+      "title": "Mood Arc",
+      "type": "array"
+    },
+    "people_mentioned": {
+      "items": {
+        "type": "string"
+      },
+      "title": "People Mentioned",
+      "type": "array"
+    }
+  },
+  "required": [
+    "date",
+    "mood_arc",
+    "beats"
+  ],
+  "title": "BeatSheet",
+  "type": "object"
+}

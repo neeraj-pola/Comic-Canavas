@@ -1,0 +1,55 @@
+{
+  "id": "013_synthetic_emotional_rollercoaster",
+  "category": "synthetic",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Weird day, emotionally all over the place. Woke up anxious about a review that turned out totally fine, actually kind of great. Then got some annoying news about a rent increase around lunch that put me in a bad mood for hours. But then a random old friend texted out of nowhere in the evening and that completely turned things around, felt really happy by the end of the night.",
+  "expected": {
+    "date": "2026-08-06",
+    "mood_arc": ["anxious", "relieved", "frustrated", "happy"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "a workplace performance review meeting",
+        "event": "Had a performance review that went well after being anxious about it",
+        "emotion": "relieved",
+        "people": [],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "turned out totally fine, actually kind of great"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "other",
+        "place_detail": "reading a notice about a rent increase",
+        "event": "Got news about a rent increase that soured the mood for hours",
+        "emotion": "frustrated",
+        "people": [],
+        "objects": ["rent notice"],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "annoying news about a rent increase around lunch"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "at home, texting with an old friend who reached out unexpectedly",
+        "event": "An old friend texted out of nowhere in the evening, turning the whole day around",
+        "emotion": "happy",
+        "people": [],
+        "objects": ["phone"],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "completely turned things around"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

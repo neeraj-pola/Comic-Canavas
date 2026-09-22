@@ -1,0 +1,57 @@
+# --- Python ---
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.coverage
+htmlcov/
+uv.lock.bak
+
+# --- Node ---
+node_modules/
+.next/
+out/
+.turbo/
+pnpm-debug.log*
+*.tsbuildinfo
+
+# --- apps/web's own Playwright suite (Phase 10) ---
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# --- Env / secrets ---
+.env
+.env.local
+.env.*.local
+
+# --- Local dev data (LocalFileStorage adapter, §0.2b) ---
+.data/
+
+# --- Regularization-set images (task 5.7, ADR 0008) ---
+# Regenerable from ml/reg/comic_character/manifest.json's recorded
+# seeds/prompts; no LFS configured in this repo and R2 is Phase 12 by
+# CLAUDE.md §0.1's own rule, so the images themselves aren't committed —
+# only the manifest (force-added) and the derived DINOv2 embedding bank
+# (ml/identity/reg_embeddings/) are.
+ml/reg/*.jpg
+ml/reg/*.txt
+ml/reg/**/*.jpg
+ml/reg/**/*.txt
+
+# --- Generated ---
+docs/api.md.tmp
+reports/
+*.log
+
+# --- OS ---
+.DS_Store
+
+# --- Editors ---
+.vscode/*
+!.vscode/extensions.json
+.idea/

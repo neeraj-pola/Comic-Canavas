@@ -1,0 +1,26 @@
+[project]
+name = "comiccanvas-scheduler"
+version = "0.1.0"
+description = "Cron entrypoints — reminders, weekly recap, feedback export, kick_training (services/scheduler)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "comiccanvas-contracts",
+    "redis>=5.2",
+    "psycopg[binary]>=3.2",
+    "pydantic-settings>=2.6",
+    "python-dotenv>=1.0",
+    # Task 8.14: weekly_recap/kick_training enqueue real worker jobs onto
+    # the same redis the worker (Procfile.dev) consumes from.
+    "arq>=0.28",
+    # Task 9.9: kick_training calls ml.reward_model.train directly (a
+    # real installed package, unlike services/*'s own private `app`
+    # namespaces — no cross-package conflict risk, ADR 0019).
+    "comiccanvas-ml",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+comiccanvas-contracts = { workspace = true }
+comiccanvas-ml = { workspace = true }

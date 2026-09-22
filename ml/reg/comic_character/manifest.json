@@ -1,0 +1,902 @@
+[
+  {
+    "index": 0,
+    "subject": "a person reading a book on a couch",
+    "seed": 20260914,
+    "prompt": "a person reading a book on a couch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 1,
+    "subject": "two friends talking at a cafe table",
+    "seed": 20260915,
+    "prompt": "two friends talking at a cafe table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 2,
+    "subject": "a person walking a dog in a park",
+    "seed": 20260916,
+    "prompt": "a person walking a dog in a park. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 3,
+    "subject": "a person cooking at a stove",
+    "seed": 20260917,
+    "prompt": "a person cooking at a stove. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 4,
+    "subject": "a person typing at a laptop on a desk",
+    "seed": 20260918,
+    "prompt": "a person typing at a laptop on a desk. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 5,
+    "subject": "a person waiting at a bus stop",
+    "seed": 20260919,
+    "prompt": "a person waiting at a bus stop. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 6,
+    "subject": "a person watering plants on a balcony",
+    "seed": 20260920,
+    "prompt": "a person watering plants on a balcony. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 7,
+    "subject": "a person riding a bicycle down a street",
+    "seed": 20260921,
+    "prompt": "a person riding a bicycle down a street. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 8,
+    "subject": "a person browsing shelves in a bookstore",
+    "seed": 20260922,
+    "prompt": "a person browsing shelves in a bookstore. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 9,
+    "subject": "a person stretching before a morning jog",
+    "seed": 20260923,
+    "prompt": "a person stretching before a morning jog. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 10,
+    "subject": "two coworkers reviewing papers at a table",
+    "seed": 20260924,
+    "prompt": "two coworkers reviewing papers at a table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 11,
+    "subject": "a person washing dishes at a kitchen sink",
+    "seed": 20260925,
+    "prompt": "a person washing dishes at a kitchen sink. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 12,
+    "subject": "a person sitting on a park bench eating lunch",
+    "seed": 20260926,
+    "prompt": "a person sitting on a park bench eating lunch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 13,
+    "subject": "a person unpacking groceries in a kitchen",
+    "seed": 20260927,
+    "prompt": "a person unpacking groceries in a kitchen. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 14,
+    "subject": "a person playing guitar on a bedroom floor",
+    "seed": 20260928,
+    "prompt": "a person playing guitar on a bedroom floor. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 15,
+    "subject": "a person standing at a bus window looking out",
+    "seed": 20260929,
+    "prompt": "a person standing at a bus window looking out. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 16,
+    "subject": "a person folding laundry in a bedroom",
+    "seed": 20260930,
+    "prompt": "a person folding laundry in a bedroom. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 17,
+    "subject": "a person painting at an easel",
+    "seed": 20260931,
+    "prompt": "a person painting at an easel. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 18,
+    "subject": "a person carrying an umbrella in the rain",
+    "seed": 20260932,
+    "prompt": "a person carrying an umbrella in the rain. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 19,
+    "subject": "a person sitting cross-legged writing in a notebook",
+    "seed": 20260933,
+    "prompt": "a person sitting cross-legged writing in a notebook. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 20,
+    "subject": "a person waiting in line at a counter",
+    "seed": 20260934,
+    "prompt": "a person waiting in line at a counter. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 21,
+    "subject": "a person hiking on a forest trail",
+    "seed": 20260935,
+    "prompt": "a person hiking on a forest trail. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 22,
+    "subject": "a person setting a table for dinner",
+    "seed": 20260936,
+    "prompt": "a person setting a table for dinner. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 23,
+    "subject": "a person napping in a hammock",
+    "seed": 20260937,
+    "prompt": "a person napping in a hammock. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 24,
+    "subject": "a person sweeping a porch",
+    "seed": 20260938,
+    "prompt": "a person sweeping a porch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 25,
+    "subject": "a person reading a book on a couch",
+    "seed": 20260939,
+    "prompt": "a person reading a book on a couch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 26,
+    "subject": "two friends talking at a cafe table",
+    "seed": 20260940,
+    "prompt": "two friends talking at a cafe table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 27,
+    "subject": "a person walking a dog in a park",
+    "seed": 20260941,
+    "prompt": "a person walking a dog in a park. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 28,
+    "subject": "a person cooking at a stove",
+    "seed": 20260942,
+    "prompt": "a person cooking at a stove. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 29,
+    "subject": "a person typing at a laptop on a desk",
+    "seed": 20260943,
+    "prompt": "a person typing at a laptop on a desk. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 30,
+    "subject": "a person waiting at a bus stop",
+    "seed": 20260944,
+    "prompt": "a person waiting at a bus stop. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 31,
+    "subject": "a person watering plants on a balcony",
+    "seed": 20260945,
+    "prompt": "a person watering plants on a balcony. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 32,
+    "subject": "a person riding a bicycle down a street",
+    "seed": 20260946,
+    "prompt": "a person riding a bicycle down a street. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 33,
+    "subject": "a person browsing shelves in a bookstore",
+    "seed": 20260947,
+    "prompt": "a person browsing shelves in a bookstore. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 34,
+    "subject": "a person stretching before a morning jog",
+    "seed": 20260948,
+    "prompt": "a person stretching before a morning jog. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 35,
+    "subject": "two coworkers reviewing papers at a table",
+    "seed": 20260949,
+    "prompt": "two coworkers reviewing papers at a table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 36,
+    "subject": "a person washing dishes at a kitchen sink",
+    "seed": 20260950,
+    "prompt": "a person washing dishes at a kitchen sink. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 37,
+    "subject": "a person sitting on a park bench eating lunch",
+    "seed": 20260951,
+    "prompt": "a person sitting on a park bench eating lunch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 38,
+    "subject": "a person unpacking groceries in a kitchen",
+    "seed": 20260952,
+    "prompt": "a person unpacking groceries in a kitchen. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 39,
+    "subject": "a person playing guitar on a bedroom floor",
+    "seed": 20260953,
+    "prompt": "a person playing guitar on a bedroom floor. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 40,
+    "subject": "a person standing at a bus window looking out",
+    "seed": 20260954,
+    "prompt": "a person standing at a bus window looking out. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 41,
+    "subject": "a person folding laundry in a bedroom",
+    "seed": 20260955,
+    "prompt": "a person folding laundry in a bedroom. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 42,
+    "subject": "a person painting at an easel",
+    "seed": 20260956,
+    "prompt": "a person painting at an easel. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 43,
+    "subject": "a person carrying an umbrella in the rain",
+    "seed": 20260957,
+    "prompt": "a person carrying an umbrella in the rain. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 44,
+    "subject": "a person sitting cross-legged writing in a notebook",
+    "seed": 20260958,
+    "prompt": "a person sitting cross-legged writing in a notebook. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 45,
+    "subject": "a person waiting in line at a counter",
+    "seed": 20260959,
+    "prompt": "a person waiting in line at a counter. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 46,
+    "subject": "a person hiking on a forest trail",
+    "seed": 20260960,
+    "prompt": "a person hiking on a forest trail. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 47,
+    "subject": "a person setting a table for dinner",
+    "seed": 20260961,
+    "prompt": "a person setting a table for dinner. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 48,
+    "subject": "a person napping in a hammock",
+    "seed": 20260962,
+    "prompt": "a person napping in a hammock. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 49,
+    "subject": "a person sweeping a porch",
+    "seed": 20260963,
+    "prompt": "a person sweeping a porch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 50,
+    "subject": "a person reading a book on a couch",
+    "seed": 20260964,
+    "prompt": "a person reading a book on a couch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 51,
+    "subject": "two friends talking at a cafe table",
+    "seed": 20260965,
+    "prompt": "two friends talking at a cafe table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 52,
+    "subject": "a person walking a dog in a park",
+    "seed": 20260966,
+    "prompt": "a person walking a dog in a park. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 53,
+    "subject": "a person cooking at a stove",
+    "seed": 20260967,
+    "prompt": "a person cooking at a stove. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 54,
+    "subject": "a person typing at a laptop on a desk",
+    "seed": 20260968,
+    "prompt": "a person typing at a laptop on a desk. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 55,
+    "subject": "a person waiting at a bus stop",
+    "seed": 20260969,
+    "prompt": "a person waiting at a bus stop. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 56,
+    "subject": "a person watering plants on a balcony",
+    "seed": 20260970,
+    "prompt": "a person watering plants on a balcony. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 57,
+    "subject": "a person riding a bicycle down a street",
+    "seed": 20260971,
+    "prompt": "a person riding a bicycle down a street. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 58,
+    "subject": "a person browsing shelves in a bookstore",
+    "seed": 20260972,
+    "prompt": "a person browsing shelves in a bookstore. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 59,
+    "subject": "a person stretching before a morning jog",
+    "seed": 20260973,
+    "prompt": "a person stretching before a morning jog. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 60,
+    "subject": "two coworkers reviewing papers at a table",
+    "seed": 20260974,
+    "prompt": "two coworkers reviewing papers at a table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 61,
+    "subject": "a person washing dishes at a kitchen sink",
+    "seed": 20260975,
+    "prompt": "a person washing dishes at a kitchen sink. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 62,
+    "subject": "a person sitting on a park bench eating lunch",
+    "seed": 20260976,
+    "prompt": "a person sitting on a park bench eating lunch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 63,
+    "subject": "a person unpacking groceries in a kitchen",
+    "seed": 20260977,
+    "prompt": "a person unpacking groceries in a kitchen. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 64,
+    "subject": "a person playing guitar on a bedroom floor",
+    "seed": 20260978,
+    "prompt": "a person playing guitar on a bedroom floor. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 65,
+    "subject": "a person standing at a bus window looking out",
+    "seed": 20260979,
+    "prompt": "a person standing at a bus window looking out. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 66,
+    "subject": "a person folding laundry in a bedroom",
+    "seed": 20260980,
+    "prompt": "a person folding laundry in a bedroom. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 67,
+    "subject": "a person painting at an easel",
+    "seed": 20260981,
+    "prompt": "a person painting at an easel. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 68,
+    "subject": "a person carrying an umbrella in the rain",
+    "seed": 20260982,
+    "prompt": "a person carrying an umbrella in the rain. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 69,
+    "subject": "a person sitting cross-legged writing in a notebook",
+    "seed": 20260983,
+    "prompt": "a person sitting cross-legged writing in a notebook. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 70,
+    "subject": "a person waiting in line at a counter",
+    "seed": 20260984,
+    "prompt": "a person waiting in line at a counter. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 71,
+    "subject": "a person hiking on a forest trail",
+    "seed": 20260985,
+    "prompt": "a person hiking on a forest trail. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 72,
+    "subject": "a person setting a table for dinner",
+    "seed": 20260986,
+    "prompt": "a person setting a table for dinner. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 73,
+    "subject": "a person napping in a hammock",
+    "seed": 20260987,
+    "prompt": "a person napping in a hammock. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 74,
+    "subject": "a person sweeping a porch",
+    "seed": 20260988,
+    "prompt": "a person sweeping a porch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 75,
+    "subject": "a person reading a book on a couch",
+    "seed": 20260989,
+    "prompt": "a person reading a book on a couch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 76,
+    "subject": "two friends talking at a cafe table",
+    "seed": 20260990,
+    "prompt": "two friends talking at a cafe table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 77,
+    "subject": "a person walking a dog in a park",
+    "seed": 20260991,
+    "prompt": "a person walking a dog in a park. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 78,
+    "subject": "a person cooking at a stove",
+    "seed": 20260992,
+    "prompt": "a person cooking at a stove. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 79,
+    "subject": "a person typing at a laptop on a desk",
+    "seed": 20260993,
+    "prompt": "a person typing at a laptop on a desk. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 80,
+    "subject": "a person waiting at a bus stop",
+    "seed": 20260994,
+    "prompt": "a person waiting at a bus stop. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 81,
+    "subject": "a person watering plants on a balcony",
+    "seed": 20260995,
+    "prompt": "a person watering plants on a balcony. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 82,
+    "subject": "a person riding a bicycle down a street",
+    "seed": 20260996,
+    "prompt": "a person riding a bicycle down a street. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 83,
+    "subject": "a person browsing shelves in a bookstore",
+    "seed": 20260997,
+    "prompt": "a person browsing shelves in a bookstore. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 84,
+    "subject": "a person stretching before a morning jog",
+    "seed": 20260998,
+    "prompt": "a person stretching before a morning jog. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 85,
+    "subject": "two coworkers reviewing papers at a table",
+    "seed": 20260999,
+    "prompt": "two coworkers reviewing papers at a table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 86,
+    "subject": "a person washing dishes at a kitchen sink",
+    "seed": 20261000,
+    "prompt": "a person washing dishes at a kitchen sink. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 87,
+    "subject": "a person sitting on a park bench eating lunch",
+    "seed": 20261001,
+    "prompt": "a person sitting on a park bench eating lunch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 88,
+    "subject": "a person unpacking groceries in a kitchen",
+    "seed": 20261002,
+    "prompt": "a person unpacking groceries in a kitchen. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 89,
+    "subject": "a person playing guitar on a bedroom floor",
+    "seed": 20261003,
+    "prompt": "a person playing guitar on a bedroom floor. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 90,
+    "subject": "a person standing at a bus window looking out",
+    "seed": 20261004,
+    "prompt": "a person standing at a bus window looking out. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 91,
+    "subject": "a person folding laundry in a bedroom",
+    "seed": 20261005,
+    "prompt": "a person folding laundry in a bedroom. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 92,
+    "subject": "a person painting at an easel",
+    "seed": 20261006,
+    "prompt": "a person painting at an easel. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 93,
+    "subject": "a person carrying an umbrella in the rain",
+    "seed": 20261007,
+    "prompt": "a person carrying an umbrella in the rain. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 94,
+    "subject": "a person sitting cross-legged writing in a notebook",
+    "seed": 20261008,
+    "prompt": "a person sitting cross-legged writing in a notebook. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 95,
+    "subject": "a person waiting in line at a counter",
+    "seed": 20261009,
+    "prompt": "a person waiting in line at a counter. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 96,
+    "subject": "a person hiking on a forest trail",
+    "seed": 20261010,
+    "prompt": "a person hiking on a forest trail. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 97,
+    "subject": "a person setting a table for dinner",
+    "seed": 20261011,
+    "prompt": "a person setting a table for dinner. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 98,
+    "subject": "a person napping in a hammock",
+    "seed": 20261012,
+    "prompt": "a person napping in a hammock. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 99,
+    "subject": "a person sweeping a porch",
+    "seed": 20261013,
+    "prompt": "a person sweeping a porch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 100,
+    "subject": "a person reading a book on a couch",
+    "seed": 20261014,
+    "prompt": "a person reading a book on a couch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 101,
+    "subject": "two friends talking at a cafe table",
+    "seed": 20261015,
+    "prompt": "two friends talking at a cafe table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 102,
+    "subject": "a person walking a dog in a park",
+    "seed": 20261016,
+    "prompt": "a person walking a dog in a park. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 103,
+    "subject": "a person cooking at a stove",
+    "seed": 20261017,
+    "prompt": "a person cooking at a stove. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 104,
+    "subject": "a person typing at a laptop on a desk",
+    "seed": 20261018,
+    "prompt": "a person typing at a laptop on a desk. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 105,
+    "subject": "a person waiting at a bus stop",
+    "seed": 20261019,
+    "prompt": "a person waiting at a bus stop. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 106,
+    "subject": "a person watering plants on a balcony",
+    "seed": 20261020,
+    "prompt": "a person watering plants on a balcony. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 107,
+    "subject": "a person riding a bicycle down a street",
+    "seed": 20261021,
+    "prompt": "a person riding a bicycle down a street. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 108,
+    "subject": "a person browsing shelves in a bookstore",
+    "seed": 20261022,
+    "prompt": "a person browsing shelves in a bookstore. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 109,
+    "subject": "a person stretching before a morning jog",
+    "seed": 20261023,
+    "prompt": "a person stretching before a morning jog. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 110,
+    "subject": "two coworkers reviewing papers at a table",
+    "seed": 20261024,
+    "prompt": "two coworkers reviewing papers at a table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 111,
+    "subject": "a person washing dishes at a kitchen sink",
+    "seed": 20261025,
+    "prompt": "a person washing dishes at a kitchen sink. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 112,
+    "subject": "a person sitting on a park bench eating lunch",
+    "seed": 20261026,
+    "prompt": "a person sitting on a park bench eating lunch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 113,
+    "subject": "a person unpacking groceries in a kitchen",
+    "seed": 20261027,
+    "prompt": "a person unpacking groceries in a kitchen. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 114,
+    "subject": "a person playing guitar on a bedroom floor",
+    "seed": 20261028,
+    "prompt": "a person playing guitar on a bedroom floor. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 115,
+    "subject": "a person standing at a bus window looking out",
+    "seed": 20261029,
+    "prompt": "a person standing at a bus window looking out. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 116,
+    "subject": "a person folding laundry in a bedroom",
+    "seed": 20261030,
+    "prompt": "a person folding laundry in a bedroom. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 117,
+    "subject": "a person painting at an easel",
+    "seed": 20261031,
+    "prompt": "a person painting at an easel. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 118,
+    "subject": "a person carrying an umbrella in the rain",
+    "seed": 20261032,
+    "prompt": "a person carrying an umbrella in the rain. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 119,
+    "subject": "a person sitting cross-legged writing in a notebook",
+    "seed": 20261033,
+    "prompt": "a person sitting cross-legged writing in a notebook. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 120,
+    "subject": "a person waiting in line at a counter",
+    "seed": 20261034,
+    "prompt": "a person waiting in line at a counter. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 121,
+    "subject": "a person hiking on a forest trail",
+    "seed": 20261035,
+    "prompt": "a person hiking on a forest trail. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 122,
+    "subject": "a person setting a table for dinner",
+    "seed": 20261036,
+    "prompt": "a person setting a table for dinner. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 123,
+    "subject": "a person napping in a hammock",
+    "seed": 20261037,
+    "prompt": "a person napping in a hammock. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 124,
+    "subject": "a person sweeping a porch",
+    "seed": 20261038,
+    "prompt": "a person sweeping a porch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 125,
+    "subject": "a person reading a book on a couch",
+    "seed": 20261039,
+    "prompt": "a person reading a book on a couch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 126,
+    "subject": "two friends talking at a cafe table",
+    "seed": 20261040,
+    "prompt": "two friends talking at a cafe table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 127,
+    "subject": "a person walking a dog in a park",
+    "seed": 20261041,
+    "prompt": "a person walking a dog in a park. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 128,
+    "subject": "a person cooking at a stove",
+    "seed": 20261042,
+    "prompt": "a person cooking at a stove. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 129,
+    "subject": "a person typing at a laptop on a desk",
+    "seed": 20261043,
+    "prompt": "a person typing at a laptop on a desk. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 130,
+    "subject": "a person waiting at a bus stop",
+    "seed": 20261044,
+    "prompt": "a person waiting at a bus stop. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 131,
+    "subject": "a person watering plants on a balcony",
+    "seed": 20261045,
+    "prompt": "a person watering plants on a balcony. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 132,
+    "subject": "a person riding a bicycle down a street",
+    "seed": 20261046,
+    "prompt": "a person riding a bicycle down a street. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 133,
+    "subject": "a person browsing shelves in a bookstore",
+    "seed": 20261047,
+    "prompt": "a person browsing shelves in a bookstore. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 134,
+    "subject": "a person stretching before a morning jog",
+    "seed": 20261048,
+    "prompt": "a person stretching before a morning jog. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 135,
+    "subject": "two coworkers reviewing papers at a table",
+    "seed": 20261049,
+    "prompt": "two coworkers reviewing papers at a table. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 136,
+    "subject": "a person washing dishes at a kitchen sink",
+    "seed": 20261050,
+    "prompt": "a person washing dishes at a kitchen sink. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 137,
+    "subject": "a person sitting on a park bench eating lunch",
+    "seed": 20261051,
+    "prompt": "a person sitting on a park bench eating lunch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 138,
+    "subject": "a person unpacking groceries in a kitchen",
+    "seed": 20261052,
+    "prompt": "a person unpacking groceries in a kitchen. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 139,
+    "subject": "a person playing guitar on a bedroom floor",
+    "seed": 20261053,
+    "prompt": "a person playing guitar on a bedroom floor. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 140,
+    "subject": "a person standing at a bus window looking out",
+    "seed": 20261054,
+    "prompt": "a person standing at a bus window looking out. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 141,
+    "subject": "a person folding laundry in a bedroom",
+    "seed": 20261055,
+    "prompt": "a person folding laundry in a bedroom. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 142,
+    "subject": "a person painting at an easel",
+    "seed": 20261056,
+    "prompt": "a person painting at an easel. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 143,
+    "subject": "a person carrying an umbrella in the rain",
+    "seed": 20261057,
+    "prompt": "a person carrying an umbrella in the rain. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 144,
+    "subject": "a person sitting cross-legged writing in a notebook",
+    "seed": 20261058,
+    "prompt": "a person sitting cross-legged writing in a notebook. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 145,
+    "subject": "a person waiting in line at a counter",
+    "seed": 20261059,
+    "prompt": "a person waiting in line at a counter. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 146,
+    "subject": "a person hiking on a forest trail",
+    "seed": 20261060,
+    "prompt": "a person hiking on a forest trail. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 147,
+    "subject": "a person setting a table for dinner",
+    "seed": 20261061,
+    "prompt": "a person setting a table for dinner. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 148,
+    "subject": "a person napping in a hammock",
+    "seed": 20261062,
+    "prompt": "a person napping in a hammock. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  },
+  {
+    "index": 149,
+    "subject": "a person sweeping a porch",
+    "seed": 20261063,
+    "prompt": "a person sweeping a porch. flat ink comic illustration, bold even outlines, flat cel shading, limited warm palette, halftone texture."
+  }
+]

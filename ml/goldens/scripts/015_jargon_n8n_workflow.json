@@ -1,0 +1,119 @@
+{
+  "id": "015_jargon_n8n_workflow",
+  "source_transcript_id": "028_jargon_n8n_workflow",
+  "beat_sheet": {
+    "date": "2026-04-16",
+    "mood_arc": [
+      "frustrated",
+      "relieved"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "a desk debugging an automation workflow",
+        "event": "Spent the day fighting with n8n trying to get a workflow to trigger correctly",
+        "emotion": "frustrated",
+        "people": [],
+        "objects": [
+          "n8n"
+        ],
+        "importance": 0.4,
+        "humor": 0.2,
+        "quote": "it just would not cooperate"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "a desk after a coworker spots the actual bug",
+        "event": "Rebecca from platform pointed out the webhook was pointed at the wrong Kubernetes namespace",
+        "emotion": "relieved",
+        "people": [
+          "Rebecca"
+        ],
+        "objects": [
+          "Kubernetes"
+        ],
+        "importance": 0.5,
+        "humor": 0.3,
+        "quote": "felt so dumb but also relieved"
+      }
+    ],
+    "people_mentioned": [
+      "Rebecca"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "frustrated to relieved",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a desk debugging an automation",
+          "time_of_day": "afternoon",
+          "expression": "angry",
+          "action": "Glaring at a workflow that refuses to trigger.",
+          "framing": "close",
+          "caption_a": "n8n and I are not friends today.",
+          "caption_b": "This workflow simply would not cooperate.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a desk, coworker pointing at a screen",
+          "time_of_day": "afternoon",
+          "expression": "surprised",
+          "action": "Rebecca points out the wrong namespace on screen.",
+          "framing": "wide",
+          "caption_a": "Wrong namespace. That explained everything.",
+          "caption_b": "Rebecca spotted it in five minutes.",
+          "bubble": "",
+          "cast": [
+            "Rebecca"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "a debugging afternoon",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a desk with a laptop open to n8n",
+          "time_of_day": "afternoon",
+          "expression": "tired",
+          "action": "Retrying the same workflow trigger, again.",
+          "framing": "wide",
+          "caption_a": "Spent all day fighting one workflow.",
+          "caption_b": "n8n won round one, decisively.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a desk, relief after a fix",
+          "time_of_day": "afternoon",
+          "expression": "happy",
+          "action": "Finally watching the workflow run clean.",
+          "framing": "close",
+          "caption_a": "Wrong namespace \u2014 fixed, thanks to Rebecca.",
+          "caption_b": "Felt dumb, then just relieved.",
+          "bubble": "",
+          "cast": [
+            "Rebecca"
+          ]
+        }
+      ]
+    }
+  ]
+}

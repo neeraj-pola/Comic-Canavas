@@ -1,0 +1,144 @@
+{
+  "id": "001_real_commute_and_small_win",
+  "source_transcript_id": "001_real_commute_and_small_win",
+  "beat_sheet": {
+    "date": "2026-02-02",
+    "mood_arc": [
+      "annoyed",
+      "satisfied",
+      "content"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "transit",
+        "place_detail": "a delayed train platform on the morning commute",
+        "event": "The train was delayed about twenty minutes, making them late for standup",
+        "emotion": "annoyed",
+        "people": [],
+        "objects": [],
+        "importance": 0.2,
+        "humor": 0.1,
+        "quote": "the train was delayed like twenty minutes so I was late for standup"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "an office desk shared with a coworker debugging together",
+        "event": "Fixed a reporting bug with Priya that had been a problem all week",
+        "emotion": "satisfied",
+        "people": [
+          "Priya"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "finally got the reporting bug fixed that's been haunting us all week"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "kitchen",
+        "place_detail": "a home kitchen making a simple dinner",
+        "event": "Came home and made pasta for dinner",
+        "emotion": "content",
+        "people": [],
+        "objects": [
+          "pasta"
+        ],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "just made pasta, nothing fancy"
+      }
+    ],
+    "people_mentioned": [
+      "Priya"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "from delayed to satisfied",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a delayed train platform",
+          "time_of_day": "morning",
+          "expression": "tired",
+          "action": "Watching the delay board tick past twenty minutes.",
+          "framing": "wide",
+          "caption_a": "Another delay. Standup wasn't going to wait.",
+          "caption_b": "Late again, not my fault this time.",
+          "bubble": "Ugh.",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "an office desk shared with a coworker",
+          "time_of_day": "afternoon",
+          "expression": "happy",
+          "action": "High-fiving Priya over the fixed reporting bug.",
+          "framing": "medium",
+          "caption_a": "Fixed. Finally.",
+          "caption_b": "A whole week's bug, gone in an afternoon.",
+          "bubble": "We got it!",
+          "cast": [
+            "Priya"
+          ]
+        },
+        {
+          "id": 3,
+          "beat_id": "b3",
+          "place": "a home kitchen",
+          "time_of_day": "evening",
+          "expression": "content",
+          "action": "Twirling pasta at the kitchen counter, unbothered.",
+          "framing": "close",
+          "caption_a": "Dinner: pasta, nothing fancy.",
+          "caption_b": "Simple win of an otherwise annoying day.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "delayed morning, good afternoon",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a crowded train platform",
+          "time_of_day": "morning",
+          "expression": "angry",
+          "action": "Checking the clock, tapping a foot on the platform.",
+          "framing": "close",
+          "caption_a": "Twenty minutes late before the day even starts.",
+          "caption_b": "The train had other plans today.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "an office desk",
+          "time_of_day": "afternoon",
+          "expression": "happy",
+          "action": "Priya and I finally squash the reporting bug.",
+          "framing": "wide",
+          "caption_a": "A week-long bug, dead by lunch.",
+          "caption_b": "Priya and I finally got it.",
+          "bubble": "Yes!",
+          "cast": [
+            "Priya"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "003_real_sick_day",
+  "category": "real",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Still not feeling great, stayed in bed most of the morning. Managed to drag myself up to do a bit of laundry in the afternoon but that was about the extent of my productivity. Soup for dinner, straight back to bed after.",
+  "expected": {
+    "date": "2026-01-20",
+    "mood_arc": ["drained", "drained"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "bedroom",
+        "place_detail": "a bedroom, resting in bed while unwell",
+        "event": "Stayed in bed most of the morning while feeling sick",
+        "emotion": "drained",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "still not feeling great, stayed in bed most of the morning"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a laundry room or corner with a washing machine",
+        "event": "Managed to do a bit of laundry in the afternoon",
+        "emotion": "drained",
+        "people": [],
+        "objects": ["laundry"],
+        "importance": 0.1,
+        "humor": 0.2,
+        "quote": "that was about the extent of my productivity"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "kitchen",
+        "place_detail": "a kitchen making a simple soup dinner",
+        "event": "Had soup for dinner and went straight back to bed",
+        "emotion": "drained",
+        "people": [],
+        "objects": ["soup"],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "soup for dinner, straight back to bed after"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

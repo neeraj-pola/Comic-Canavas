@@ -1,0 +1,134 @@
+{
+  "$defs": {
+    "FeatureCheck": {
+      "description": "One look-card line, judged present or not on one face crop.",
+      "properties": {
+        "expected": {
+          "title": "Expected",
+          "type": "string"
+        },
+        "feature": {
+          "enum": [
+            "hair",
+            "glasses",
+            "skin_tone",
+            "face_shape",
+            "signature_outfit",
+            "distinguishing"
+          ],
+          "title": "Feature",
+          "type": "string"
+        },
+        "mandatory": {
+          "title": "Mandatory",
+          "type": "boolean"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "present": {
+          "title": "Present",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "feature",
+        "expected",
+        "present",
+        "mandatory"
+      ],
+      "title": "FeatureCheck",
+      "type": "object"
+    },
+    "FeatureChecklistResult": {
+      "description": "The identity metric: \"is every feature of the approved character\npresent\" rather than \"is this geometrically the same face\" \u2014 a VLM\nchecklist result, crossing from master ranking into the critic.",
+      "properties": {
+        "artifact_note": {
+          "default": "",
+          "title": "Artifact Note",
+          "type": "string"
+        },
+        "artifacts_clean": {
+          "title": "Artifacts Clean",
+          "type": "boolean"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/FeatureCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "image_sha256": {
+          "title": "Image Sha256",
+          "type": "string"
+        },
+        "mandatory_passed": {
+          "title": "Mandatory Passed",
+          "type": "boolean"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "checks",
+        "score",
+        "mandatory_passed",
+        "artifacts_clean",
+        "image_sha256",
+        "model"
+      ],
+      "title": "FeatureChecklistResult",
+      "type": "object"
+    }
+  },
+  "description": "One curated character-sheet image \u2014 a reference-preserving variation\ngenerated from the approved master (not the raw photos). Crosses into\nthe onboarding \"meet your character\" screen and is the character LoRA's\ntraining set, so it's a contract, not a local dataclass.",
+  "properties": {
+    "checklist": {
+      "$ref": "#/$defs/FeatureChecklistResult"
+    },
+    "dinov2_to_master": {
+      "title": "Dinov2 To Master",
+      "type": "number"
+    },
+    "expression": {
+      "title": "Expression",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "kept": {
+      "title": "Kept",
+      "type": "boolean"
+    },
+    "url": {
+      "title": "Url",
+      "type": "string"
+    },
+    "view": {
+      "title": "View",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "url",
+    "view",
+    "expression",
+    "checklist",
+    "dinov2_to_master",
+    "kept"
+  ],
+  "title": "SheetImage",
+  "type": "object"
+}

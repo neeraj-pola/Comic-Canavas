@@ -1,0 +1,42 @@
+{
+  "id": "008_real_flight_delay",
+  "category": "real",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Travel day was a disaster, flight got delayed three separate times and I ended up just sitting at the gate for like six hours total. Read most of a book at least. Finally landed super late and just crashed at the hotel, didn't even unpack.",
+  "expected": {
+    "date": "2026-07-03",
+    "mood_arc": ["exasperated", "exhausted"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "transit",
+        "place_detail": "an airport gate area during a long series of flight delays",
+        "event": "Flight was delayed three times, spending about six hours waiting at the gate",
+        "emotion": "exasperated",
+        "people": [],
+        "objects": ["book"],
+        "importance": 0.4,
+        "humor": 0.2,
+        "quote": "flight got delayed three separate times"
+      },
+      {
+        "id": "b2",
+        "time": "night",
+        "place": "other",
+        "place_detail": "a hotel room arrived at very late after a delayed flight",
+        "event": "Landed very late and crashed at the hotel without unpacking",
+        "emotion": "exhausted",
+        "people": [],
+        "objects": [],
+        "importance": 0.2,
+        "humor": 0.1,
+        "quote": "didn't even unpack"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

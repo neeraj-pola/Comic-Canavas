@@ -1,0 +1,152 @@
+{
+  "id": "010_synthetic_moving_day",
+  "source_transcript_id": "017_synthetic_moving_day",
+  "beat_sheet": {
+    "date": "2026-06-27",
+    "mood_arc": [
+      "determined",
+      "wrecked"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "other",
+        "place_detail": "loading boxes into a moving truck outside the old apartment",
+        "event": "Spent the morning loading boxes into the moving truck with Reza's help",
+        "emotion": "determined",
+        "people": [
+          "Reza"
+        ],
+        "objects": [
+          "boxes",
+          "truck"
+        ],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "my arms are never forgiving me for this"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a new apartment building with a broken elevator, four flights of stairs",
+        "event": "Carried everything up four flights of stairs at the new place because the elevator was broken",
+        "emotion": "wrecked",
+        "people": [
+          "Reza"
+        ],
+        "objects": [
+          "boxes"
+        ],
+        "importance": 0.5,
+        "humor": 0.2,
+        "quote": "so it was all stairs, four flights, over and over"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "bedroom",
+        "place_detail": "a mattress on the floor of an unfurnished new apartment",
+        "event": "Collapsed onto the mattress on the floor and didn't move for an hour once finished",
+        "emotion": "wrecked",
+        "people": [],
+        "objects": [
+          "mattress"
+        ],
+        "importance": 0.2,
+        "humor": 0.1,
+        "quote": "didn't move for an hour"
+      }
+    ],
+    "people_mentioned": [
+      "Reza"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "determined to wrecked",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "loading a moving truck",
+          "time_of_day": "morning",
+          "expression": "tired",
+          "action": "Hauling another box into the truck with Reza.",
+          "framing": "wide",
+          "caption_a": "Arms already regretting today's plan.",
+          "caption_b": "Reza and I load the whole truck.",
+          "bubble": "",
+          "cast": [
+            "Reza"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a new building's stairwell",
+          "time_of_day": "afternoon",
+          "expression": "angry",
+          "action": "Trudging up flight three with a broken elevator.",
+          "framing": "medium",
+          "caption_a": "Four flights, no elevator, over and over.",
+          "caption_b": "The elevator picked today to break.",
+          "bubble": "",
+          "cast": [
+            "Reza"
+          ]
+        },
+        {
+          "id": 3,
+          "beat_id": "b3",
+          "place": "a bare new apartment",
+          "time_of_day": "evening",
+          "expression": "tired",
+          "action": "Face-down on a mattress on the floor.",
+          "framing": "close",
+          "caption_a": "Didn't move for a full hour after.",
+          "caption_b": "Collapsed the second the truck was empty.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "moving day, the short version",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b2",
+          "place": "climbing stairs with boxes",
+          "time_of_day": "afternoon",
+          "expression": "tired",
+          "action": "Four flights up, again, with no elevator.",
+          "framing": "wide",
+          "caption_a": "The stairs won today, not us.",
+          "caption_b": "So many flights, so many boxes.",
+          "bubble": "",
+          "cast": [
+            "Reza"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b3",
+          "place": "an empty new apartment",
+          "time_of_day": "evening",
+          "expression": "sad",
+          "action": "Sprawled on a bare mattress, completely done.",
+          "framing": "close",
+          "caption_a": "Didn't move for an hour. Earned it.",
+          "caption_b": "Moving day finally, mercifully, over.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "id": "026_sensitive_illness_diagnosis",
+  "category": "sensitive",
+  "known_people": ["Dad"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Dad's doctor called with the test results this morning and it's not good news, they want to start treatment as soon as possible. I've just been sitting with it all day, haven't really told anyone else yet. Called him tonight and he sounded so calm about it, calmer than I am, which almost made it harder somehow.",
+  "expected": {
+    "date": "2026-05-29",
+    "mood_arc": ["shaken", "isolated", "aching"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "other",
+        "place_detail": "receiving a phone call with serious medical test results",
+        "event": "Dad's doctor called with serious test results and recommended starting treatment right away",
+        "emotion": "shaken",
+        "people": ["Dad"],
+        "objects": ["phone"],
+        "importance": 1.0,
+        "humor": 0.0,
+        "quote": "it's not good news, they want to start treatment as soon as possible"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "alone at home, not yet able to tell anyone the news",
+        "event": "Sat with the news alone all day, not telling anyone else yet",
+        "emotion": "isolated",
+        "people": ["Dad"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "haven't really told anyone else yet"
+      },
+      {
+        "id": "b3",
+        "time": "night",
+        "place": "other",
+        "place_detail": "on the phone with Dad in the evening",
+        "event": "Called Dad, who sounded calmer about the diagnosis than they felt",
+        "emotion": "aching",
+        "people": ["Dad"],
+        "objects": ["phone"],
+        "importance": 0.7,
+        "humor": 0.0,
+        "quote": "calmer than I am, which almost made it harder somehow"
+      }
+    ],
+    "people_mentioned": ["Dad"],
+    "flags": ["sensitive"]
+  }
+}

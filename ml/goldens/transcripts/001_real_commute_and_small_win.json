@@ -1,0 +1,55 @@
+{
+  "id": "001_real_commute_and_small_win",
+  "category": "real",
+  "known_people": ["Priya"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Ugh, the train was delayed like twenty minutes so I was late for standup, which was annoying because I hate walking in late. But then in the afternoon Priya and I finally got the reporting bug fixed that's been haunting us all week, so that felt really good. Came home and just made pasta, nothing fancy.",
+  "expected": {
+    "date": "2026-02-02",
+    "mood_arc": ["annoyed", "satisfied", "content"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "transit",
+        "place_detail": "a delayed train platform on the morning commute",
+        "event": "The train was delayed about twenty minutes, making them late for standup",
+        "emotion": "annoyed",
+        "people": [],
+        "objects": [],
+        "importance": 0.2,
+        "humor": 0.1,
+        "quote": "the train was delayed like twenty minutes so I was late for standup"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "an office desk shared with a coworker debugging together",
+        "event": "Fixed a reporting bug with Priya that had been a problem all week",
+        "emotion": "satisfied",
+        "people": ["Priya"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "finally got the reporting bug fixed that's been haunting us all week"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "kitchen",
+        "place_detail": "a home kitchen making a simple dinner",
+        "event": "Came home and made pasta for dinner",
+        "emotion": "content",
+        "people": [],
+        "objects": ["pasta"],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "just made pasta, nothing fancy"
+      }
+    ],
+    "people_mentioned": ["Priya"],
+    "flags": []
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "properties": {
+    "age_descriptor": {
+      "default": "",
+      "title": "Age Descriptor",
+      "type": "string"
+    },
+    "distinguishing": {
+      "title": "Distinguishing",
+      "type": "string"
+    },
+    "edits": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Edits",
+      "type": "array"
+    },
+    "face_shape": {
+      "title": "Face Shape",
+      "type": "string"
+    },
+    "gender_term": {
+      "default": "",
+      "title": "Gender Term",
+      "type": "string"
+    },
+    "glasses": {
+      "title": "Glasses",
+      "type": "string"
+    },
+    "hair": {
+      "title": "Hair",
+      "type": "string"
+    },
+    "mandatory": {
+      "items": {
+        "enum": [
+          "hair",
+          "glasses",
+          "skin_tone",
+          "face_shape",
+          "signature_outfit",
+          "distinguishing"
+        ],
+        "type": "string"
+      },
+      "title": "Mandatory",
+      "type": "array"
+    },
+    "signature_outfit": {
+      "title": "Signature Outfit",
+      "type": "string"
+    },
+    "skin_tone": {
+      "title": "Skin Tone",
+      "type": "string"
+    }
+  },
+  "required": [
+    "hair",
+    "glasses",
+    "skin_tone",
+    "face_shape",
+    "signature_outfit",
+    "distinguishing"
+  ],
+  "title": "LookCard",
+  "type": "object"
+}

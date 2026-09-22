@@ -1,0 +1,85 @@
+{
+  "properties": {
+    "character_clause": {
+      "title": "Character Clause",
+      "type": "string"
+    },
+    "environment_clause": {
+      "title": "Environment Clause",
+      "type": "string"
+    },
+    "generator": {
+      "enum": [
+        "leonardo",
+        "flux",
+        "flux_kontext",
+        "mock"
+      ],
+      "title": "Generator",
+      "type": "string"
+    },
+    "guidance": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Guidance"
+    },
+    "negative": {
+      "title": "Negative",
+      "type": "string"
+    },
+    "panel_id": {
+      "title": "Panel Id",
+      "type": "integer"
+    },
+    "place_ref_used": {
+      "default": false,
+      "title": "Place Ref Used",
+      "type": "boolean"
+    },
+    "positive": {
+      "title": "Positive",
+      "type": "string"
+    },
+    "seed": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Seed"
+    },
+    "steps": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Steps"
+    }
+  },
+  "required": [
+    "panel_id",
+    "generator",
+    "character_clause",
+    "environment_clause",
+    "positive",
+    "negative"
+  ],
+  "title": "ImagePrompt",
+  "type": "object"
+}

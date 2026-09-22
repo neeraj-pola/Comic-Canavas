@@ -1,0 +1,29 @@
+{
+  "id": "021_quiet_low_key_day",
+  "category": "quiet",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Pretty quiet day today, honestly not much to report. Just took it easy, read a bit, went to bed early.",
+  "expected": {
+    "date": "2026-04-05",
+    "mood_arc": ["calm"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "evening",
+        "place": "bedroom",
+        "place_detail": "at home relaxing quietly and reading",
+        "event": "Took it easy, read a bit, and went to bed early on an uneventful day",
+        "emotion": "calm",
+        "people": [],
+        "objects": ["book"],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "not much to report"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": ["too_short"]
+  }
+}

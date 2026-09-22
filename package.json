@@ -1,0 +1,19 @@
+{
+  "name": "comiccanvas",
+  "private": true,
+  "packageManager": "pnpm@10.16.1",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "pnpm --filter web dev",
+    "lint": "eslint . --max-warnings=0 && pnpm --filter web lint",
+    "format": "prettier --check .",
+    "format:write": "prettier --write .",
+    "gen:types": "pnpm --filter web gen:types"
+  },
+  "devDependencies": {
+    "eslint": "^10.10.0",
+    "prettier": "^3.3.3"
+  }
+}

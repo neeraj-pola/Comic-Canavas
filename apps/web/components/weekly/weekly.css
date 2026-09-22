@@ -1,0 +1,22 @@
+/* Ported verbatim from comiccanvas-dashboard.html's `.people`/`.person`
+ * rules — the Weekly and Cast pages both need them. */
+
+.dashboard-scope .people {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+}
+.dashboard-scope .person {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.dashboard-scope .person svg {
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
+.dashboard-scope .person .avatar {
+  width: 56px;
+  height: 56px;
+}

@@ -1,0 +1,42 @@
+{
+  "id": "010_real_rainy_wfh_tech_trouble",
+  "category": "real",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Pouring rain all day so I just stayed in and worked from home. My laptop decided to update itself right before a call and I missed the first ten minutes, which was mortifying. Otherwise pretty uneventful, made tea about four times.",
+  "expected": {
+    "date": "2026-11-14",
+    "mood_arc": ["cozy", "embarrassed", "flat"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "a home desk set up for working from home on a rainy day",
+        "event": "Stayed in and worked from home because of pouring rain all day",
+        "emotion": "cozy",
+        "people": [],
+        "objects": [],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "pouring rain all day so I just stayed in and worked from home"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "desk",
+        "place_detail": "a home desk during a video call, laptop mid-update",
+        "event": "Laptop updated itself right before a call and missed the first ten minutes",
+        "emotion": "embarrassed",
+        "people": [],
+        "objects": ["laptop"],
+        "importance": 0.3,
+        "humor": 0.4,
+        "quote": "which was mortifying"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

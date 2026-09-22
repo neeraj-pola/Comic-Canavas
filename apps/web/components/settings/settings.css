@@ -1,0 +1,36 @@
+/* Ported verbatim from comiccanvas-dashboard.html's `.styles`/`.sty`/
+ * `.range` rules — the setup wizard and Style & voice page both need
+ * them. */
+
+.dashboard-scope .styles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.dashboard-scope .sty {
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  padding: 10px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+.dashboard-scope .sty.on {
+  outline: 3px solid var(--mustard);
+  outline-offset: -3px;
+}
+.dashboard-scope .sty .sw {
+  height: 54px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  border: 1px solid var(--rule);
+}
+.dashboard-scope .range {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.dashboard-scope .range input {
+  flex: 1;
+  accent-color: var(--mustard-deep);
+}

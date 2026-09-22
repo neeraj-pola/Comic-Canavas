@@ -1,0 +1,36 @@
+{
+  "kind": "reward_model",
+  "config": {
+    "features": [
+      "identity",
+      "style",
+      "alignment",
+      "detail"
+    ],
+    "epochs": 500,
+    "lr": 0.05
+  },
+  "snapshot_hash": "heldout_week:28pairs",
+  "metrics": {
+    "n_pairs": 28,
+    "n_train": 21,
+    "n_eval": 7,
+    "learned_weights": {
+      "identity": 0.1508210301399231,
+      "style": 12.841135025024414,
+      "alignment": -22.576202392578125,
+      "detail": -18.641891479492188
+    },
+    "hand_set_weights": {
+      "identity": 0.35,
+      "style": 0.25,
+      "alignment": 0.25,
+      "detail": 0.15
+    },
+    "learned_pairwise_accuracy": 0.42857142857142855,
+    "hand_set_pairwise_accuracy": 0.42857142857142855,
+    "beats_champion": false
+  },
+  "artifact_url": null,
+  "logged_at": "2026-09-20T02:00:46.951627+00:00"
+}

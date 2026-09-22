@@ -1,0 +1,154 @@
+{
+  "id": "014_sensitive_grief",
+  "source_transcript_id": "025_sensitive_grief",
+  "beat_sheet": {
+    "date": "2026-02-21",
+    "mood_arc": [
+      "grieving",
+      "comforted",
+      "numb"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "midday",
+        "place": "other",
+        "place_detail": "a funeral service for a grandmother",
+        "event": "Attended Grandma Rose's funeral with the whole family present",
+        "emotion": "grieving",
+        "people": [
+          "Grandma Rose"
+        ],
+        "objects": [],
+        "importance": 1.0,
+        "humor": 0.0,
+        "quote": "I don't really know how to talk about it"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a family gathering after the funeral, sharing memories",
+        "event": "The family gathered afterwards sharing stories about Grandma Rose, which helped a little",
+        "emotion": "comforted",
+        "people": [
+          "Grandma Rose"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "everyone sharing stories about her afterwards"
+      },
+      {
+        "id": "b3",
+        "time": "night",
+        "place": "bedroom",
+        "place_detail": "alone at night, the loss not yet feeling real",
+        "event": "Kept expecting to call Grandma Rose this weekend before remembering she was gone",
+        "emotion": "numb",
+        "people": [
+          "Grandma Rose"
+        ],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "it doesn't feel real yet"
+      }
+    ],
+    "people_mentioned": [
+      "Grandma Rose"
+    ],
+    "flags": [
+      "sensitive"
+    ]
+  },
+  "reference_scripts": [
+    {
+      "mood": "grief, held gently",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a funeral service",
+          "time_of_day": "midday",
+          "expression": "sad",
+          "action": "Standing with family, quiet, holding it together.",
+          "framing": "wide",
+          "caption_a": "Said goodbye to Grandma Rose today.",
+          "caption_b": "The whole family came together for her.",
+          "bubble": "",
+          "cast": [
+            "Grandma Rose"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a family gathering afterward",
+          "time_of_day": "afternoon",
+          "expression": "content",
+          "action": "Someone shares a story; a few soft laughs.",
+          "framing": "medium",
+          "caption_a": "Everyone had a Grandma Rose story.",
+          "caption_b": "The stories helped, a little.",
+          "bubble": "",
+          "cast": [
+            "Grandma Rose"
+          ]
+        },
+        {
+          "id": 3,
+          "beat_id": "b3",
+          "place": "alone at night, phone in hand",
+          "time_of_day": "night",
+          "expression": "sad",
+          "action": "Reaching for the phone, then remembering.",
+          "framing": "close",
+          "caption_a": "Almost called her, out of habit.",
+          "caption_b": "Doesn't feel real yet.",
+          "bubble": "",
+          "cast": [
+            "Grandma Rose"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "a day of remembering her",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a funeral service, family gathered",
+          "time_of_day": "midday",
+          "expression": "sad",
+          "action": "The family stands together, saying goodbye.",
+          "framing": "wide",
+          "caption_a": "Goodbye, Grandma Rose.",
+          "caption_b": "Hardest kind of family gathering.",
+          "bubble": "",
+          "cast": [
+            "Grandma Rose"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b3",
+          "place": "a quiet room at night",
+          "time_of_day": "night",
+          "expression": "sad",
+          "action": "Sitting with the phone, not quite ready to put it down.",
+          "framing": "close",
+          "caption_a": "Kept expecting to call her.",
+          "caption_b": "It still doesn't feel real.",
+          "bubble": "",
+          "cast": [
+            "Grandma Rose"
+          ]
+        }
+      ]
+    }
+  ]
+}

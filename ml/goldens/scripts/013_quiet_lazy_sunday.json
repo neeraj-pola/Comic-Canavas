@@ -1,0 +1,96 @@
+{
+  "id": "013_quiet_lazy_sunday",
+  "source_transcript_id": "024_quiet_lazy_sunday",
+  "beat_sheet": {
+    "date": "2026-07-19",
+    "mood_arc": [
+      "content"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "unknown",
+        "place": "bedroom",
+        "place_detail": "at home in pajamas all day with no plans",
+        "event": "Stayed in pajamas all day with no plans or errands, doing nothing on purpose",
+        "emotion": "content",
+        "people": [],
+        "objects": [],
+        "importance": 0.1,
+        "humor": 0.1,
+        "quote": "exactly what I needed"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": [
+      "too_short",
+      "no_events"
+    ]
+  },
+  "reference_scripts": [
+    {
+      "mood": "a lazy day, happily",
+      "quiet_day": true,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a couch, still in pajamas",
+          "time_of_day": "midday",
+          "expression": "content",
+          "action": "Sprawled on the couch, pajamas, no plans.",
+          "framing": "wide",
+          "caption_a": "Pajamas all day. Zero regrets.",
+          "caption_b": "Did nothing, exactly on purpose.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b1",
+          "place": "a sunlit living room",
+          "time_of_day": "afternoon",
+          "expression": "happy",
+          "action": "Stretching out, completely unbothered by the day.",
+          "framing": "close",
+          "caption_a": "Exactly what today needed to be.",
+          "caption_b": "No errands, no plans, no problem.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "nothing on the agenda",
+      "quiet_day": true,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a living room in pajamas",
+          "time_of_day": "midday",
+          "expression": "content",
+          "action": "Lounging with no intention of getting dressed.",
+          "framing": "wide",
+          "caption_a": "Still in pajamas at 2pm. Perfect.",
+          "caption_b": "A whole day with nothing on it.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b1",
+          "place": "a cozy couch corner",
+          "time_of_day": "evening",
+          "expression": "content",
+          "action": "Settling in for another hour of doing nothing.",
+          "framing": "close",
+          "caption_a": "Nothing happened, and it was great.",
+          "caption_b": "The best kind of uneventful day.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "012_synthetic_wedding_day",
+  "category": "synthetic",
+  "known_people": ["Nora", "Devon"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Nora and Devon's wedding was today and it was honestly one of the best days I've had in years. The ceremony was outside under this huge oak tree and Nora cried through her whole speech, which made everyone else cry too. Danced way more than I meant to at the reception and my feet are destroyed but completely worth it.",
+  "expected": {
+    "date": "2026-09-19",
+    "mood_arc": ["moved", "joyful"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "outdoors",
+        "place_detail": "an outdoor wedding ceremony under a large oak tree",
+        "event": "Attended Nora and Devon's outdoor wedding ceremony, where Nora's speech made everyone cry",
+        "emotion": "moved",
+        "people": ["Nora", "Devon"],
+        "objects": [],
+        "importance": 0.9,
+        "humor": 0.0,
+        "quote": "Nora cried through her whole speech, which made everyone else cry too"
+      },
+      {
+        "id": "b2",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "a wedding reception with a dance floor",
+        "event": "Danced much more than planned at the wedding reception",
+        "emotion": "joyful",
+        "people": ["Nora", "Devon"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.3,
+        "quote": "my feet are destroyed but completely worth it"
+      }
+    ],
+    "people_mentioned": ["Nora", "Devon"],
+    "flags": []
+  }
+}

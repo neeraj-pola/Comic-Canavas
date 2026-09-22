@@ -1,0 +1,29 @@
+{
+  "id": "029_jargon_family_nickname_place",
+  "category": "jargon",
+  "known_people": ["Beatrice"],
+  "known_places": ["Ashbourne Park"],
+  "known_vocab": ["Ashbourne Park"],
+  "transcript": "Took the kids to Ashborn Park this afternoon, the one with the big fountain. Bea met us there with her two and we just let all the kids run around while we sat and talked for a couple hours. Really easy, nice afternoon.",
+  "expected": {
+    "date": "2026-06-06",
+    "mood_arc": ["relaxed"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "outdoors",
+        "place_detail": "Ashbourne Park, near the large fountain",
+        "event": "Took the kids to Ashbourne Park and met Beatrice and her kids there to let everyone run around",
+        "emotion": "relaxed",
+        "people": ["Beatrice"],
+        "objects": ["fountain"],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "really easy, nice afternoon"
+      }
+    ],
+    "people_mentioned": ["Beatrice"],
+    "flags": []
+  }
+}

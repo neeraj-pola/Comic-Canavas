@@ -1,0 +1,121 @@
+{
+  "id": "004_real_date_night",
+  "source_transcript_id": "006_real_date_night",
+  "beat_sheet": {
+    "date": "2026-06-10",
+    "mood_arc": [
+      "surprised",
+      "warm"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "evening",
+        "place": "cafe",
+        "place_detail": "a small Italian restaurant, the site of their first date",
+        "event": "Alex surprised them with dinner at the Italian place from their first date",
+        "emotion": "surprised",
+        "people": [
+          "Alex"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.1,
+        "quote": "did not expect on a random Tuesday"
+      },
+      {
+        "id": "b2",
+        "time": "night",
+        "place": "cafe",
+        "place_detail": "the same restaurant, lingering after most other tables had cleared",
+        "event": "Talked with Alex for about three hours until the restaurant closed",
+        "emotion": "warm",
+        "people": [
+          "Alex"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.1,
+        "quote": "closed the place down basically"
+      }
+    ],
+    "people_mentioned": [
+      "Alex"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "surprised into warm",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a small Italian restaurant",
+          "time_of_day": "evening",
+          "expression": "surprised",
+          "action": "Walking in to find Alex already at their table.",
+          "framing": "wide",
+          "caption_a": "A random Tuesday, apparently not so random.",
+          "caption_b": "Alex planned this whole thing.",
+          "bubble": "Surprise!",
+          "cast": [
+            "Alex"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "the same restaurant, nearly empty",
+          "time_of_day": "night",
+          "expression": "happy",
+          "action": "Still talking as the last other table leaves.",
+          "framing": "close",
+          "caption_a": "Talked for three hours. Closed the place.",
+          "caption_b": "Needed a night exactly like this.",
+          "bubble": "",
+          "cast": [
+            "Alex"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "an unplanned good night",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "an Italian restaurant from their first date",
+          "time_of_day": "evening",
+          "expression": "happy",
+          "action": "Alex grinning, having planned the whole surprise.",
+          "framing": "close",
+          "caption_a": "Our first-date spot, out of nowhere.",
+          "caption_b": "Alex surprised me with dinner tonight.",
+          "bubble": "",
+          "cast": [
+            "Alex"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a restaurant table, staff clearing up",
+          "time_of_day": "night",
+          "expression": "content",
+          "action": "Both still leaning in, mid-conversation.",
+          "framing": "wide",
+          "caption_a": "Three hours passed like nothing.",
+          "caption_b": "We basically closed the restaurant.",
+          "bubble": "",
+          "cast": [
+            "Alex"
+          ]
+        }
+      ]
+    }
+  ]
+}

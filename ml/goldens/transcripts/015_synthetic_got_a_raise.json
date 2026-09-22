@@ -1,0 +1,42 @@
+{
+  "id": "015_synthetic_got_a_raise",
+  "category": "synthetic",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "My manager pulled me aside today and told me I'm getting a raise and a title bump next cycle. I genuinely did not see that coming, I was still kind of stunned an hour later. Treated myself to a really nice dinner to celebrate.",
+  "expected": {
+    "date": "2026-10-01",
+    "mood_arc": ["stunned", "celebratory"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "a manager's office delivering unexpected good news",
+        "event": "Manager told them they're getting a raise and a title bump next cycle",
+        "emotion": "stunned",
+        "people": [],
+        "objects": [],
+        "importance": 0.8,
+        "humor": 0.0,
+        "quote": "I genuinely did not see that coming"
+      },
+      {
+        "id": "b2",
+        "time": "evening",
+        "place": "cafe",
+        "place_detail": "a nice restaurant for a celebratory dinner",
+        "event": "Treated themselves to a nice dinner to celebrate the raise",
+        "emotion": "celebratory",
+        "people": [],
+        "objects": [],
+        "importance": 0.4,
+        "humor": 0.0,
+        "quote": "treated myself to a really nice dinner to celebrate"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

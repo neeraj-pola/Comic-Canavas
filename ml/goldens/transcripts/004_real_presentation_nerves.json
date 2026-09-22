@@ -1,0 +1,55 @@
+{
+  "id": "004_real_presentation_nerves",
+  "category": "real",
+  "known_people": ["Marcus"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Okay that presentation to leadership went so much better than I was dreading. I barely slept last night I was so nervous about it. But I got through the whole deck, Marcus backed me up on the numbers question, and afterwards my manager actually said it was one of the clearer pitches she's seen this quarter. I could actually breathe again after that.",
+  "expected": {
+    "date": "2026-05-08",
+    "mood_arc": ["anxious", "relieved", "proud"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "night",
+        "place": "bedroom",
+        "place_detail": "lying awake in bed the night before a big presentation",
+        "event": "Barely slept the night before, dreading the leadership presentation",
+        "emotion": "anxious",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "I barely slept last night I was so nervous about it"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "desk",
+        "place_detail": "a conference room presenting a deck to leadership",
+        "event": "Got through the whole presentation to leadership, with Marcus backing up the numbers question",
+        "emotion": "relieved",
+        "people": ["Marcus"],
+        "objects": [],
+        "importance": 0.8,
+        "humor": 0.0,
+        "quote": "Marcus backed me up on the numbers question"
+      },
+      {
+        "id": "b3",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "an office hallway conversation with a manager after the meeting",
+        "event": "The manager said it was one of the clearer pitches she'd seen this quarter",
+        "emotion": "proud",
+        "people": [],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "one of the clearer pitches she's seen this quarter"
+      }
+    ],
+    "people_mentioned": ["Marcus"],
+    "flags": []
+  }
+}

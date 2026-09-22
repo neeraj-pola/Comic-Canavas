@@ -1,0 +1,42 @@
+{
+  "id": "027_sensitive_breakup",
+  "category": "sensitive",
+  "known_people": ["Casey"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Casey and I ended things last night, for real this time. Spent most of today just kind of numb, went through the motions at work but I don't think I got anything done. Started packing up some of his stuff in the evening and had to stop halfway through, wasn't ready for that yet.",
+  "expected": {
+    "date": "2026-11-02",
+    "mood_arc": ["numb", "overwhelmed"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "at work the day after a breakup, going through the motions",
+        "event": "Went through the motions at work the day after ending things with Casey, unable to focus",
+        "emotion": "numb",
+        "people": ["Casey"],
+        "objects": [],
+        "importance": 0.7,
+        "humor": 0.0,
+        "quote": "spent most of today just kind of numb"
+      },
+      {
+        "id": "b2",
+        "time": "evening",
+        "place": "bedroom",
+        "place_detail": "at home starting to pack up an ex-partner's belongings",
+        "event": "Started packing up Casey's stuff but had to stop halfway through, not ready yet",
+        "emotion": "overwhelmed",
+        "people": ["Casey"],
+        "objects": [],
+        "importance": 0.8,
+        "humor": 0.0,
+        "quote": "had to stop halfway through, wasn't ready for that yet"
+      }
+    ],
+    "people_mentioned": ["Casey"],
+    "flags": ["sensitive"]
+  }
+}

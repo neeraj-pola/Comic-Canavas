@@ -1,0 +1,74 @@
+# Style card (task 3.5, v2 for task 5.7/ADR 0008) — the fixed visual
+# language every panel prompt (nodes/prompts.py, task 3.6), every
+# regularization render (ml/identity/reg_set.py), and every master
+# candidate (ml/identity/master.py) is built from. Simple characters,
+# detailed environments (CLAUDE.md §1).
+#
+# Changing this changes every future panel's look AND invalidates the
+# DINOv2 style reference bank built from it (ml/identity/style_score.py)
+# — treat it like a golden: bump `version`, regenerate the reg set, and
+# record the change in an ADR (0008 records this v1->v2 change).
+#
+# v1->v2 change (ADR 0008): v1's "loose hand-drawn ink line" + single
+# mustard spot-accent read as intended in isolated tests, but under real
+# identity-conditioning (Leonardo Character Reference, Flux LoRA) it gave
+# the base model's own strong stylistic priors too much freedom to drift
+# — bold, even, closed-shape outlines and flat cel shading are far more
+# reproducible across a reference/LoRA-conditioned generation than a
+# "loose, slightly imperfect by hand" line ever was.
+
+version: v2-2026-09-14
+
+# The single canonical style string — kept short enough that a panel
+# prompt built from it still fits nodes/prompts.py's 90-token budget.
+style_phrase: >-
+  flat ink comic illustration, bold even outlines, flat cel shading,
+  limited warm palette, halftone texture
+
+line:
+  weight: bold, even-weight ink outline, uniform thickness, no tapering, no cross-hatching
+  style: clean confident contour lines, closed shapes, flat 2D drawing — never rendered or painted
+
+palette:
+  base: limited warm palette — cream paper, warm ochre, terracotta, soft charcoal ink
+  accent: one deeper accent (rust or teal) per panel on a single meaningful object, never on skin
+  rule: flat cel shading — each area one flat fill plus at most one shadow tone, no gradients
+
+texture:
+  paper: halftone dot texture in midtones and shadows, visible dot pattern
+  finish: matte printed-comic feel, no glossy digital sheen, no photographic grain
+
+camera:
+  wide: full body, environment dominant, character small in frame
+  medium: waist-up, character and immediate surroundings balanced
+  close: face or hands, background soft and suggested only
+  angle: slightly low or eye-level; avoid extreme dutch angles or fisheye distortion
+
+character:
+  rules:
+    - "simple shapes: rounded head, minimal facial linework, few flat fills"
+    - keep the character's design constant — frame shape, hair direction, facial hair and face shape never change between panels
+    - one clear, restrained expression per panel, not exaggerated cartoon mugging
+    - consistent outfit across a day's panels unless the beat says otherwise
+    - character reads as a drawn character, never as a stylized photograph
+  avoid:
+    - photorealistic or airbrushed skin rendering
+    - soft painterly shading, gradients, or lens blur on the character
+    - extra fingers or warped hands
+    - text, logos, or brand marks on clothing
+
+environment:
+  rules:
+    - 4-6 concrete, specific props per panel, grounded in the beat's place_detail and objects
+    - name real materials — wood grain, brushed steel, worn fabric — not just "table" or "chair"
+    - one clear light source per panel (window light, lamp, screen glow) that motivates shadow direction
+    - "background detail scales with framing: wide shows the full environment, close softens it"
+    - environments carry the detail budget; characters stay simple
+
+negative_standard:
+  - no artist names
+  - no watermark, no signature, no text overlays
+  - no extra limbs, no distorted hands
+  - no photorealism, no photograph, no 3d render
+  - no soft airbrushed shading, no gradients, no depth-of-field blur
+  - no logos or brand marks

@@ -1,0 +1,101 @@
+# Character LoRA training config (task 5.11, ADR 0005) — trains on the
+# task 5.10 character sheet (curated, reference-preserving variations of
+# the approved master), not the person's raw photos.
+#
+# Field names/nesting verified live against ai-toolkit's own source
+# (toolkit/config_modules.py, fetched 2026-09-15) rather than assumed —
+# this repo has hit five separate real training bugs from guessing this
+# schema before (see train_lora.py's module docstring). Confirmed real
+# fields used here: `is_reg` (DatasetConfig), `mask_path`/`mask_min_value`
+# (DatasetConfig — "white has higher loss than black", 0-1 range),
+# `ema_config`/`use_ema`/`ema_decay` (TrainConfig/EMAConfig), `cfg_scale`
+# (TrainConfig, default 1.0 — this is what CLAUDE.md's task 5.11 calls
+# "guidance 1.0").
+#
+# `name`, dataset/reg folder paths, and mask path are fixed in-container
+# paths (`/root/...`) that `ml/identity/train_character_lora.py` always
+# extracts the submitted tarballs to — the same static file is reused
+# every run; only `name` is overridden per run by that submission code
+# (a real per-run identifier can't live in a frozen, committed template).
+#
+# Deviation from CLAUDE.md's literal "LR 1e-4 cosine, 100-step warmup"
+# (explicit user request, 2026-09-15): `lr_scheduler: constant` instead
+# of cosine+warmup — a flat, non-decaying rate for the training's full
+# duration.
+job: extension
+config:
+  name: REPLACE_ME_AT_SUBMIT_TIME
+  process:
+    - type: sd_trainer
+      training_folder: /root/output
+      device: cuda:0
+      network:
+        type: lora
+        linear: 32
+        linear_alpha: 32
+      save:
+        dtype: float16
+        save_every: 250
+        max_step_saves_to_keep: 8 # keep every checkpoint (2000 steps / 250 = 8) for task 5.12's
+        # "score every checkpoint, pick the max, not the last" selection — not just the final one.
+        push_to_hub: false
+      datasets:
+        - folder_path: /root/dataset
+          caption_ext: txt
+          caption_dropout_rate: 0.05
+          shuffle_tokens: false
+          cache_latents_to_disk: true
+          resolution: [512, 768, 1024]
+          mask_path: /root/dataset/masks
+          mask_min_value: 0.0 # the mask image's own pixel values (255 face / 102 background,
+          # ~2.5x ratio) already encode the weighting — no additional floor needed.
+        - folder_path: /root/reg_dataset
+          caption_ext: txt
+          is_reg: true
+          cache_latents_to_disk: true
+          resolution: [512, 768, 1024]
+      train:
+        batch_size: 1
+        steps: 2000
+        gradient_accumulation_steps: 2
+        train_unet: true
+        train_text_encoder: false
+        gradient_checkpointing: true
+        noise_scheduler: flowmatch
+        optimizer: adamw8bit
+        lr: 0.0001
+        lr_scheduler: constant # user's explicit request, 2026-09-15 — not cosine+warmup
+        cfg_scale: 1.0 # CLAUDE.md's "guidance 1.0" — ai-toolkit's own default, stated explicitly
+        dtype: bf16
+        ema_config:
+          use_ema: true
+          ema_decay: 0.99
+      model:
+        name_or_path: black-forest-labs/FLUX.1-dev
+        is_flux: true
+        quantize: true
+      sample:
+        sampler: flowmatch
+        sample_every: 250 # once per checkpoint — CLAUDE.md's "8-prompt seed-fixed sample grid
+        # per checkpoint" (2000 / 250 = 8 checkpoints, each gets its own grid)
+        width: 1024
+        height: 1024
+        prompts:
+          - "nrj_cc, comic character, facing directly forward, a warm smile, a black t-shirt, a plain cream background"
+          - "nrj_cc, comic character, turned three-quarters to their own left, a broad open laugh, a black t-shirt, a plain cream background"
+          - "nrj_cc, comic character, turned three-quarters to their own right, a calm neutral expression, a black t-shirt, a plain cream background"
+          - "nrj_cc, comic character, facing directly forward, a surprised expression, sitting at a desk typing on a laptop"
+          - "nrj_cc, comic character, turned three-quarters to their own left, a confident smile, walking outside with a backpack"
+          - "nrj_cc, comic character, facing directly forward, a focused expression, lifting a dumbbell at the gym"
+          - "nrj_cc, comic character, turned three-quarters to their own right, a relaxed half-smile, pouring coffee in a kitchen"
+          - "nrj_cc, comic character, facing directly forward, a playful smirk, standing under an umbrella in the rain"
+        neg: ""
+        seed: 42
+        walk_seed: false # "seed-fixed" (CLAUDE.md) — the same 8 prompt/seed pairs every
+        # checkpoint, so grids are directly comparable across steps, not the baseline
+        # `train_lora.py`'s `walk_seed: true` (that job only ever sampled once, at the end).
+        guidance_scale: 4
+        sample_steps: 20
+meta:
+  name: "[character_v1]"
+  version: "1.0"

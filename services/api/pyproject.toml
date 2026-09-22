@@ -1,0 +1,48 @@
+[project]
+name = "comiccanvas-api"
+version = "0.1.0"
+description = "FastAPI service (services/api) — Railway in prod, uvicorn --reload in dev"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "comiccanvas-contracts",
+    "comiccanvas-storage",
+    # Task 8.9: `ml.identity.faces`/`embedding`/`lookcard` (self-contained
+    # — `lookcard.py` bootstraps `services/worker` onto sys.path itself
+    # for its one LLM call, same as `ml/evals/*.py`) run real face
+    # processing synchronously in `/cast/{id}/process`. Real generation
+    # (`ml.identity.master`, task 5.8) is a worker job (real spend +
+    # httpx), not called from this service directly.
+    "comiccanvas-ml",
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.32",
+    "redis>=5.2",
+    "psycopg[binary]>=3.2",
+    "pydantic-settings>=2.6",
+    # Direct use in app/config.py (find_dotenv) — was already an
+    # incidental transitive dep of pydantic-settings; declared honestly
+    # now that application code imports it directly (task 7.3 fix, see
+    # ADR 0014).
+    "python-dotenv>=1.0",
+    # Task 8.2: Clerk JWT verification (ADR 0017). Already an incidental
+    # transitive dep in this workspace's venv; declared honestly now
+    # that app/auth.py imports it directly.
+    "pyjwt[crypto]>=2.9",
+    # Task 8.5: POST /days enqueues an arq job onto the same redis the
+    # worker (Procfile.dev) consumes from.
+    "arq>=0.28",
+    # Task 8.8: `GET /weekly/{iso_week}.pdf` — CLAUDE.md's own decided
+    # architecture ("Weekly recap rendered server-side with Playwright").
+    "playwright>=1.63.0",
+    # Renders templates/weekly.html — autoescaping matters here (real
+    # captions/names are user-authored diary text embedded in the page).
+    # Already an incidental transitive dep of fastapi; declared honestly.
+    "jinja2>=3.1",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+comiccanvas-contracts = { workspace = true }
+comiccanvas-storage = { workspace = true }
+comiccanvas-ml = { workspace = true }

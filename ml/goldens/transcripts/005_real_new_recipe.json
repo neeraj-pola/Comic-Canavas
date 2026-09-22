@@ -1,0 +1,42 @@
+{
+  "id": "005_real_new_recipe",
+  "category": "real",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Spent way too long at the grocery store because I couldn't find half the ingredients for this curry recipe I wanted to try. Worth it though, it actually turned out really good, way better than I expected for a first attempt. Definitely making that again.",
+  "expected": {
+    "date": "2026-03-19",
+    "mood_arc": ["frustrated", "delighted"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a grocery store aisle searching for specific ingredients",
+        "event": "Spent a long time at the grocery store hunting for curry ingredients",
+        "emotion": "frustrated",
+        "people": [],
+        "objects": ["groceries"],
+        "importance": 0.2,
+        "humor": 0.2,
+        "quote": "couldn't find half the ingredients for this curry recipe"
+      },
+      {
+        "id": "b2",
+        "time": "evening",
+        "place": "kitchen",
+        "place_detail": "a home kitchen cooking a new curry recipe for the first time",
+        "event": "Cooked the curry recipe for the first time and it turned out really good",
+        "emotion": "delighted",
+        "people": [],
+        "objects": ["curry"],
+        "importance": 0.5,
+        "humor": 0.1,
+        "quote": "way better than I expected for a first attempt"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

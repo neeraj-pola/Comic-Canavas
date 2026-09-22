@@ -1,0 +1,123 @@
+{
+  "id": "005_real_school_event",
+  "source_transcript_id": "007_real_school_event",
+  "beat_sheet": {
+    "date": "2026-02-27",
+    "mood_arc": [
+      "worried",
+      "proud"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "transit",
+        "place_detail": "in the car on the drive to the school science fair",
+        "event": "Mia was very nervous and quiet in the car on the way to her school science fair",
+        "emotion": "worried",
+        "people": [
+          "Mia"
+        ],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "barely said a word"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "other",
+        "place_detail": "a school gymnasium set up for a science fair",
+        "event": "Mia explained her volcano project to the judges confidently and didn't place but was proud anyway",
+        "emotion": "proud",
+        "people": [
+          "Mia"
+        ],
+        "objects": [
+          "volcano project"
+        ],
+        "importance": 0.7,
+        "humor": 0.1,
+        "quote": "she was just proud she did it"
+      }
+    ],
+    "people_mentioned": [
+      "Mia"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "worried to proud",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "the back seat of a car",
+          "time_of_day": "morning",
+          "expression": "sad",
+          "action": "Mia stares out the window, silent the whole ride.",
+          "framing": "close",
+          "caption_a": "Not a word out of her the whole drive.",
+          "caption_b": "Mia's nerves filled the whole car.",
+          "bubble": "",
+          "cast": [
+            "Mia"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a school gymnasium science fair",
+          "time_of_day": "midday",
+          "expression": "happy",
+          "action": "Mia points confidently at her volcano's model.",
+          "framing": "wide",
+          "caption_a": "No ribbon, but she owned that room.",
+          "caption_b": "Mia explained every part like a pro.",
+          "bubble": "",
+          "cast": [
+            "Mia"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "a proud parent's day",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a car on the way to school",
+          "time_of_day": "morning",
+          "expression": "tired",
+          "action": "Mia fidgeting with her display board, saying little.",
+          "framing": "wide",
+          "caption_a": "Quiet nerves all the way to the gym.",
+          "caption_b": "Mia barely spoke on the drive over.",
+          "bubble": "",
+          "cast": [
+            "Mia"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a science fair gymnasium",
+          "time_of_day": "midday",
+          "expression": "surprised",
+          "action": "The judges nod along to Mia's explanation.",
+          "framing": "close",
+          "caption_a": "Didn't place \u2014 didn't care either.",
+          "caption_b": "She was proud, and that was the point.",
+          "bubble": "",
+          "cast": [
+            "Mia"
+          ]
+        }
+      ]
+    }
+  ]
+}

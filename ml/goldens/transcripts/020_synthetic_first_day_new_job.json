@@ -1,0 +1,55 @@
+{
+  "id": "020_synthetic_first_day_new_job",
+  "category": "synthetic",
+  "known_people": ["Halima"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "First day at the new job and it was a total whirlwind, so many names and logins and forms I could barely keep track. My new manager Halima was really welcoming though, took me around to meet the whole team personally instead of just leaving me at a desk. Came home completely fried but in a good way, feels like it could be a good fit.",
+  "expected": {
+    "date": "2026-01-06",
+    "mood_arc": ["overwhelmed", "welcomed", "hopeful"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "a new office on the first day, surrounded by paperwork and logins",
+        "event": "First day at the new job was overwhelming with names, logins, and forms",
+        "emotion": "overwhelmed",
+        "people": [],
+        "objects": [],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "so many names and logins and forms I could barely keep track"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "desk",
+        "place_detail": "walking around the office being introduced to the team",
+        "event": "New manager Halima personally introduced them to the whole team",
+        "emotion": "welcomed",
+        "people": ["Halima"],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "took me around to meet the whole team personally"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "home after a long, tiring first day",
+        "event": "Came home exhausted but hopeful the new job could be a good fit",
+        "emotion": "hopeful",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "feels like it could be a good fit"
+      }
+    ],
+    "people_mentioned": ["Halima"],
+    "flags": []
+  }
+}

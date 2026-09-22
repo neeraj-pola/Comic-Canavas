@@ -1,0 +1,29 @@
+{
+  "id": "024_quiet_lazy_sunday",
+  "category": "quiet",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Did absolutely nothing today and it was great. Stayed in pajamas the entire day, no plans, no errands, nothing. Exactly what I needed.",
+  "expected": {
+    "date": "2026-07-19",
+    "mood_arc": ["content"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "unknown",
+        "place": "bedroom",
+        "place_detail": "at home in pajamas all day with no plans",
+        "event": "Stayed in pajamas all day with no plans or errands, doing nothing on purpose",
+        "emotion": "content",
+        "people": [],
+        "objects": [],
+        "importance": 0.1,
+        "humor": 0.1,
+        "quote": "exactly what I needed"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": ["too_short", "no_events"]
+  }
+}

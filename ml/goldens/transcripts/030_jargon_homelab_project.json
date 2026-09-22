@@ -1,0 +1,42 @@
+{
+  "id": "030_jargon_homelab_project",
+  "category": "jargon",
+  "known_people": ["Theo"],
+  "known_places": [],
+  "known_vocab": ["Proxmox", "Grafana"],
+  "transcript": "Finally got around to setting up prox mox on the old server in the closet, took way longer than it should have because of some networking issue. Once that was sorted I got graf ana up and running to actually see the metrics, which felt really satisfying. Theo talked me through the trickiest part over a call, couldn't have finished it tonight without him.",
+  "expected": {
+    "date": "2026-08-23",
+    "mood_arc": ["frustrated", "satisfied"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "a home closet with an old server set up as a home lab",
+        "event": "Set up Proxmox on an old server, delayed by a networking issue",
+        "emotion": "frustrated",
+        "people": [],
+        "objects": ["Proxmox", "server"],
+        "importance": 0.3,
+        "humor": 0.1,
+        "quote": "took way longer than it should have because of some networking issue"
+      },
+      {
+        "id": "b2",
+        "time": "night",
+        "place": "other",
+        "place_detail": "a home lab setup, now monitoring live metrics",
+        "event": "Got Grafana running to see the server's metrics, with Theo talking through the trickiest part on a call",
+        "emotion": "satisfied",
+        "people": ["Theo"],
+        "objects": ["Grafana"],
+        "importance": 0.4,
+        "humor": 0.0,
+        "quote": "couldn't have finished it tonight without him"
+      }
+    ],
+    "people_mentioned": ["Theo"],
+    "flags": []
+  }
+}

@@ -1,0 +1,66 @@
+[project]
+name = "comiccanvas-worker"
+version = "0.1.0"
+description = "arq worker + LangGraph pipeline (services/worker)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "comiccanvas-contracts",
+    "comiccanvas-storage",
+    "arq>=0.26",
+    "redis>=5.2",
+    "psycopg[binary]>=3.2",
+    "pydantic-settings>=2.6",
+    "anthropic>=0.40",
+    "openai>=1.55",
+    "pyyaml>=6.0",
+    "httpx>=0.27",
+    "pillow>=11.0",
+    # Real, pre-existing gap fixed 2026-09-15: `images/refine_face.py`
+    # (task 5.14) already imported cv2 directly, and `critic/
+    # alignment.py` (task 6.3) needs torch/transformers directly too —
+    # both only "worked" before this because uv's shared workspace venv
+    # already has them installed via ml/pyproject.toml. Declared here now
+    # so this package's own dependencies are honest, not just incidental.
+    "opencv-python-headless>=4.10",
+    "torch>=2.4",
+    "transformers>=4.44",
+    # SiglipTokenizer requires this, found live 2026-09-15 running the
+    # real task 6.3 eval for the first time (ImportError, not guessable
+    # from transformers' own listed dependencies).
+    "sentencepiece>=0.2",
+    # Task 6.8's OCR text-detection guard. CLAUDE.md names `rapidocr-onnx`,
+    # which does not exist on PyPI (verified live 2026-09-15 against
+    # RapidOCR's own docs/GitHub) — `rapidocr` is the current, maintained
+    # ONNX-backed package; `onnxruntime` is its inference backend,
+    # installed separately by design so callers control the version.
+    "rapidocr>=2.0",
+    "onnxruntime>=1.19",
+    # Task 7.3's memory store: registers the pgvector type codec for
+    # psycopg 3 (`from pgvector.psycopg import register_vector`) and
+    # provides the `Vector` wrapper for storing embeddings.
+    "pgvector>=0.3",
+    # Direct use in app/config.py (find_dotenv) — see ADR 0014.
+    "python-dotenv>=1.0",
+    # Task 7.4: the orchestration layer CLAUDE.md §1 already decided on
+    # ("LangGraph, one DayState object, fan-out for panels").
+    "langgraph>=0.2",
+    # Task 7.6: persists DayGraph state after every node against the
+    # same real local Postgres task 7.3's memory store uses (ADR 0009),
+    # so a killed job resumes from its last completed node instead of
+    # restarting from scratch.
+    "langgraph-checkpoint-postgres>=2.0",
+    # RunnableConfig's real type (used directly in app/graph.py) — an
+    # incidental transitive dep of langgraph already; declared honestly.
+    "langchain-core>=0.3",
+    # Task 8.9: `app/worker.py`'s `train_character_job` calls
+    # `ml.identity.master.design_master` directly.
+    "comiccanvas-ml",
+]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+comiccanvas-contracts = { workspace = true }
+comiccanvas-storage = { workspace = true }
+comiccanvas-ml = { workspace = true }

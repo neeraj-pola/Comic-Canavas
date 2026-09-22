@@ -1,0 +1,17 @@
+node_modules
+.next
+.venv
+.data
+ml/goldens
+design
+pnpm-lock.yaml
+
+# Root tests/ is pytest-only (see tests/e2e/backend_flow.py, Phase 8 gate) —
+# JSON/cassette fixtures in here are generated/compared byte-for-byte by
+# Python (json.dumps, VCR), not meant for prettier's JS-ecosystem defaults.
+# apps/web's own Playwright suite (Phase 10) lives under apps/web/, not here.
+tests
+
+# Markdown is hand-authored prose/tables (CLAUDE.md, ADRs, docs); prettier's
+# markdown formatter reflows both and would fight that on every run.
+*.md

@@ -1,0 +1,606 @@
+{
+  "$defs": {
+    "Beat": {
+      "properties": {
+        "emotion": {
+          "title": "Emotion",
+          "type": "string"
+        },
+        "event": {
+          "maxLength": 200,
+          "title": "Event",
+          "type": "string"
+        },
+        "humor": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Humor",
+          "type": "number"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "importance": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Importance",
+          "type": "number"
+        },
+        "objects": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Objects",
+          "type": "array"
+        },
+        "people": {
+          "items": {
+            "type": "string"
+          },
+          "title": "People",
+          "type": "array"
+        },
+        "place": {
+          "enum": [
+            "bedroom",
+            "desk",
+            "kitchen",
+            "gym",
+            "outdoors",
+            "transit",
+            "cafe",
+            "other"
+          ],
+          "title": "Place",
+          "type": "string"
+        },
+        "place_detail": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Place Detail"
+        },
+        "quote": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Quote"
+        },
+        "time": {
+          "enum": [
+            "morning",
+            "midday",
+            "afternoon",
+            "evening",
+            "night",
+            "unknown"
+          ],
+          "title": "Time",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "time",
+        "place",
+        "event",
+        "emotion",
+        "importance",
+        "humor"
+      ],
+      "title": "Beat",
+      "type": "object"
+    },
+    "BeatSheet": {
+      "properties": {
+        "beats": {
+          "items": {
+            "$ref": "#/$defs/Beat"
+          },
+          "maxItems": 6,
+          "minItems": 1,
+          "title": "Beats",
+          "type": "array"
+        },
+        "date": {
+          "format": "date",
+          "title": "Date",
+          "type": "string"
+        },
+        "flags": {
+          "items": {
+            "enum": [
+              "too_short",
+              "sensitive",
+              "no_events"
+            ],
+            "type": "string"
+          },
+          "title": "Flags",
+          "type": "array"
+        },
+        "mood_arc": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 6,
+          "minItems": 1,
+          "title": "Mood Arc",
+          "type": "array"
+        },
+        "people_mentioned": {
+          "items": {
+            "type": "string"
+          },
+          "title": "People Mentioned",
+          "type": "array"
+        }
+      },
+      "required": [
+        "date",
+        "mood_arc",
+        "beats"
+      ],
+      "title": "BeatSheet",
+      "type": "object"
+    },
+    "Candidate": {
+      "properties": {
+        "chosen": {
+          "default": false,
+          "title": "Chosen",
+          "type": "boolean"
+        },
+        "embedding": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "number"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Embedding"
+        },
+        "face_box": {
+          "anyOf": [
+            {
+              "maxItems": 4,
+              "minItems": 4,
+              "prefixItems": [
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                },
+                {
+                  "type": "integer"
+                }
+              ],
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Face Box"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "panel_id": {
+          "title": "Panel Id",
+          "type": "integer"
+        },
+        "rejected_reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rejected Reason"
+        },
+        "scores": {
+          "additionalProperties": {
+            "type": "number"
+          },
+          "title": "Scores",
+          "type": "object"
+        },
+        "seed": {
+          "title": "Seed",
+          "type": "integer"
+        },
+        "url": {
+          "title": "Url",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "panel_id",
+        "url",
+        "seed"
+      ],
+      "title": "Candidate",
+      "type": "object"
+    },
+    "ImagePrompt": {
+      "properties": {
+        "character_clause": {
+          "title": "Character Clause",
+          "type": "string"
+        },
+        "environment_clause": {
+          "title": "Environment Clause",
+          "type": "string"
+        },
+        "generator": {
+          "enum": [
+            "leonardo",
+            "flux",
+            "flux_kontext",
+            "mock"
+          ],
+          "title": "Generator",
+          "type": "string"
+        },
+        "guidance": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Guidance"
+        },
+        "negative": {
+          "title": "Negative",
+          "type": "string"
+        },
+        "panel_id": {
+          "title": "Panel Id",
+          "type": "integer"
+        },
+        "place_ref_used": {
+          "default": false,
+          "title": "Place Ref Used",
+          "type": "boolean"
+        },
+        "positive": {
+          "title": "Positive",
+          "type": "string"
+        },
+        "seed": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Seed"
+        },
+        "steps": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Steps"
+        }
+      },
+      "required": [
+        "panel_id",
+        "generator",
+        "character_clause",
+        "environment_clause",
+        "positive",
+        "negative"
+      ],
+      "title": "ImagePrompt",
+      "type": "object"
+    },
+    "Panel": {
+      "properties": {
+        "action": {
+          "title": "Action",
+          "type": "string"
+        },
+        "beat_id": {
+          "title": "Beat Id",
+          "type": "string"
+        },
+        "bubble": {
+          "default": "",
+          "maxLength": 20,
+          "title": "Bubble",
+          "type": "string"
+        },
+        "caption_a": {
+          "maxLength": 60,
+          "title": "Caption A",
+          "type": "string"
+        },
+        "caption_b": {
+          "maxLength": 60,
+          "title": "Caption B",
+          "type": "string"
+        },
+        "cast": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Cast",
+          "type": "array"
+        },
+        "expression": {
+          "enum": [
+            "happy",
+            "content",
+            "sad",
+            "panic",
+            "angry",
+            "tired",
+            "surprised",
+            "neutral"
+          ],
+          "title": "Expression",
+          "type": "string"
+        },
+        "framing": {
+          "enum": [
+            "wide",
+            "medium",
+            "close"
+          ],
+          "title": "Framing",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "type": "integer"
+        },
+        "place": {
+          "title": "Place",
+          "type": "string"
+        },
+        "time_of_day": {
+          "title": "Time Of Day",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "beat_id",
+        "place",
+        "time_of_day",
+        "expression",
+        "action",
+        "framing",
+        "caption_a",
+        "caption_b"
+      ],
+      "title": "Panel",
+      "type": "object"
+    },
+    "Script": {
+      "properties": {
+        "mood": {
+          "title": "Mood",
+          "type": "string"
+        },
+        "panels": {
+          "items": {
+            "$ref": "#/$defs/Panel"
+          },
+          "maxItems": 6,
+          "minItems": 2,
+          "title": "Panels",
+          "type": "array"
+        },
+        "quiet_day": {
+          "title": "Quiet Day",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "mood",
+        "quiet_day",
+        "panels"
+      ],
+      "title": "Script",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "audio_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Audio Url"
+    },
+    "beats": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/BeatSheet"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "candidates": {
+      "items": {
+        "$ref": "#/$defs/Candidate"
+      },
+      "title": "Candidates",
+      "type": "array"
+    },
+    "cost_usd": {
+      "default": 0.0,
+      "title": "Cost Usd",
+      "type": "number"
+    },
+    "date": {
+      "format": "date",
+      "title": "Date",
+      "type": "string"
+    },
+    "errors": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Errors",
+      "type": "array"
+    },
+    "job_id": {
+      "title": "Job Id",
+      "type": "string"
+    },
+    "layout": {
+      "anyOf": [
+        {
+          "additionalProperties": true,
+          "type": "object"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Layout"
+    },
+    "prompts": {
+      "items": {
+        "$ref": "#/$defs/ImagePrompt"
+      },
+      "title": "Prompts",
+      "type": "array"
+    },
+    "retries": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Retries",
+      "type": "object"
+    },
+    "script": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/Script"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "source": {
+      "enum": [
+        "text",
+        "audio"
+      ],
+      "title": "Source",
+      "type": "string"
+    },
+    "strip_url": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Strip Url"
+    },
+    "text": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Text"
+    },
+    "transcript": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Transcript"
+    },
+    "user_id": {
+      "title": "User Id",
+      "type": "string"
+    },
+    "versions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Versions",
+      "type": "object"
+    }
+  },
+  "required": [
+    "job_id",
+    "user_id",
+    "date",
+    "source"
+  ],
+  "title": "DayState",
+  "type": "object"
+}

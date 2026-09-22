@@ -1,0 +1,223 @@
+/* Ported verbatim from comiccanvas-dashboard.html's `.cal`/`.thumbgrid`/
+ * `.thumb` rules — the Library page. */
+
+.dashboard-scope .cal {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+.dashboard-scope .cal .d {
+  aspect-ratio: 1;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  position: relative;
+  cursor: pointer;
+}
+.dashboard-scope .cal .d.has {
+  background: #fff;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+.dashboard-scope .cal .d.has::after {
+  content: "";
+  position: absolute;
+  bottom: 5px;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--mustard);
+}
+.dashboard-scope .cal .d.today {
+  outline: 2px solid var(--mustard);
+  outline-offset: -2px;
+}
+.dashboard-scope .cal .h {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.dashboard-scope .thumbgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+.dashboard-scope .thumb {
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+}
+.dashboard-scope .thumb .t {
+  padding: 6px 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  display: flex;
+  justify-content: space-between;
+}
+.dashboard-scope .thumb .mini img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* beats table (day detail) */
+.dashboard-scope table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.dashboard-scope th {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--mute);
+  font-weight: 500;
+  border-bottom: 1.5px solid var(--ink);
+  padding: 8px 6px;
+}
+.dashboard-scope td {
+  padding: 9px 6px;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top;
+}
+
+/* Candidate cards: hover / focus / tap opens a table instead of a wall of text. */
+.dashboard-scope .cands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+.dashboard-scope .cand {
+  flex: 0 1 176px;
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  align-content: start;
+}
+.dashboard-scope .cand-img {
+  position: relative;
+  border-radius: 12px;
+  outline-offset: 3px;
+}
+.dashboard-scope .cand-img > img {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  border: 1.5px solid var(--ink);
+}
+.dashboard-scope .cand.chosen .cand-img > img {
+  outline: 3px solid var(--mustard);
+  outline-offset: 1px;
+}
+.dashboard-scope .cand-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-height: 26px;
+}
+.dashboard-scope .cand-pop {
+  /* Fixed + viewport coordinates from CandidateCard's `place()`, so the card
+     sits beside the row of options instead of on top of a photo. */
+  position: fixed;
+  z-index: 60;
+  top: var(--pop-top, 0px);
+  left: var(--pop-left, 0px);
+  width: 262px;
+  max-width: calc(100vw - 32px);
+  background: var(--charcoal);
+  color: #fff;
+  border-radius: 14px;
+  padding: 12px 14px 8px;
+  box-shadow: 0 18px 36px -14px rgba(21, 21, 21, 0.55);
+  visibility: hidden;
+  opacity: 0;
+  --ty: -4px;
+  transform: translateY(var(--ty));
+  transition:
+    opacity 0.14s ease,
+    transform 0.14s ease,
+    visibility 0.14s;
+  pointer-events: none;
+}
+.dashboard-scope .cand-img:hover .cand-pop,
+.dashboard-scope .cand-img:focus .cand-pop,
+.dashboard-scope .cand-img:focus-within .cand-pop {
+  visibility: visible;
+  opacity: 1;
+  --ty: 0px;
+}
+.dashboard-scope .cand-pop table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0 0 8px;
+  font-size: 12.5px;
+}
+.dashboard-scope .cand-pop caption {
+  text-align: left;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mustard);
+  padding: 0 0 4px;
+}
+.dashboard-scope .cand-pop th,
+.dashboard-scope .cand-pop td {
+  padding: 3px 0;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  font-weight: 500;
+}
+.dashboard-scope .cand-pop th {
+  text-align: left;
+  color: #d6d4c8;
+}
+.dashboard-scope .cand-pop td {
+  text-align: right;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  font-weight: 600;
+}
+.dashboard-scope .cand-pop tr:last-child th,
+.dashboard-scope .cand-pop tr:last-child td {
+  border-bottom: 0;
+}
+/* Docked mode (tablets/phones, where there is no empty space beside the photos):
+   a wide, short panel pinned to the top or bottom of the screen. */
+.dashboard-scope .cand-pop[data-dock] {
+  left: 50%;
+  top: auto;
+  width: min(560px, calc(100vw - 24px));
+  max-width: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 22px;
+  align-content: start;
+  transform: translate(-50%, var(--ty));
+  padding: 12px 16px 6px;
+}
+.dashboard-scope .cand-pop[data-dock="top"] {
+  top: 12px;
+}
+.dashboard-scope .cand-pop[data-dock="bottom"] {
+  bottom: 12px;
+}
+.dashboard-scope .cand-pop[data-dock] table {
+  font-size: 12px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-scope .cand-pop {
+    transition: none;
+  }
+}

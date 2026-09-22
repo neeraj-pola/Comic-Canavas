@@ -1,0 +1,104 @@
+{
+  "properties": {
+    "emotion": {
+      "title": "Emotion",
+      "type": "string"
+    },
+    "event": {
+      "maxLength": 200,
+      "title": "Event",
+      "type": "string"
+    },
+    "humor": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Humor",
+      "type": "number"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "importance": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Importance",
+      "type": "number"
+    },
+    "objects": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Objects",
+      "type": "array"
+    },
+    "people": {
+      "items": {
+        "type": "string"
+      },
+      "title": "People",
+      "type": "array"
+    },
+    "place": {
+      "enum": [
+        "bedroom",
+        "desk",
+        "kitchen",
+        "gym",
+        "outdoors",
+        "transit",
+        "cafe",
+        "other"
+      ],
+      "title": "Place",
+      "type": "string"
+    },
+    "place_detail": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Place Detail"
+    },
+    "quote": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Quote"
+    },
+    "time": {
+      "enum": [
+        "morning",
+        "midday",
+        "afternoon",
+        "evening",
+        "night",
+        "unknown"
+      ],
+      "title": "Time",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "time",
+    "place",
+    "event",
+    "emotion",
+    "importance",
+    "humor"
+  ],
+  "title": "Beat",
+  "type": "object"
+}

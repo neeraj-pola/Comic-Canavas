@@ -1,0 +1,42 @@
+{
+  "id": "014_synthetic_work_conflict",
+  "category": "synthetic",
+  "known_people": ["Trevor"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Had a pretty tense back and forth with Trevor in the design review, he basically dismissed three weeks of work in about thirty seconds and it stung. Cooled off by the afternoon and we actually talked it through over coffee, turns out he'd misread the brief, not that it made the morning feel any better in the moment.",
+  "expected": {
+    "date": "2026-04-23",
+    "mood_arc": ["hurt", "resolved"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "a design review meeting room",
+        "event": "Trevor dismissed three weeks of work in a tense design review",
+        "emotion": "hurt",
+        "people": ["Trevor"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "dismissed three weeks of work in about thirty seconds and it stung"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "cafe",
+        "place_detail": "getting coffee with a coworker to talk through a disagreement",
+        "event": "Talked it through with Trevor over coffee and learned he had misread the brief",
+        "emotion": "resolved",
+        "people": ["Trevor"],
+        "objects": ["coffee"],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "turns out he'd misread the brief"
+      }
+    ],
+    "people_mentioned": ["Trevor"],
+    "flags": []
+  }
+}

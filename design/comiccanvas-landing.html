@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comic Canvas — a diary that draws itself</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --field:#F7F6F1; --card:#FFFFFF; --ink:#151515; --mute:#6B6B66; --rule:#DDDBD3;
+  --mustard:#E9D24A; --mustard-soft:#F3E9A8; --mustard-deep:#C9B22E; --charcoal:#1E1E1C; --charcoal-deep:#111110;
+  --paper:#FBFAF5; --paper-line:#ECE9DD; --spiral:#C4C1B6;
+  --sans:"Inter",system-ui,sans-serif; --mono:"JetBrains Mono",ui-monospace,monospace;
+  --r:14px; --shadow:0 1px 0 rgba(21,21,21,.05),0 12px 32px -16px rgba(21,21,21,.25);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--field);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.5}
+body{overflow-x:hidden}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.015em;line-height:1.1}
+p{margin:0}
+a{color:inherit}
+button{font:inherit}
+.dc{float:left;font-weight:800;font-size:3em;line-height:.82;padding:.05em .1em 0 0;background:linear-gradient(transparent 55%,var(--mustard-soft) 55%)}
+
+/* variant switcher */
+.switch{position:fixed;top:14px;right:14px;z-index:50;display:flex;gap:6px;background:rgba(255,255,255,.85);backdrop-filter:blur(8px);border:1.5px solid var(--ink);border-radius:999px;padding:5px}
+.switch button{border:0;background:transparent;border-radius:999px;padding:7px 12px;font-weight:700;font-size:13px;cursor:pointer;color:var(--ink)}
+.switch button[aria-pressed="true"]{background:var(--mustard);color:var(--ink)}
+.switch .lbl{align-self:center;font-size:12px;color:var(--mute);padding:0 6px 0 10px;font-weight:600}
+.brand{position:fixed;top:18px;left:18px;z-index:50;font-weight:800;font-size:15px;letter-spacing:-.01em;display:flex;gap:8px;align-items:center;pointer-events:none}
+.brand i{width:26px;height:3px;border-radius:2px;background:var(--mustard);display:inline-block}
+.hintscroll{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:40;font-family:var(--mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);display:flex;gap:8px;align-items:center;transition:opacity .4s}
+.hintscroll svg{width:16px;height:16px}
+body.scrolled .hintscroll{opacity:0}
+
+/* ---------- pinned 3D book ---------- */
+.pin{position:relative}
+.stage{position:sticky;top:0;height:100vh;display:grid;place-items:center;perspective:2200px;perspective-origin:50% 45%;overflow:hidden}
+.book{position:relative;height:min(90vh,66vw);aspect-ratio:1.38;width:auto;transform-style:preserve-3d;will-change:transform}
+@media (max-aspect-ratio:1/1){.book{height:min(74vh,86vw);aspect-ratio:1.1}}
+.board{position:absolute;left:50%;top:0;width:50%;height:100%;border-radius:0 14px 14px 0;background:var(--paper);box-shadow:var(--shadow), inset 0 0 0 1px var(--rule)}
+.board::before{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-linear-gradient(to bottom,transparent 0 27px,var(--paper-line) 27px 28px);opacity:.55;mask:linear-gradient(#000 12%,#000 90%,transparent)}
+.backboard{position:absolute;left:50%;top:-.6%;width:50.6%;height:101.2%;border-radius:0 16px 16px 0;background:var(--charcoal-deep);transform:translateZ(-6px);box-shadow:0 30px 60px -20px rgba(21,22,27,.45)}
+.sheet{position:absolute;left:50%;top:0;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;will-change:transform}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:0 14px 14px 0;overflow:hidden}
+.face.back{transform:rotateY(180deg);border-radius:14px 0 0 14px}
+.face.paper{background:var(--paper);box-shadow:inset 0 0 0 1px var(--rule)}
+.face.paper::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0 27px,var(--paper-line) 27px 28px);opacity:.5;pointer-events:none;mask:linear-gradient(#000 14%,#000 90%,transparent)}
+.face.paper::after{content:"";position:absolute;top:0;bottom:0;width:26px;pointer-events:none}
+.face.front.paper::after{left:0;background:linear-gradient(to right,rgba(21,22,27,.14),transparent)}
+.face.back.paper::after{right:0;background:linear-gradient(to left,rgba(21,22,27,.14),transparent)}
+.edge{position:absolute;right:-4px;top:1%;height:98%;width:4px;background:repeating-linear-gradient(to bottom,#fff 0 1px,#E3DED2 1px 2px);border-radius:0 2px 2px 0;transform:translateZ(-1px)}
+
+/* cover */
+.face.cover{background:radial-gradient(120% 90% at 20% 10%,#2C2C29,var(--charcoal) 55%,var(--charcoal-deep));box-shadow:inset 0 0 0 1px rgba(255,255,255,.06),inset 14px 0 30px -18px rgba(0,0,0,.7);color:#F7F6F1;display:flex;flex-direction:column;justify-content:space-between;padding:7% 8%}
+.face.cover .title{font-weight:800;font-size:clamp(26px,3.6vw,52px);line-height:1;letter-spacing:-.02em}
+.face.cover .sub{font-size:clamp(12px,1.1vw,15px);opacity:.8;margin-top:10px;max-width:22ch;font-weight:500}
+.face.cover .emboss{position:absolute;inset:6% 6%;border:1.5px solid rgba(255,255,255,.1);border-radius:10px;pointer-events:none}
+.face.cover .title u{text-decoration:none;background:linear-gradient(transparent 60%,var(--mustard) 60%);color:inherit}
+body[data-cover="mustard"] .face.cover{background:radial-gradient(120% 90% at 20% 10%,#F2E070,var(--mustard) 55%,var(--mustard-deep));color:var(--ink);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08),inset 14px 0 30px -18px rgba(0,0,0,.35)}
+body[data-cover="mustard"] .face.cover .emboss{border-color:rgba(0,0,0,.14)}
+body[data-cover="mustard"] .face.cover .title u{background:linear-gradient(transparent 60%,#fff 60%)}
+body[data-cover="mustard"] .face.cover .year::before{background:var(--ink)}
+body[data-cover="mustard"] .backboard{background:var(--mustard-deep)}
+body[data-cover="mustard"] .spine .bar{background:var(--mustard-deep)}
+.face.cover .mark{width:clamp(70px,9vw,120px);align-self:flex-end}
+.face.cover .year{font-family:var(--mono);font-size:12px;letter-spacing:.06em;opacity:.7;display:flex;align-items:center;gap:10px}.face.cover .year::before{content:"";width:28px;height:3px;background:var(--mustard);border-radius:2px}
+.face.endpaper{background:var(--mustard-soft);display:grid;place-items:center;padding:8%}
+.face.endpaper .pat{position:absolute;inset:0;background-image:radial-gradient(var(--mustard-deep) 1.2px,transparent 1.3px);background-size:18px 18px;opacity:.5}
+.face.endpaper .note{position:relative;background:#fff;border:1.5px solid var(--ink);border-radius:var(--r);padding:clamp(14px,2vw,26px);max-width:34ch;box-shadow:var(--shadow);font-size:clamp(13px,1.05vw,16px)}
+.face.endpaper .note b{font-weight:800;font-size:1.35em;display:block;margin-bottom:6px;line-height:1.1;letter-spacing:-.01em}
+
+/* spiral in gutter */
+.spiral{position:absolute;left:50%;top:3%;height:94%;width:34px;transform:translateX(-50%) translateZ(40px);z-index:60;pointer-events:none;display:flex;flex-direction:column;justify-content:space-between}
+.spiral i{display:block;width:34px;height:12px;border:3px solid var(--spiral);border-radius:999px;border-color:#9AA1AE #C9CED8 #C9CED8 #9AA1AE;box-shadow:0 1px 0 rgba(0,0,0,.25);position:relative}
+.spiral i::after{content:"";position:absolute;left:8px;right:8px;top:-8px;height:6px;background:rgba(21,22,27,.35);border-radius:999px;filter:blur(1px)}
+
+/* page content */
+.pg{position:absolute;inset:0;padding:clamp(18px,3vw,48px);display:flex;flex-direction:column;gap:clamp(10px,1.2vw,18px);font-size:clamp(13px,1.05vw,17px)}
+.pg .kick{font-family:var(--mono);font-size:.8em;font-weight:500;letter-spacing:.02em;color:var(--mute);display:flex;align-items:center;gap:10px}.pg .kick::before{content:"";width:28px;height:3px;background:var(--mustard);border-radius:2px}
+.pg h2{font-size:clamp(26px,3vw,48px)}
+.pg h3{font-size:1.1em;font-weight:800}
+.pg p{color:#2E3140}
+.cards{display:grid;gap:clamp(8px,.9vw,14px)}
+.c2{grid-template-columns:1fr 1fr}
+.c3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1.5px solid var(--ink);border-radius:var(--r);padding:clamp(10px,1.2vw,18px);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.card.pink{background:var(--mustard-soft)}
+.card.blue{background:var(--charcoal);color:#fff}.card.blue p,.card.blue .num{color:#E8E6DC}
+.card .num{font-family:var(--mono);font-weight:500;font-size:1.6em;line-height:1;color:var(--mute)}
+.card .tag{display:inline-block;font-family:var(--mono);font-size:.72em;padding:3px 9px;border-radius:999px;background:var(--mustard-soft);border:1px solid var(--mustard-deep)}
+.byline{display:flex;gap:10px;align-items:center;margin-top:auto}
+.byline svg{width:44px;height:44px}
+.byline b{display:block;font-size:1em}
+.byline span{font-size:.85em;color:var(--mute)}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:999px;padding:8px 14px;font-weight:700;background:#fff;cursor:pointer}
+.pill.pink{background:var(--mustard);border-color:var(--mustard)}.pill.blue{background:#fff}.pill:hover{transform:translateY(-1px)}.pill{transition:transform .15s}a.pill{text-decoration:none}
+.tags{display:flex;gap:10px;flex-wrap:wrap;font-weight:700;font-size:.9em;color:var(--mute)}
+.strip{display:grid;grid-template-columns:1fr 1fr;gap:6px;background:#fff;border:1.5px solid var(--ink);border-radius:var(--r);padding:6px;box-shadow:var(--shadow)}
+.strip svg{width:100%;height:auto;display:block;border-radius:8px}
+.strip .capt{background:var(--ink);color:#fff;font-size:.8em;font-weight:700;padding:4px 8px;border-radius:0 0 8px 8px;margin-top:-4px}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ab .opt{border:1.5px solid var(--ink);border-radius:12px;background:#fff;padding:6px;font-size:.8em;font-weight:700;text-align:center}
+.ab .opt svg{width:100%;height:auto;display:block;border-radius:8px;margin-bottom:4px}
+.ab .opt.win{outline:3px solid var(--mustard);outline-offset:-3px}
+.input{display:flex;border:1.5px solid var(--ink);border-radius:999px;background:#fff;padding:5px 5px 5px 16px;align-items:center;gap:8px}
+.input input{border:0;outline:0;flex:1;font:inherit;min-width:0;background:transparent}
+.input button{border:0;border-radius:999px;background:var(--ink);color:#fff;padding:9px 14px;font-weight:700;cursor:pointer}
+.colophon{font-size:.9em;color:var(--mute)}
+.colophon ul{margin:6px 0 0;padding-left:18px}
+.person{display:flex;gap:10px;align-items:center}
+.person svg{width:40px;height:40px;flex:none}
+.stat{display:grid;grid-template-columns:repeat(3,1fr);border:1.5px solid var(--ink);border-radius:12px;overflow:hidden;font-size:.8em;text-align:center;background:#fff}
+.stat div{padding:6px 4px}.stat div+div{border-left:1.5px solid var(--ink)}
+.stat b{display:block;font-size:1.3em}
+
+/* ---------- flow sections (variants B, C) ---------- */
+.flow{position:relative;max-width:1180px;margin:0 auto;padding:6vh 24px 14vh 84px;z-index:3}
+body[data-variant="B"] .flow,body[data-variant="C"] .flow{margin-top:-52vh}
+.flow .strip,.flow .ab{max-width:720px}
+.flow .cards.c2{max-width:820px}
+@media (max-width:700px){.flow{padding-left:56px}}
+.flow section{position:relative;margin:0 0 14vh;padding:clamp(22px,3.4vw,48px);display:grid;gap:18px;font-size:clamp(14px,1.05vw,17px)}
+.flow section .pg{position:static;padding:0;font-size:inherit}
+.flow section h2{font-size:clamp(28px,3vw,48px)}
+.flow .frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.flow .frame rect{fill:none;stroke:var(--ink);stroke-width:3;stroke-linejoin:round;stroke-linecap:round;rx:18}
+.inkline{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:2}
+.inkline path{fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.inkline .nib{transition:opacity .2s}
+.spine{position:fixed;left:0;top:0;bottom:0;width:60px;z-index:30;pointer-events:none;opacity:0;transition:opacity .5s}
+.spine .bar{position:absolute;left:0;top:0;bottom:0;width:26px;background:var(--charcoal-deep);box-shadow:6px 0 18px -8px rgba(0,0,0,.5)}
+.spine .rings{position:absolute;left:8px;top:0;bottom:0;width:44px;background:repeating-linear-gradient(to bottom,transparent 0 22px,#9AA1AE 22px 24px,#C9CED8 24px 30px,#9AA1AE 30px 32px,transparent 32px 54px);mask:linear-gradient(90deg,#000 60%,transparent)}
+.spine .holes{position:absolute;left:30px;top:0;bottom:0;width:14px;background:repeating-radial-gradient(circle at 7px 27px,#B9B2A3 0 4px,transparent 5px 54px)}
+body.showspine .spine{opacity:1}
+body.showspine .brand{left:76px}
+.brand{transition:left .25s}
+@media (max-width:760px){.switch{top:auto;bottom:14px;right:50%;transform:translateX(50%)}.switch .lbl{display:none}.hintscroll{bottom:64px}}
+.stitch{position:absolute;left:36px;top:0;bottom:0;width:0;border-left:2px dashed var(--ink);opacity:.35}
+
+/* variant A: keep book centered whole time */
+body[data-variant="A"] .flow{display:none}
+.fade{transition:opacity .2s}
+.flatten .book{transition:none}
+footer.site{max-width:1180px;margin:0 auto;padding:0 24px 40px 84px;color:var(--mute);font-size:14px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+body[data-variant="A"] footer.site{display:none}
+@media (prefers-reduced-motion:reduce){.book,.sheet{transition:none!important}}
+</style>
+</head>
+<body data-variant="B" data-cover="mustard">
+<div class="brand"><i></i>Comic Canvas</div>
+<div class="switch" role="group" aria-label="Cover finish"><span class="lbl">Cover:</span><button aria-pressed="false" data-c="charcoal">Charcoal</button><button aria-pressed="true" data-c="mustard">Mustard</button></div>
+<div class="hintscroll"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>Scroll to open</div>
+
+<div class="pin" id="pin">
+  <div class="stage">
+    <div class="book" id="book"></div>
+  </div>
+</div>
+
+<div class="spine" aria-hidden="true"><div class="bar"></div><div class="rings"></div><div class="holes"></div></div>
+<main class="flow" id="flow"></main>
+<footer class="site"><span>Comic Canvas · a diary that draws itself</span><span>Made for one reader: you</span></footer>
+<script>
+/* ---------- tiny line-art people (in the spirit of the reference cards) ---------- */
+function person(hair,shirt,mood){
+  const m={smile:'<path d="M27 40 q5 5 10 0" fill="none" stroke="#15161B" stroke-width="2"/>',oh:'<ellipse cx="32" cy="41" rx="3" ry="4.5" fill="#15161B"/>',flat:'<path d="M28 41 h8" stroke="#15161B" stroke-width="2"/>'}[mood]||'';
+  const h={bun:'<circle cx="18" cy="14" r="7" fill="#15161B"/><path d="M14 26 q18 -18 36 0" fill="#15161B"/>',fringe:'<path d="M13 30 q19 -20 38 0 l-4 -2 q-15 -10 -30 0z" fill="#15161B"/>',curly:'<path d="M12 28 q4 -18 20 -14 q16 -4 20 14 q-6 -6 -12 -2 q-8 -8 -16 0 q-6 -4 -12 2z" fill="#15161B"/>'}[hair]||'';
+  return `<svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="18" fill="#fff" stroke="#15161B" stroke-width="2"/>${h}<circle cx="26" cy="33" r="1.8" fill="#15161B"/><circle cx="38" cy="33" r="1.8" fill="#15161B"/>${m}<path d="M14 64 q18 -20 36 0z" fill="${shirt}" stroke="#15161B" stroke-width="2"/></svg>`;
+}
+/* mini comic panel */
+function panel(bg,scene,exp){
+  const face={panic:'<circle cx="-5" cy="-1" r="3" fill="#fff" stroke="#15161B" stroke-width="1.5"/><circle cx="5" cy="-1" r="3" fill="#fff" stroke="#15161B" stroke-width="1.5"/><ellipse cx="0" cy="7" rx="3" ry="4.5" fill="#15161B"/>',content:'<path d="M-8 -1 q3 2 6 0 M2 -1 q3 2 6 0 M-5 5 q5 6 10 0" fill="none" stroke="#15161B" stroke-width="1.6"/>',tired:'<path d="M-8 -1 h6 M2 -1 h6 M-4 7 q4 -2 8 0" fill="none" stroke="#15161B" stroke-width="1.6"/>',angry:'<path d="M-8 -5 l6 2 M8 -5 l-6 2 M-4 7 h8" fill="none" stroke="#15161B" stroke-width="1.6"/>'}[exp];
+  const sc={bed:'<rect x="90" y="70" width="80" height="26" rx="5" fill="#C9A27A" stroke="#15161B" stroke-width="1.5"/><rect x="20" y="16" width="44" height="36" fill="#A9CFF7" stroke="#15161B" stroke-width="1.5"/>',desk:'<rect x="10" y="84" width="160" height="7" fill="#A68A6A" stroke="#15161B" stroke-width="1.5"/><rect x="105" y="50" width="56" height="36" rx="3" fill="#2B2B2B"/><rect x="110" y="55" width="46" height="26" fill="#1E2A38"/><rect x="114" y="60" width="30" height="3" fill="#4CAF7D"/><rect x="114" y="67" width="36" height="4" fill="#E5484D"/>',kitchen:'<rect x="10" y="88" width="160" height="7" fill="#D9C9B4" stroke="#15161B" stroke-width="1.5"/><ellipse cx="48" cy="86" rx="24" ry="6" fill="#fff" stroke="#15161B" stroke-width="1.5"/><ellipse cx="48" cy="82" rx="19" ry="6" fill="#E0A244" stroke="#15161B" stroke-width="1.5"/>',gym:'<rect x="10" y="90" width="160" height="6" fill="#8a8a8a" stroke="#15161B" stroke-width="1.5"/><rect x="118" y="44" width="42" height="46" fill="#6e6e6e" stroke="#15161B" stroke-width="1.5"/><rect x="24" y="76" width="66" height="8" rx="3" fill="#3a3a3a" stroke="#15161B" stroke-width="1.5"/>'}[scene];
+  const cx=scene==='bed'?60:scene==='desk'?70:scene==='kitchen'?100:70;
+  return `<svg viewBox="0 0 180 100" aria-hidden="true"><rect width="180" height="100" fill="${bg}"/><rect width="180" height="100" fill="url(#ht)"/>${sc}<g transform="translate(${cx} 44)"><rect x="-12" y="12" width="24" height="34" rx="4" fill="#5B7FB5" stroke="#15161B" stroke-width="1.5"/><circle cx="0" cy="0" r="12" fill="#C68A5A" stroke="#15161B" stroke-width="1.5"/><path d="M-12 -4 q4 -14 14 -8 q6 -5 10 8 l-4 -3 l-3 4 l-4 -4 l-4 4 l-4 -4 l-3 4z" fill="#15161B"/>${face}<rect x="-8" y="-4" width="6" height="4" rx="1" fill="none" stroke="#15161B" stroke-width="1.2"/><rect x="2" y="-4" width="6" height="4" rx="1" fill="none" stroke="#15161B" stroke-width="1.2"/></g></svg>`;
+}
+const HT='<svg width="0" height="0" style="position:absolute"><defs><pattern id="ht" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="2.5" cy="2.5" r=".7" fill="#15161B" opacity=".14"/></pattern></defs></svg>';
+
+/* ---------- content blocks ---------- */
+const B={
+ endpaper:`<div class="face back endpaper"><div class="pat"></div><div class="note"><b>This diary writes itself. Well, draws.</b>Every evening you talk for a minute. It listens, finds the four moments that matter, and draws them as a strip with you in it. Turn the page.</div></div>`,
+ hero:`<div class="pg"><span class="kick">Daily · Spoken · Drawn</span><h2>Speak your day.<br>Get a comic of it.</h2><p><span class="dc">Y</span>ou talk for sixty seconds about what actually happened. Comic Canvas transcribes it, picks the setup, the complication, the relief and the punchline, and draws a four-panel strip in a style that stays yours, with a character that looks like you.</p><div class="tags">#daily #comic #voice #yours</div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="pill pink" href="comiccanvas-dashboard.html">Get started</a><a class="pill" href="#flow">How it works</a></div><div class="byline">${person('bun','#E9D24A','smile')}<div><b>Made for one reader: you</b><span>No feed. No likes. A book you keep.</span></div></div></div>`,
+ how:`<div class="pg"><span class="kick">How a day becomes a strip</span><h2>Three steps, sixty seconds</h2><div class="cards c3"><div class="card"><div class="num">1</div><h3>Say it</h3><p>Voice note or a few lines of text. Whisper turns it to words.</p></div><div class="card pink"><div class="num">2</div><h3>Find the beats</h3><p>An agent extracts what happened, when, where, and how you felt. Nothing invented.</p></div><div class="card blue"><div class="num">3</div><h3>Draw it</h3><p>A script agent writes four panels in your voice; the illustrator draws them with you in frame.</p></div></div><div class="byline">${person('fringe','#F7F6F1','oh')}<div><b>Quiet day?</b><span>Two panels, gentler jokes. It reads the room.</span></div></div></div>`,
+ sample:`<div class="pg"><span class="kick">Thursday, Sep 3</span><h2>The alarm had one job</h2><div class="strip"><div>${panel('#FDE8C8','bed','panic')}<div class="capt">7:52 AM. The alarm had one job.</div></div><div>${panel('#DDEBF7','desk','angry')}<div class="capt">Three hours. One trailing space.</div></div><div>${panel('#F6D9C2','kitchen','content')}<div class="capt">Leftover biryani: undefeated.</div></div><div>${panel('#D8E6D7','gym','tired')}<div class="capt">Legs have filed a complaint.</div></div></div><p>Captions reuse your own phrasing, so the strip sounds like you, not like a model.</p></div>`,
+ learn:`<div class="pg"><span class="kick">It learns your taste</span><h2>Two taps a day teach it</h2><p>For two panels each evening you see the panel it chose and the runner-up. Tap the one you like. Those pairs train a small reward model, and once a week the illustrator is nudged toward what you kept.</p><div class="ab"><div class="opt win">${panel('#DDEBF7','desk','angry')}You picked this</div><div class="opt">${panel('#DDEBF7','desk','tired')}Runner-up</div></div><div class="stat"><div><b>82%</b>first pick rate</div><div><b>10 s</b>a day</div><div><b>0</b>surveys</div></div></div>`,
+ cast:`<div class="pg"><span class="kick">Your cast</span><h2>Friends become characters</h2><p>Anyone who shows up often can opt in with a few photos and become a recurring character who looks the same every time.</p><div class="cards c2"><div class="card"><div class="person">${person('curly','#fff','smile')}<div><b>You</b><br><span style="color:var(--mute)">21 selfies · look card set</span></div></div></div><div class="card pink"><div class="person">${person('bun','#fff','oh')}<div><b>Rahul</b><br><span style="color:var(--mute)">appears Tuesdays</span></div></div></div><div class="card blue"><div class="person">${person('fringe','#fff','flat')}<div><b>Coach</b><br><span style="color:var(--mute)">legs, complaints</span></div></div></div><div class="card"><div class="person">${person('curly','#E9D24A','smile')}<div><b>Add someone</b><br><span style="color:var(--mute)">they choose their photos</span></div></div></div></div></div>`,
+ join:`<div class="pg"><span class="kick">Open your diary</span><h2>One strip a day, yours to keep</h2><p>Your voice notes, your face, and your strips stay in your own book; nothing is shared unless you share it. Sign in and record tonight's entry.</p><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="pill pink" href="comiccanvas-dashboard.html#signup">Get started</a><a class="pill" href="comiccanvas-dashboard.html">Sign in</a></div><div class="cards c2"><div class="card pink"><span class="tag">Weekly recap</span><p style="margin-top:8px">Sundays, a six-panel week.</p></div><div class="card blue"><span class="tag">Yearbook</span><p style="margin-top:8px">Your favourite strips, printed.</p></div></div></div>`,
+ colophon:`<div class="pg"><span class="kick">Colophon</span><h2>How it is drawn</h2><div class="colophon">Under the hood, for the curious:<ul><li>Whisper for listening, an extractor that only writes down what you said</li><li>A script agent tuned with DPO on the captions you edit</li><li>Flux with an identity LoRA, three candidates a panel, a CNN critic choosing</li><li>A reward model trained on your two taps a day</li></ul></div><div class="byline">${person('curly','#F7F6F1','smile')}<div><b>Made for one reader: you</b><span>No feed. No likes. A book you keep.</span></div></div></div>`
+};
+const SPREADS=[['endpaper','hero'],['how','sample'],['learn','cast'],['join','colophon']];
+const VARIANT_SPREADS={A:4,B:1,C:2};
+
+/* ---------- build ---------- */
+const book=document.getElementById('book'),pin=document.getElementById('pin'),flow=document.getElementById('flow');
+let sheets=[],nSheets=0,inBook=1,flowSections=[],inkPath=null,nib=null,inkLen=0;
+function face(cls,html){return `<div class="face ${cls}">${html}</div>`;}
+function build(v){
+  inBook=VARIANT_SPREADS[v];
+  const spirals=Array.from({length:14},()=>'<i></i>').join('');
+  let html=HT+`<div class="backboard"></div><div class="board" id="board">${inBook<SPREADS.length&&v!=='A'?B[SPREADS[inBook-1][1]]:B[SPREADS[inBook-1][1]]}</div>`;
+  // sheets: cover + (inBook-1) inner sheets
+  html+=`<div class="sheet" data-i="0"><div class="face front cover"><div class="emboss"></div><div><div class="year">Diary · 2026</div></div><div><div class="title">Comic <u>Canvas</u></div><div class="sub">a diary that draws itself, one strip a day</div></div>${person('curly','#E9D24A','smile').replace('<svg ','<svg class="mark" ')}</div>${B.endpaper}<div class="edge"></div></div>`;
+  for(let i=1;i<inBook;i++){html+=`<div class="sheet" data-i="${i}">${face('front paper',B[SPREADS[i-1][1]])}${face('back paper',B[SPREADS[i][0]])}<div class="edge"></div></div>`;}
+  html+=`<div class="spiral">${spirals}</div>`;
+  book.innerHTML=html;
+  // in variant B/C the board shows right page of last in-book spread
+  document.getElementById('board').innerHTML=B[SPREADS[inBook-1][1]];
+  sheets=[...book.querySelectorAll('.sheet')];nSheets=sheets.length;
+  // flow sections
+  flow.innerHTML='';flowSections=[];
+  if(v!=='A'){
+    const rest=SPREADS.slice(inBook).flat().filter(k=>k!=='endpaper'&&k!=='colophon');
+    rest.forEach(k=>{const s=document.createElement('section');s.className='frame-host';s.innerHTML=`<svg class="frame" aria-hidden="true"><rect x="1.5" y="1.5" width="10" height="10"/></svg>${B[k]}`;flow.appendChild(s);flowSections.push(s);});
+    const ink=document.createElementNS('http://www.w3.org/2000/svg','svg');ink.setAttribute('class','inkline');ink.innerHTML='<path id="inkpath" d=""/><g class="nib" id="nib"><path d="M0 0 l-7 -22 h14z" fill="#15161B"/><circle cx="0" cy="0" r="2.2" fill="#F4CBDD" stroke="#15161B" stroke-width="1.5"/></g>';flow.appendChild(ink);inkPath=ink.querySelector('#inkpath');nib=ink.querySelector('#nib');
+    flow.style.display='block';
+  } else {flow.style.display='none';inkPath=null;}
+  // pin height: 100vh dwell + 150vh per flip (+ extra runoff for B/C)
+  const flips=nSheets;const vh=window.innerHeight;
+  const runoff=v==='A'?0.6:0.7;
+  pin.style.height=(1+1.5*flips+runoff)*100+'vh';
+  document.body.dataset.variant=v;
+  
+  requestAnimationFrame(()=>{layoutInk();update();});
+}
+function layoutInk(){
+  if(!inkPath||!flowSections.length)return;
+  const fr=flow.getBoundingClientRect();const W=flow.offsetWidth,H=flow.offsetHeight;
+  const svg=inkPath.ownerSVGElement;svg.setAttribute('viewBox',`0 0 ${W} ${H}`);
+  const X=48;let d=`M ${X} 0`;let prevY=0;
+  flowSections.forEach((s,i)=>{const r=s.getBoundingClientRect();const x0=r.left-fr.left,y0=r.top-fr.top,w=r.width,h=r.height;
+    const f=s.querySelector('.frame rect');f.setAttribute('width',w-3);f.setAttribute('height',h-3);const svgf=s.querySelector('.frame');svgf.setAttribute('viewBox',`0 0 ${w} ${h}`);
+    const per=2*(w+h);f.style.strokeDasharray=per;f.dataset.per=per;f.style.strokeDashoffset=per;
+    // run down the margin, hook into the frame's top-left corner, swing back out
+    d+=` L ${X} ${y0-70} C ${X} ${y0-20}, ${x0-10} ${y0-10}, ${x0+18} ${y0+1.5}`;
+    d+=` C ${x0-30} ${y0+20}, ${X} ${y0+h*0.25}, ${X} ${y0+h*0.45}`;prevY=y0+h*0.45;});
+  d+=` L ${X} ${H}`;
+  inkPath.setAttribute('d',d);inkLen=inkPath.getTotalLength();inkPath.style.strokeDasharray=inkLen;inkPath.style.strokeDashoffset=inkLen;
+}
+/* ---------- scroll engine ---------- */
+const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));const ease=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+function update(){
+  const vh=window.innerHeight,sy=window.scrollY;const v=document.body.dataset.variant;
+  document.body.classList.toggle('scrolled',sy>40);
+  const total=pin.offsetHeight-vh;const p=clamp(sy/total,0,1);
+  const flips=nSheets;const dwell=1/(1+1.5*flips+(v==='A'?0.6:0.7));const per=1.5*dwell;
+  // book shift: closed book centered => translateX(25%), opens to 0
+  const open=clamp((p-dwell)/(per*0.8),0,1);
+  let bx=-25*(1-ease(open));const lean=Math.sin(Math.PI*ease(open));let scale=1+0.07*lean,op=1,ry=0;
+  sheets.forEach((s,i)=>{const start=dwell+i*per,t=clamp((p-start)/(per*0.8),0,1);const e=ease(t);const rot=-180*e;
+    s.style.transform=`rotateY(${rot}deg) translateZ(${(0.5-Math.abs(e-0.5))*40}px)`;
+    if(t<=0)s.style.zIndex=flips-i+2;else if(t>=1)s.style.zIndex=i+1;else s.style.zIndex=flips+10;});
+  // end-of-pin behaviour per variant
+  const endStart=dwell+flips*per;const tail=clamp((p-endStart)/(1-endStart),0,1);
+  if(v==='B'){op=1-ease(clamp((tail-0.15)/0.6,0,1));scale*=1+0.12*ease(tail);}
+  if(v==='C'){scale=1+0.08*ease(tail);op=1-ease(clamp((tail-0.4)/0.6,0,1));}
+  book.style.transform=`translateX(${bx}%) scale(${scale}) rotateX(${(1-ease(open))*6}deg) rotateY(${(1-ease(open))*-2}deg)`;
+  book.style.opacity=op;
+  // flow ink + frames
+  if(inkPath){
+    document.body.classList.toggle('showspine',tail>0.35);
+    const fr=flow.getBoundingClientRect();const prog=clamp((vh*0.72-fr.top)/fr.height,0,1);
+    inkPath.style.strokeDashoffset=inkLen*(1-prog);
+    const pt=inkPath.getPointAtLength(inkLen*prog);nib.setAttribute('transform',`translate(${pt.x} ${pt.y}) rotate(-28)`);nib.style.opacity=prog>0&&prog<1?1:0;
+    flowSections.forEach(s=>{const r=s.getBoundingClientRect();const t=clamp((vh*0.9-r.top)/(vh*0.55),0,1);const f=s.querySelector('.frame rect');f.style.strokeDashoffset=(+f.dataset.per)*(1-ease(t));s.style.opacity=0.35+0.65*ease(clamp(t*1.4,0,1));});
+  } else document.body.classList.remove('showspine');
+}
+let ticking=false;addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(()=>{update();ticking=false;});}},{passive:true});
+addEventListener('resize',()=>{build(document.body.dataset.variant);});
+document.querySelectorAll('.switch button').forEach(b=>b.addEventListener('click',()=>{document.body.dataset.cover=b.dataset.c;document.querySelectorAll('.switch button').forEach(x=>x.setAttribute('aria-pressed',x===b));}));
+build('B');
+</script>
+</body>
+</html>

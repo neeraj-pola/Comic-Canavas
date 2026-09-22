@@ -1,0 +1,7 @@
+{
+  "golden_id": "001_real_commute_and_small_win",
+  "model": "gpt-4o-mini",
+  "response_text": "{\"date\":\"2026-02-02\",\"mood_arc\":[\"annoyed\",\"satisfied\",\"content\"],\"beats\":[{\"id\":\"1\",\"time\":\"morning\",\"place\":\"transit\",\"place_detail\":\"on a train\",\"event\":\"The train was delayed twenty minutes, causing me to be late for standup.\",\"emotion\":\"annoyed\",\"people\":[],\"objects\":[],\"importance\":0.7,\"humor\":0,\"quote\":\"Ugh, the train was delayed like twenty minutes so I was late for standup, which was annoying because I hate walking in late.\"},{\"id\":\"2\",\"time\":\"afternoon\",\"place\":\"desk\",\"place_detail\":\"an office desk\",\"event\":\"Priya and I fixed the reporting bug that had been haunting us all week.\",\"emotion\":\"satisfied\",\"people\":[\"Priya\"],\"objects\":[],\"importance\":0.9,\"humor\":0,\"quote\":\"But then in the afternoon Priya and I finally got the reporting bug fixed that's been haunting us all week, so that felt really good.\"},{\"id\":\"3\",\"time\":\"evening\",\"place\":\"kitchen\",\"place_detail\":\"a small kitchen\",\"event\":\"I came home and made pasta for dinner.\",\"emotion\":\"content\",\"people\":[],\"objects\":[],\"importance\":0.5,\"humor\":0,\"quote\":\"Came home and just made pasta, nothing fancy.\"}],\"people_mentioned\":[\"Priya\"],\"flags\":[]}",
+  "input_tokens": 1746,
+  "output_tokens": 293
+}

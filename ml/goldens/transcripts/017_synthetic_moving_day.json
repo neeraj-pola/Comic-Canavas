@@ -1,0 +1,55 @@
+{
+  "id": "017_synthetic_moving_day",
+  "category": "synthetic",
+  "known_people": ["Reza"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Moving day. Spent the whole morning loading boxes into the truck with Reza's help, my arms are never forgiving me for this. Unloading at the new place took even longer because the elevator was broken, so it was all stairs, four flights, over and over. By the time we finished I basically fell onto the mattress on the floor and didn't move for an hour.",
+  "expected": {
+    "date": "2026-06-27",
+    "mood_arc": ["determined", "wrecked"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "other",
+        "place_detail": "loading boxes into a moving truck outside the old apartment",
+        "event": "Spent the morning loading boxes into the moving truck with Reza's help",
+        "emotion": "determined",
+        "people": ["Reza"],
+        "objects": ["boxes", "truck"],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "my arms are never forgiving me for this"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a new apartment building with a broken elevator, four flights of stairs",
+        "event": "Carried everything up four flights of stairs at the new place because the elevator was broken",
+        "emotion": "wrecked",
+        "people": ["Reza"],
+        "objects": ["boxes"],
+        "importance": 0.5,
+        "humor": 0.2,
+        "quote": "so it was all stairs, four flights, over and over"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "bedroom",
+        "place_detail": "a mattress on the floor of an unfurnished new apartment",
+        "event": "Collapsed onto the mattress on the floor and didn't move for an hour once finished",
+        "emotion": "wrecked",
+        "people": [],
+        "objects": ["mattress"],
+        "importance": 0.2,
+        "humor": 0.1,
+        "quote": "didn't move for an hour"
+      }
+    ],
+    "people_mentioned": ["Reza"],
+    "flags": []
+  }
+}

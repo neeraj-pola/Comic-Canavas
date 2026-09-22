@@ -1,0 +1,1789 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Comic Canvas API",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/media/upload": {
+      "put": {
+        "tags": [
+          "media"
+        ],
+        "summary": "Upload",
+        "operationId": "upload_media_upload_put",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          },
+          {
+            "name": "expires",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Expires"
+            }
+          },
+          {
+            "name": "signature",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Signature"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/media/{key}": {
+      "get": {
+        "tags": [
+          "media"
+        ],
+        "summary": "Serve",
+        "operationId": "serve_media__key__get",
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Key"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/days": {
+      "post": {
+        "tags": [
+          "days"
+        ],
+        "summary": "Create Day",
+        "operationId": "create_day_days_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object",
+                "title": "Body"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Create Day Days Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/jobs/{job_id}/events": {
+      "get": {
+        "tags": [
+          "days"
+        ],
+        "summary": "Job Events",
+        "operationId": "job_events_jobs__job_id__events_get",
+        "parameters": [
+          {
+            "name": "job_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Job Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/days/{date}": {
+      "get": {
+        "tags": [
+          "days"
+        ],
+        "summary": "Get Day",
+        "operationId": "get_day_days__date__get",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Date"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Day Days  Date  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/pair": {
+      "post": {
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Feedback Pair",
+        "operationId": "feedback_pair_feedback_pair_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PairIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Feedback Pair Feedback Pair Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/pick": {
+      "post": {
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Feedback Pick",
+        "description": "User request 2026-09-20: a quick tap is a pick of the favourite of a panel's three\noptions. Writes one `image_pairs` row per option passed on, all sharing a `tap_id`, so the\npreference model can learn it as a single tap (`app.preference.retrain._load_taps`) while\nolder single-pair rows keep working. The strip switches to the pick exactly as `/pair`\ndoes.",
+        "operationId": "feedback_pick_feedback_pick_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PickIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Feedback Pick Feedback Pick Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/rating": {
+      "post": {
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Feedback Rating",
+        "description": "User request 2026-09-21: a rating (off / ok / great) of a single image. A pick says which of\nthree is best; a rating also says whether an image is good at all, so the models learn from\nboth. A changed mind is a new row (the latest per image counts). Nothing on screen changes,\nso only the learning is re-run.",
+        "operationId": "feedback_rating_feedback_rating_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RatingIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Feedback Rating Feedback Rating Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/caption": {
+      "post": {
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Feedback Caption",
+        "operationId": "feedback_caption_feedback_caption_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptionIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Feedback Caption Feedback Caption Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/feedback/thumb": {
+      "post": {
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Feedback Thumb",
+        "operationId": "feedback_thumb_feedback_thumb_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ThumbIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Feedback Thumb Feedback Thumb Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/days/{date}/panels/{panel_id}/regenerate": {
+      "post": {
+        "tags": [
+          "feedback"
+        ],
+        "summary": "Regenerate Panel",
+        "operationId": "regenerate_panel_days__date__panels__panel_id__regenerate_post",
+        "parameters": [
+          {
+            "name": "date",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "title": "Date"
+            }
+          },
+          {
+            "name": "panel_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Panel Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegenerateIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Regenerate Panel Days  Date  Panels  Panel Id  Regenerate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/library": {
+      "get": {
+        "tags": [
+          "library"
+        ],
+        "summary": "Library",
+        "operationId": "library_library_get",
+        "parameters": [
+          {
+            "name": "month",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}$",
+              "title": "Month"
+            }
+          },
+          {
+            "name": "mood",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Mood"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Library Library Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search": {
+      "get": {
+        "tags": [
+          "library"
+        ],
+        "summary": "Search",
+        "operationId": "search_search_get",
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "title": "Q"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Search Search Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weekly/{iso_week}/generate": {
+      "post": {
+        "tags": [
+          "weekly"
+        ],
+        "summary": "Generate Weekly",
+        "operationId": "generate_weekly_weekly__iso_week__generate_post",
+        "parameters": [
+          {
+            "name": "iso_week",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Iso Week"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Generate Weekly Weekly  Iso Week  Generate Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weekly/{iso_week}.pdf": {
+      "get": {
+        "tags": [
+          "weekly"
+        ],
+        "summary": "Get Weekly Pdf",
+        "operationId": "get_weekly_pdf_weekly__iso_week__pdf_get",
+        "parameters": [
+          {
+            "name": "iso_week",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Iso Week"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/weekly/{iso_week}": {
+      "get": {
+        "tags": [
+          "weekly"
+        ],
+        "summary": "Get Weekly",
+        "operationId": "get_weekly_weekly__iso_week__get",
+        "parameters": [
+          {
+            "name": "iso_week",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Iso Week"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Weekly Weekly  Iso Week  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast": {
+      "get": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "List Cast",
+        "operationId": "list_cast_cast_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response List Cast Cast Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Create Person",
+        "operationId": "create_person_cast_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Create Person Cast Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast/{person_id}": {
+      "patch": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Update Person",
+        "operationId": "update_person_cast__person_id__patch",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PersonPatchIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Person Cast  Person Id  Patch"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Revoke Person",
+        "operationId": "revoke_person_cast__person_id__delete",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Revoke Person Cast  Person Id  Delete"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast/{person_id}/photos/presign": {
+      "post": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Presign Photo",
+        "operationId": "presign_photo_cast__person_id__photos_presign_post",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PhotoPresignIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Presign Photo Cast  Person Id  Photos Presign Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast/{person_id}/process": {
+      "post": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Process Person",
+        "operationId": "process_person_cast__person_id__process_post",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Process Person Cast  Person Id  Process Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast/{person_id}/train": {
+      "post": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Train Person",
+        "description": "The worker's `train_character_job` builds the look card (task\n5.4's real vision call, needs `app.llm` \u2014 worker-only, see this\nrouter's module docstring) before running `design_master` itself \u2014\nnot done here in `/process` even though it would be more responsive,\nbecause `ml.identity.lookcard`'s `services/worker` sys.path bootstrap\nbreaks once THIS service's own `app` package is already loaded\nfirst (a real conflict, found live running this router for the first\ntime \u2014 `ModuleNotFoundError: No module named 'app.llm'`).",
+        "operationId": "train_person_cast__person_id__train_post",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TrainIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "title": "Response Train Person Cast  Person Id  Train Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast/{person_id}/master": {
+      "post": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Pick Master",
+        "description": "The person's own choice of master (task 5.18's \"which one feels\nlike you\" screen, user request 2026-09-19) \u2014 promotes one of the\ncandidates `train_character_job` saved to `master.png`, records the\nsame provenance fields the old auto-approve wrote, and discards the\nrest. Free: no generation happens here.",
+        "operationId": "pick_master_cast__person_id__master_post",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Person Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MasterPickIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Pick Master Cast  Person Id  Master Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cast/invite": {
+      "post": {
+        "tags": [
+          "cast"
+        ],
+        "summary": "Create Invite",
+        "description": "A signed, stateless token (no `invites` table exists in CLAUDE.md\n\u00a73) \u2014 `expires`+`user_id` are embedded and HMAC-signed with the same\nlocal secret `LocalFileStorage`'s own upload tokens use, verified the\nsame way (`hmac.compare_digest`).",
+        "operationId": "create_invite_cast_invite_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InviteIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Create Invite Cast Invite Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/settings": {
+      "get": {
+        "tags": [
+          "settings"
+        ],
+        "summary": "Get User Settings",
+        "operationId": "get_user_settings_settings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Get User Settings Settings Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "settings"
+        ],
+        "summary": "Put User Settings",
+        "operationId": "put_user_settings_settings_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SettingsIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Put User Settings Settings Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/learning": {
+      "get": {
+        "tags": [
+          "learning"
+        ],
+        "summary": "Learning",
+        "operationId": "learning_learning_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Learning Learning Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account/export": {
+      "get": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Export Account",
+        "operationId": "export_account_account_export_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Export Account Account Export Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/account": {
+      "delete": {
+        "tags": [
+          "account"
+        ],
+        "summary": "Delete Account",
+        "operationId": "delete_account_account_delete",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Delete Account Account Delete"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "summary": "Health",
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CaptionIn": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "panel_id": {
+            "type": "integer",
+            "title": "Panel Id"
+          },
+          "original": {
+            "type": "string",
+            "title": "Original"
+          },
+          "edited": {
+            "type": "string",
+            "title": "Edited"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "panel_id",
+          "original",
+          "edited"
+        ],
+        "title": "CaptionIn"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "env": {
+            "type": "string",
+            "title": "Env"
+          },
+          "db": {
+            "type": "boolean",
+            "title": "Db"
+          },
+          "redis": {
+            "type": "boolean",
+            "title": "Redis"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "env",
+          "db",
+          "redis"
+        ],
+        "title": "HealthResponse"
+      },
+      "InviteIn": {
+        "properties": {
+          "expires_in": {
+            "type": "integer",
+            "title": "Expires In",
+            "default": 604800
+          }
+        },
+        "type": "object",
+        "title": "InviteIn"
+      },
+      "MasterPickIn": {
+        "properties": {
+          "candidate_id": {
+            "type": "string",
+            "title": "Candidate Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "candidate_id"
+        ],
+        "title": "MasterPickIn"
+      },
+      "PairIn": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "panel_id": {
+            "type": "integer",
+            "title": "Panel Id"
+          },
+          "chosen": {
+            "type": "string",
+            "title": "Chosen"
+          },
+          "rejected": {
+            "type": "string",
+            "title": "Rejected"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "ab",
+              "regenerate"
+            ],
+            "title": "Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "panel_id",
+          "chosen",
+          "rejected",
+          "source"
+        ],
+        "title": "PairIn"
+      },
+      "PersonIn": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "gender_term": {
+            "type": "string",
+            "title": "Gender Term",
+            "default": ""
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 120.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "title": "PersonIn"
+      },
+      "PersonPatchIn": {
+        "properties": {
+          "gender_term": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Gender Term"
+          },
+          "age": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 120.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Age"
+          }
+        },
+        "type": "object",
+        "title": "PersonPatchIn",
+        "description": "A person is auto-created (just a name) the moment the setup\nwizard's first screen loads, before there's been any chance to ask\nfor a gender \u2014 this lets that same screen fill it in right after,\nrather than requiring person-creation itself to block on it. Both\nfields are optional so the wizard can save gender and age\nindependently (`COALESCE` below keeps whichever isn't sent)."
+      },
+      "PhotoPresignIn": {
+        "properties": {
+          "filename": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "content_type": {
+            "type": "string",
+            "title": "Content Type",
+            "default": "image/jpeg"
+          }
+        },
+        "type": "object",
+        "required": [
+          "filename"
+        ],
+        "title": "PhotoPresignIn"
+      },
+      "PickIn": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "panel_id": {
+            "type": "integer",
+            "title": "Panel Id"
+          },
+          "picked": {
+            "type": "string",
+            "title": "Picked"
+          },
+          "others": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 5,
+            "minItems": 1,
+            "title": "Others"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "panel_id",
+          "picked",
+          "others"
+        ],
+        "title": "PickIn",
+        "description": "Best-of-3: the person picked `picked` as their favourite of the options shown\n(`others` are the ones they passed on). One tap, learned as the pick beating each other."
+      },
+      "RatingIn": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "panel_id": {
+            "type": "integer",
+            "title": "Panel Id"
+          },
+          "url": {
+            "type": "string",
+            "title": "Url"
+          },
+          "rating": {
+            "type": "integer",
+            "maximum": 2.0,
+            "minimum": 0.0,
+            "title": "Rating"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "panel_id",
+          "url",
+          "rating"
+        ],
+        "title": "RatingIn",
+        "description": "0 off, 1 ok, 2 great \u2014 for one image (usually the one in the strip)."
+      },
+      "RegenerateIn": {
+        "properties": {
+          "note": {
+            "type": "string",
+            "maxLength": 300,
+            "title": "Note",
+            "default": ""
+          }
+        },
+        "type": "object",
+        "title": "RegenerateIn"
+      },
+      "SettingsIn": {
+        "properties": {
+          "style": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Style"
+          },
+          "humor": {
+            "type": "integer",
+            "title": "Humor",
+            "default": 5
+          },
+          "caption_length": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Caption Length"
+          },
+          "sensitive_mode": {
+            "type": "boolean",
+            "title": "Sensitive Mode",
+            "default": true
+          },
+          "reminder_time": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reminder Time"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel"
+          },
+          "generator": {
+            "type": "string",
+            "title": "Generator",
+            "default": "mock"
+          },
+          "detail_level": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Detail Level"
+          },
+          "personalise": {
+            "type": "boolean",
+            "title": "Personalise",
+            "default": true
+          }
+        },
+        "type": "object",
+        "title": "SettingsIn"
+      },
+      "ThumbIn": {
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date",
+            "title": "Date"
+          },
+          "panel_id": {
+            "type": "integer",
+            "title": "Panel Id"
+          },
+          "value": {
+            "type": "integer",
+            "enum": [
+              1,
+              -1
+            ],
+            "title": "Value"
+          }
+        },
+        "type": "object",
+        "required": [
+          "date",
+          "panel_id",
+          "value"
+        ],
+        "title": "ThumbIn"
+      },
+      "TrainIn": {
+        "properties": {
+          "confirm": {
+            "type": "boolean",
+            "title": "Confirm",
+            "default": false
+          }
+        },
+        "type": "object",
+        "title": "TrainIn"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

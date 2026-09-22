@@ -1,0 +1,142 @@
+{
+  "id": "011_synthetic_first_day_new_job",
+  "source_transcript_id": "020_synthetic_first_day_new_job",
+  "beat_sheet": {
+    "date": "2026-01-06",
+    "mood_arc": [
+      "overwhelmed",
+      "welcomed",
+      "hopeful"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "a new office on the first day, surrounded by paperwork and logins",
+        "event": "First day at the new job was overwhelming with names, logins, and forms",
+        "emotion": "overwhelmed",
+        "people": [],
+        "objects": [],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "so many names and logins and forms I could barely keep track"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "desk",
+        "place_detail": "walking around the office being introduced to the team",
+        "event": "New manager Halima personally introduced them to the whole team",
+        "emotion": "welcomed",
+        "people": [
+          "Halima"
+        ],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "took me around to meet the whole team personally"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "home after a long, tiring first day",
+        "event": "Came home exhausted but hopeful the new job could be a good fit",
+        "emotion": "hopeful",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "feels like it could be a good fit"
+      }
+    ],
+    "people_mentioned": [
+      "Halima"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "overwhelmed to hopeful",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a new office on the first day",
+          "time_of_day": "morning",
+          "expression": "panic",
+          "action": "Juggling forms, a badge, and three new logins.",
+          "framing": "close",
+          "caption_a": "So many names, so many passwords.",
+          "caption_b": "First day chaos, right on schedule.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "walking the office meeting the team",
+          "time_of_day": "midday",
+          "expression": "happy",
+          "action": "Halima introduces the team one by one.",
+          "framing": "wide",
+          "caption_a": "Halima made sure I met everyone.",
+          "caption_b": "My new manager walked me around herself.",
+          "bubble": "",
+          "cast": [
+            "Halima"
+          ]
+        },
+        {
+          "id": 3,
+          "beat_id": "b3",
+          "place": "home in the evening",
+          "time_of_day": "evening",
+          "expression": "content",
+          "action": "Sinking into the couch, wiped but smiling.",
+          "framing": "medium",
+          "caption_a": "Fried, but it might be a good fit.",
+          "caption_b": "Exhausted, but hopeful about this one.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "a whirlwind first day",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a new desk surrounded by paperwork",
+          "time_of_day": "morning",
+          "expression": "surprised",
+          "action": "Staring at a stack of first-day forms.",
+          "framing": "wide",
+          "caption_a": "Forms, logins, and more forms.",
+          "caption_b": "A total whirlwind of a morning.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "an office, meeting new coworkers",
+          "time_of_day": "midday",
+          "expression": "happy",
+          "action": "Shaking hands as Halima leads the introductions.",
+          "framing": "close",
+          "caption_a": "Halima didn't leave me at a desk.",
+          "caption_b": "Met the whole team, thanks to Halima.",
+          "bubble": "",
+          "cast": [
+            "Halima"
+          ]
+        }
+      ]
+    }
+  ]
+}

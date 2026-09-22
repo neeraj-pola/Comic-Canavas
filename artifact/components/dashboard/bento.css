@@ -1,0 +1,267 @@
+/* Bento-grid + form primitives, extending dashboard-globals.css/shell.css. */
+
+.dashboard-scope textarea {
+  width: 100%;
+  min-height: 120px;
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  padding: 12px;
+  resize: vertical;
+  background: #fff;
+}
+.dashboard-scope .grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+.dashboard-scope .card {
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  position: relative;
+  min-width: 0;
+}
+.dashboard-scope .card.soft {
+  background: var(--mustard-soft);
+}
+/* Muted grey on the pale-mustard card measured 4.34:1 (needs 4.5) — a darker grey here. */
+.dashboard-scope .card.soft .mono,
+.dashboard-scope .card.soft .kick {
+  color: #55554f;
+}
+.dashboard-scope .card.dark {
+  background: var(--charcoal);
+  color: #fff;
+}
+.dashboard-scope .card.dark .mono,
+.dashboard-scope .card.dark p {
+  color: #d9d7cc;
+}
+.dashboard-scope .card .cap {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+}
+.dashboard-scope .s3 {
+  grid-column: span 3;
+}
+.dashboard-scope .s4 {
+  grid-column: span 4;
+}
+.dashboard-scope .s5 {
+  grid-column: span 5;
+}
+.dashboard-scope .s6 {
+  grid-column: span 6;
+}
+.dashboard-scope .s7 {
+  grid-column: span 7;
+}
+.dashboard-scope .s8 {
+  grid-column: span 8;
+}
+.dashboard-scope .s9 {
+  grid-column: span 9;
+}
+.dashboard-scope .s12 {
+  grid-column: span 12;
+}
+@media (max-width: 1100px) {
+  .dashboard-scope .s3,
+  .dashboard-scope .s4,
+  .dashboard-scope .s5 {
+    grid-column: span 6;
+  }
+  .dashboard-scope .s7,
+  .dashboard-scope .s8,
+  .dashboard-scope .s9 {
+    grid-column: span 12;
+  }
+}
+@media (max-width: 700px) {
+  .dashboard-scope .grid > * {
+    grid-column: span 12 !important;
+  }
+}
+.dashboard-scope .stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dashboard-scope .row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.dashboard-scope .btn.dark {
+  background: var(--charcoal);
+  color: #fff;
+  border-color: var(--charcoal);
+}
+.dashboard-scope .btn.sm {
+  padding: 6px 12px;
+  font-size: 13px;
+}
+.dashboard-scope .btn svg {
+  width: 16px;
+  height: 16px;
+}
+.dashboard-scope .big {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.dashboard-scope .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  background: var(--field);
+  border: 1px solid var(--rule);
+}
+.dashboard-scope .pill.ok {
+  background: #e6f2ea;
+  border-color: #9cc9ac;
+  color: #215f3a;
+}
+.dashboard-scope .pill.warn {
+  background: #fbebdd;
+  border-color: #e6b58f;
+  color: #7a3e10;
+}
+.dashboard-scope .pill.mus {
+  background: var(--mustard-soft);
+  border-color: var(--mustard-deep);
+}
+
+/* stage ticker */
+.dashboard-scope .stages {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+  gap: 6px;
+}
+.dashboard-scope .stages li {
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  padding: 6px 8px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  background: var(--field);
+}
+.dashboard-scope .stages li.run {
+  border-color: var(--mustard-deep);
+  background: var(--mustard-soft);
+  color: var(--ink);
+}
+.dashboard-scope .stages li.done {
+  border-color: var(--ink);
+  background: #fff;
+  color: var(--ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .dashboard-scope .stages li.run {
+    animation: cc-pulse 1.1s ease-in-out infinite;
+  }
+}
+@keyframes cc-pulse {
+  50% {
+    background: #fff;
+  }
+}
+
+/* strip + panels */
+.dashboard-scope .strip {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.dashboard-scope .strip.six {
+  grid-template-columns: repeat(3, 1fr);
+}
+.dashboard-scope .pnl {
+  border: 1.5px solid var(--ink);
+  border-radius: 10px;
+  overflow: hidden;
+  background: #fff;
+}
+.dashboard-scope .pnl img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.dashboard-scope .pnl .c {
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 5px 8px;
+}
+.dashboard-scope .pnl .c[contenteditable]:focus {
+  outline: 2px solid var(--mustard);
+}
+
+/* A/B pairs */
+.dashboard-scope .ab {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+/* Best-of-3: three options side by side (stacks to one column on a phone, below). */
+.dashboard-scope .ab.three {
+  grid-template-columns: repeat(3, 1fr);
+}
+.dashboard-scope .ab .opt {
+  border: 1.5px solid var(--ink);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  padding: 0;
+}
+.dashboard-scope .ab .opt img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.dashboard-scope .ab .opt .m {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--mute);
+  padding: 6px 8px;
+  border-top: 1px solid var(--rule-soft);
+}
+.dashboard-scope .ab .opt.crit {
+  outline: 2px dashed var(--mute);
+  outline-offset: -2px;
+}
+.dashboard-scope .ab .opt.pick {
+  outline: 3px solid var(--mustard);
+  outline-offset: -3px;
+}
+/* Dim only the image, not the whole button — dimming the caption text too
+ * drops its contrast below WCAG minimums. */
+.dashboard-scope .ab .opt.lose img {
+  opacity: 0.45;
+}
+
+/* Below 480px (narrower than the shell/grid breakpoints above), stack to one
+ * column — two options side by side get too narrow to read at phone width. */
+@media (max-width: 480px) {
+  .dashboard-scope .ab,
+  .dashboard-scope .ab.three {
+    grid-template-columns: 1fr;
+  }
+}

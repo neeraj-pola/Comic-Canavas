@@ -1,0 +1,41 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.6
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+        stages: [pre-commit]
+      - id: ruff-format
+        stages: [pre-commit]
+
+  - repo: local
+    hooks:
+      - id: mypy
+        name: mypy --strict (packages, services, tests — scoped per CLAUDE.md §2)
+        entry: ./scripts/mypy-all.sh
+        language: system
+        pass_filenames: false
+        types: [python]
+        stages: [pre-commit]
+
+      - id: eslint
+        name: eslint
+        entry: pnpm lint
+        language: system
+        pass_filenames: false
+        files: \.(js|jsx|ts|tsx|mjs|cjs)$
+        stages: [pre-commit]
+
+      - id: prettier
+        name: prettier --check
+        entry: pnpm format
+        language: system
+        pass_filenames: false
+        exclude: '\.md$'
+        stages: [pre-commit]
+
+      - id: conventional-commit
+        name: conventional commit message (CLAUDE.md §0.1)
+        entry: python3 scripts/check_conventional_commit.py
+        language: system
+        stages: [commit-msg]

@@ -1,0 +1,29 @@
+{
+  "id": "018_synthetic_painting_hobby",
+  "category": "synthetic",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Had the whole afternoon free so I finally finished that painting I've been stuck on for weeks. Kept messing up the shading on the water but it finally clicked today, really happy with how it came out.",
+  "expected": {
+    "date": "2026-09-02",
+    "mood_arc": ["absorbed", "proud"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a home art corner with a painting in progress",
+        "event": "Finally finished a painting that had been stuck for weeks, after struggling with the water's shading",
+        "emotion": "proud",
+        "people": [],
+        "objects": ["painting"],
+        "importance": 0.4,
+        "humor": 0.0,
+        "quote": "really happy with how it came out"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

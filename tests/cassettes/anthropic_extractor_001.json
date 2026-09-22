@@ -1,0 +1,7 @@
+{
+  "golden_id": "001_real_commute_and_small_win",
+  "model": "claude-sonnet-4-6",
+  "response_text": "{\"date\":\"2026-02-02\",\"mood_arc\":[\"annoyed\",\"relieved\",\"calm\"],\"beats\":[{\"id\":\"b1\",\"time\":\"morning\",\"place\":\"transit\",\"place_detail\":\"a commuter train platform or carriage, delayed and crowded\",\"event\":\"The train was delayed twenty minutes, making the speaker late for standup.\",\"emotion\":\"annoyed\",\"people\":[],\"objects\":[\"train\"],\"importance\":0.4,\"humor\":0.1,\"quote\":\"the train was delayed like twenty minutes so I was late for standup\"},{\"id\":\"b2\",\"time\":\"afternoon\",\"place\":\"desk\",\"place_detail\":\"an office or remote workspace with a shared codebase\",\"event\":\"Priya and the speaker finally fixed the reporting bug that had been troubling them all week.\",\"emotion\":\"relieved\",\"people\":[\"Priya\"],\"objects\":[],\"importance\":0.75,\"humor\":0.0,\"quote\":\"Priya and I finally got the reporting bug fixed that's been haunting us all week\"},{\"id\":\"b3\",\"time\":\"evening\",\"place\":\"kitchen\",\"place_detail\":\"a home kitchen\",\"event\":\"The speaker came home and made a simple pasta dinner.\",\"emotion\":\"calm\",\"people\":[],\"objects\":[\"pasta\"],\"importance\":0.15,\"humor\":0.0,\"quote\":\"just made pasta, nothing fancy\"}],\"people_mentioned\":[\"Priya\"],\"flags\":[]}",
+  "input_tokens": 2487,
+  "output_tokens": 315
+}

@@ -1,0 +1,123 @@
+{
+  "id": "002_real_hike_and_lunch",
+  "source_transcript_id": "002_real_hike_and_lunch",
+  "beat_sheet": {
+    "date": "2026-04-12",
+    "mood_arc": [
+      "exhilarated",
+      "content"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "outdoors",
+        "place_detail": "a ridge trail with a clear view over a valley",
+        "event": "Hiked a ridge trail with Jordan and got a clear view over the whole valley from the top",
+        "emotion": "exhilarated",
+        "people": [
+          "Jordan"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "could see the whole valley from the top"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "outdoors",
+        "place_detail": "a park with benches, eating takeout after the hike",
+        "event": "Got burritos and sat in the park for an hour doing nothing after the hike",
+        "emotion": "content",
+        "people": [
+          "Jordan"
+        ],
+        "objects": [
+          "burritos"
+        ],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "the best part of the day"
+      }
+    ],
+    "people_mentioned": [
+      "Jordan"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "exhilarated then content",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a ridge trail overlooking a valley",
+          "time_of_day": "morning",
+          "expression": "surprised",
+          "action": "Standing at the ridge, taking in the whole valley.",
+          "framing": "wide",
+          "caption_a": "Clearer than the forecast promised.",
+          "caption_b": "The whole valley from up here.",
+          "bubble": "Wow.",
+          "cast": [
+            "Jordan"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a park with benches",
+          "time_of_day": "midday",
+          "expression": "content",
+          "action": "Sitting in the grass with burritos, saying nothing.",
+          "framing": "close",
+          "caption_a": "Burritos and doing absolutely nothing.",
+          "caption_b": "Best part of the hike: after it.",
+          "bubble": "",
+          "cast": [
+            "Jordan"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "a good ridge day",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a ridge trail",
+          "time_of_day": "morning",
+          "expression": "happy",
+          "action": "Jordan and I reach the top, legs already sore.",
+          "framing": "close",
+          "caption_a": "Made it. Legs regret it already.",
+          "caption_b": "Jordan and I made the ridge.",
+          "bubble": "",
+          "cast": [
+            "Jordan"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a park lawn",
+          "time_of_day": "midday",
+          "expression": "content",
+          "action": "Lying back in the park after the climb down.",
+          "framing": "wide",
+          "caption_a": "An hour of doing nothing, earned.",
+          "caption_b": "Sat in the park for an hour, happily.",
+          "bubble": "",
+          "cast": [
+            "Jordan"
+          ]
+        }
+      ]
+    }
+  ]
+}

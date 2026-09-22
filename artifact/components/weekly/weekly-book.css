@@ -1,0 +1,219 @@
+/*
+ * The Weekly page's "flip through your week" viewer, reusing the landing
+ * page's own scroll-driven 3D book mechanism (`components/landing/
+ * LandingBook.tsx`) rather than reinventing it. The landing page hard-
+ * codes exactly one flippable sheet (`FLIPS = 1`, the cover); this
+ * generalizes the same math to N real sheets, one per day that has a real
+ * composed strip that week. Classes are namespaced `wb-` (not reusing
+ * `.book`/`.sheet`/`.face` directly) so this never collides with the
+ * landing page's own `.landing-scope`-scoped rules, even though this
+ * lives under `.dashboard-scope`.
+ */
+
+.dashboard-scope .weekly-book {
+  margin: 18px 0;
+}
+
+.dashboard-scope .wb-pin {
+  position: relative;
+}
+
+.dashboard-scope .wb-stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  perspective: 2200px;
+  perspective-origin: 50% 45%;
+  overflow: hidden;
+  /* The book is sized from THIS box, not the browser window: beside the sidebar
+     the stage is much narrower than the window, and a window-sized book would run
+     off its right edge. */
+  container-type: size;
+}
+
+/* Page shape: wide enough that a square strip fills the width of its page, and
+   tall enough that the book feels full — aspect 1.5 across the spread means each
+   page is 0.75 as wide as it is tall. */
+.dashboard-scope .wb-book {
+  position: relative;
+  width: min(96cqw, calc(88cqh * 1.5));
+  aspect-ratio: 1.5;
+  height: auto;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+@container (max-width: 640px) {
+  .dashboard-scope .wb-book {
+    width: min(100cqw, calc(82cqh * 1.15));
+    aspect-ratio: 1.15;
+  }
+}
+
+.dashboard-scope .wb-board {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  border-radius: 0 14px 14px 0;
+  background: var(--paper);
+  box-shadow:
+    var(--shadow),
+    inset 0 0 0 1px var(--rule);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: 24px;
+}
+.dashboard-scope .wb-board-content h2 {
+  margin: 8px 0;
+}
+.dashboard-scope .wb-board-content p {
+  color: var(--mute);
+  max-width: 32ch;
+}
+
+.dashboard-scope .wb-backboard {
+  position: absolute;
+  left: 50%;
+  top: -0.6%;
+  width: 50.6%;
+  height: 101.2%;
+  border-radius: 0 16px 16px 0;
+  background: var(--mustard-deep);
+  transform: translateZ(-6px);
+  box-shadow: 0 30px 60px -20px rgba(21, 22, 27, 0.45);
+}
+
+.dashboard-scope .wb-sheet {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.dashboard-scope .wb-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 0 14px 14px 0;
+  overflow: hidden;
+  background: var(--paper);
+  box-shadow: inset 0 0 0 1px var(--rule);
+}
+.dashboard-scope .wb-back {
+  transform: rotateY(180deg);
+  border-radius: 14px 0 0 14px;
+}
+.dashboard-scope .wb-back-pattern {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(to bottom, transparent 0 27px, var(--paper-line) 27px 28px);
+  opacity: 0.5;
+}
+
+/* A page: the picture is shown whole (never cropped), centered on the paper, with
+   its caption underneath instead of overlaid on the artwork. */
+.dashboard-scope .wb-pagefront {
+  display: flex;
+  flex-direction: column;
+  padding: 4% 4% 2.5%;
+  gap: 2%;
+}
+.dashboard-scope .wb-figure {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  place-items: center;
+}
+.dashboard-scope .wb-figure img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+  box-shadow:
+    0 0 0 1.5px var(--ink),
+    0 8px 20px -12px rgba(21, 21, 21, 0.5);
+}
+.dashboard-scope .wb-caption {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 2px;
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
+}
+.dashboard-scope .wb-caption span:last-child {
+  color: var(--mute);
+}
+
+/* The plain cover: solid mustard, just the title. */
+.dashboard-scope .wb-cover {
+  background: var(--mustard);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  box-shadow: inset 0 0 0 1px rgba(21, 21, 21, 0.25);
+}
+.dashboard-scope .wb-cover-title {
+  display: grid;
+  gap: 10px;
+  color: var(--ink);
+  padding: 0 8%;
+}
+.dashboard-scope .wb-cover-title b {
+  font-size: clamp(28px, 4.6vw, 64px);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.dashboard-scope .wb-cover-kick,
+.dashboard-scope .wb-cover-range {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.dashboard-scope .wb-spiral {
+  position: absolute;
+  left: 50%;
+  top: 3%;
+  height: 94%;
+  width: 30px;
+  transform: translateX(-50%) translateZ(40px);
+  z-index: 500;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.dashboard-scope .wb-spiral i {
+  display: block;
+  width: 30px;
+  height: 11px;
+  border: 3px solid var(--spiral);
+  border-radius: 999px;
+  border-color: #9aa1ae #c9ced8 #c9ced8 #9aa1ae;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.dashboard-scope .wb-hint {
+  text-align: center;
+  color: var(--mute);
+  font-family: var(--mono);
+  font-size: 12px;
+  padding: 8px 0 0;
+}

@@ -1,0 +1,29 @@
+{
+  "id": "022_quiet_recovering",
+  "category": "quiet",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Still recovering, mostly just rested on the couch all day. Watched some TV. Didn't do much else, needed the rest.",
+  "expected": {
+    "date": "2026-01-11",
+    "mood_arc": ["weary"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "other",
+        "place_detail": "a couch at home spent resting and watching TV while recovering",
+        "event": "Rested on the couch all day watching TV while still recovering",
+        "emotion": "weary",
+        "people": [],
+        "objects": ["TV"],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "needed the rest"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": ["too_short"]
+  }
+}

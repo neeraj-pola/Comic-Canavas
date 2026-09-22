@@ -1,0 +1,97 @@
+{
+  "id": "012_quiet_low_key_day",
+  "source_transcript_id": "021_quiet_low_key_day",
+  "beat_sheet": {
+    "date": "2026-04-05",
+    "mood_arc": [
+      "calm"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "evening",
+        "place": "bedroom",
+        "place_detail": "at home relaxing quietly and reading",
+        "event": "Took it easy, read a bit, and went to bed early on an uneventful day",
+        "emotion": "calm",
+        "people": [],
+        "objects": [
+          "book"
+        ],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "not much to report"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": [
+      "too_short"
+    ]
+  },
+  "reference_scripts": [
+    {
+      "mood": "a quiet, calm day",
+      "quiet_day": true,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a cozy reading chair at home",
+          "time_of_day": "evening",
+          "expression": "content",
+          "action": "Curled up with a book, in no hurry at all.",
+          "framing": "wide",
+          "caption_a": "Read a bit, took it easy.",
+          "caption_b": "Not much to report, and that's fine.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b1",
+          "place": "a dim bedroom, lamp about to click off",
+          "time_of_day": "night",
+          "expression": "tired",
+          "action": "Reaching for the lamp switch, ready for bed.",
+          "framing": "close",
+          "caption_a": "Early to bed on a quiet night.",
+          "caption_b": "Lights out earlier than usual.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "nothing much, restfully",
+      "quiet_day": true,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a living room with a book on the couch",
+          "time_of_day": "evening",
+          "expression": "content",
+          "action": "Settling into the couch with a book and nothing else.",
+          "framing": "wide",
+          "caption_a": "A slow evening, on purpose.",
+          "caption_b": "Took it easy, no complaints.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b1",
+          "place": "a bedroom at night",
+          "time_of_day": "night",
+          "expression": "content",
+          "action": "Pulling the blanket up, lights already dim.",
+          "framing": "close",
+          "caption_a": "Early night, well deserved.",
+          "caption_b": "In bed early, no regrets.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    }
+  ]
+}

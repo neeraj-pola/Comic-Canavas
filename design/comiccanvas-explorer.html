@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Comic Canvas — architecture explorer and simulator</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#1B1B1F; --paper:#FFFFFF; --page:#EFF1F5; --rule:#C9CDD6; --mute:#5C6170;
+  --blue:#2F5BEA; --blue-soft:#E4EAFF; --marker:#FFD447; --marker-soft:#FFF4C2;
+  --coral:#E8613C; --coral-soft:#FCE6DE; --teal:#159A8A; --teal-soft:#DDF3F0;
+  --red:#C8322B; --red-soft:#FBE3E1;
+  --display:"Archivo",system-ui,sans-serif; --body:"Source Sans 3",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55}
+a{color:var(--blue)}
+button{font-family:inherit;font-size:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.1;margin:0}
+h1{font-size:clamp(36px,6vw,64px);font-stretch:110%;letter-spacing:-.02em}
+h2{font-size:30px;font-stretch:105%}
+h3{font-size:20px}
+p{margin:0 0 12px}
+code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:.92em;background:#F2F3F7;padding:1px 5px;border-radius:4px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* masthead */
+.mast{padding:40px 0 28px;border-bottom:3px solid var(--ink)}
+.mast .kicker{font-family:var(--display);font-weight:600;color:var(--mute);margin-bottom:10px}
+.mast p.lede{font-size:20px;max-width:64ch;margin-top:14px}
+.tabs{display:flex;gap:8px;margin-top:24px;flex-wrap:wrap}
+.tabs button{border:2px solid var(--ink);background:var(--paper);padding:10px 18px;border-radius:999px;cursor:pointer;font-family:var(--display);font-weight:600}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tabs button:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+
+/* layout */
+.view{display:none;padding:28px 0 80px}
+.view.on{display:block}
+.grid{display:grid;grid-template-columns:260px 1fr;gap:32px;align-items:start}
+@media (max-width:900px){.grid{grid-template-columns:1fr}}
+.side{position:sticky;top:16px}
+.side ol{list-style:none;margin:0;padding:0;border-left:3px solid var(--ink)}
+.side li a{display:block;padding:8px 14px;color:var(--ink);text-decoration:none;font-family:var(--display);font-weight:600;font-size:15px}
+.side li a:hover{background:var(--marker-soft)}
+.side li a .n{display:inline-block;width:26px;color:var(--mute);font-weight:400}
+.side .legend{margin-top:18px;font-size:14px;color:var(--mute)}
+.side .legend span{display:inline-block;width:12px;height:12px;border:1.5px solid var(--ink);margin-right:6px;vertical-align:-1px}
+
+/* flowchart */
+.flow{background:var(--paper);border:2px solid var(--ink);padding:18px;overflow:auto}
+.flow svg{display:block;width:100%;height:auto}
+.flow .nd{cursor:pointer}
+.flow .nd rect{stroke:var(--ink);stroke-width:2}
+.flow .nd:hover rect{stroke-width:3.5}
+.flow .nd text{font-family:var(--display);font-weight:700;font-size:14px;fill:var(--ink)}
+.flow .nd text.sub{font-family:var(--body);font-weight:400;font-size:12.5px;fill:var(--mute)}
+.flow .ed{stroke:var(--ink);stroke-width:2;fill:none}
+.flow .lbl{font-family:var(--body);font-size:12.5px;fill:var(--mute)}
+
+/* node cards */
+.node{background:var(--paper);border:2px solid var(--ink);margin-top:28px;scroll-margin-top:16px}
+.node header{display:flex;align-items:baseline;gap:14px;padding:18px 22px;border-bottom:2px solid var(--ink)}
+.node header .num{font-family:var(--display);font-weight:800;font-size:34px;line-height:1;min-width:44px}
+.node header .who{margin-left:auto;font-size:14px;color:var(--mute)}
+.node .body{padding:18px 22px 22px}
+.node .io{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 16px}
+@media (max-width:640px){.node .io{grid-template-columns:1fr}}
+.node .io div{background:#F6F7FA;padding:10px 14px;border-left:3px solid var(--ink);font-size:15px}
+.node .io b{font-family:var(--display);font-weight:600}
+.pick{background:var(--marker-soft);border:2px solid var(--ink);padding:14px 16px;margin:14px 0}
+.pick b{font-family:var(--display);font-weight:700}
+table.opts{width:100%;border-collapse:collapse;font-size:15px;margin:10px 0 6px}
+table.opts th{text-align:left;font-family:var(--display);font-weight:600;border-bottom:2px solid var(--ink);padding:8px 8px}
+table.opts td{border-bottom:1px solid var(--rule);padding:8px 8px;vertical-align:top}
+.v{display:inline-block;padding:2px 9px;border-radius:999px;font-family:var(--display);font-weight:600;font-size:12.5px;white-space:nowrap;border:1.5px solid var(--ink)}
+.v.best{background:var(--marker)}
+.v.good{background:var(--paper)}
+.v.later{background:var(--teal-soft)}
+.v.avoid{background:var(--red-soft)}
+.risk{margin:14px 0 0;padding:0 0 0 18px}
+.risk li{margin-bottom:6px}
+details{margin-top:10px}
+summary{cursor:pointer;font-family:var(--display);font-weight:600}
+
+/* simulator */
+.sim{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:28px;align-items:start}
+@media (max-width:960px){.sim{grid-template-columns:1fr}}
+.card{background:var(--paper);border:2px solid var(--ink);padding:18px 20px}
+.card h3{margin-bottom:10px}
+textarea{width:100%;min-height:190px;border:2px solid var(--ink);padding:12px;font:inherit;resize:vertical;background:#FAFBFF}
+textarea:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--marker);outline-offset:1px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.btn{border:2px solid var(--ink);background:var(--paper);padding:10px 16px;cursor:pointer;font-family:var(--display);font-weight:600;border-radius:6px}
+.btn.primary{background:var(--blue);color:#fff;border-color:var(--blue)}
+.btn.small{padding:6px 10px;font-size:14px}
+.btn:disabled{opacity:.5;cursor:default}
+.btn:focus-visible{outline:3px solid var(--marker);outline-offset:2px}
+.btn.rec{background:var(--red);color:#fff;border-color:var(--red)}
+select,input[type=range]{font:inherit}
+label.opt{display:flex;gap:8px;align-items:center;font-size:15px}
+.hint{font-size:14px;color:var(--mute);margin-top:8px}
+.stages{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:6px}
+.stages li{border:1.5px solid var(--rule);padding:6px 8px;font-size:13.5px;font-family:var(--display);font-weight:600;color:var(--mute);background:#F6F7FA}
+.stages li.run{border-color:var(--blue);color:var(--blue);background:var(--blue-soft)}
+.stages li.done{border-color:var(--ink);color:var(--ink);background:var(--marker-soft)}
+.stages li.fail{border-color:var(--red);color:var(--red);background:var(--red-soft)}
+.strip{background:#FBF9F2;border:3px solid var(--ink);padding:14px;margin-top:14px}
+.strip .head{display:flex;justify-content:space-between;font-family:var(--display);font-weight:700;margin-bottom:10px}
+.strip .head span:last-child{color:var(--mute);font-weight:600}
+.panels{display:grid;grid-template-columns:1fr;gap:14px}
+@media (max-width:560px){.panels{grid-template-columns:1fr}}
+.panel{border:2.5px solid var(--ink);background:#fff;position:relative}
+.panel svg{display:block;width:100%;height:auto}
+.panel .pair{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;background:#F6F7FA;border-bottom:2px solid var(--ink)}
+.panel .cand{border:2px solid var(--ink);background:#fff;position:relative}
+.panel .cand.critic{outline:3px dashed var(--blue);outline-offset:-3px}
+.panel .cand.chosen{outline:4px solid var(--marker);outline-offset:-4px}
+.panel .cand.rejected{opacity:.45}
+.panel .scores{font-size:11.5px;color:var(--mute);padding:4px 6px;border-top:1.5px solid var(--rule);font-family:var(--display);font-weight:600}
+.panel .pickimg{width:100%;border:0;border-top:1.5px solid var(--ink);background:#fff;padding:6px;font-family:var(--display);font-weight:600;font-size:13px;cursor:pointer}
+.panel .pickimg:hover{background:var(--marker-soft)}
+.panel .cand.chosen .pickimg{background:var(--marker)}
+.panel .cap{background:var(--ink);color:#fff;font-family:var(--display);font-weight:600;font-size:14px;padding:6px 10px;min-height:32px}
+.panel .ab{display:flex;gap:6px;padding:8px;border-top:2px solid var(--ink);background:#F6F7FA;flex-wrap:wrap}
+.panel .ab button{flex:1;border:1.5px solid var(--ink);background:#fff;padding:6px 8px;font-size:13px;cursor:pointer;text-align:left;border-radius:4px}
+.panel .ab button.chosen{background:var(--marker)}
+.panel .ab button:focus-visible{outline:3px solid var(--blue)}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-top:14px}
+.meta div{border:1.5px solid var(--ink);padding:10px;background:#fff}
+.meta b{display:block;font-family:var(--display);font-size:24px;line-height:1}
+.meta span{font-size:13px;color:var(--mute)}
+canvas.curve{width:100%;height:auto;aspect-ratio:760/330;border:1.5px solid var(--ink);background:#fff;margin-top:10px}
+pre.json{background:#1B1B1F;color:#E7ECF5;padding:14px;overflow:auto;font-size:13px;max-height:340px;border-radius:0;margin:0}
+.err{border:2px solid var(--red);background:var(--red-soft);padding:10px 12px;font-size:15px;margin-top:10px}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;margin-top:12px}
+.feat label{display:flex;gap:10px;align-items:flex-start;border:1.5px solid var(--ink);padding:10px 12px;background:#fff;cursor:pointer}
+.feat label input{margin-top:5px}
+.feat label small{display:block;color:var(--mute);font-size:13.5px}
+.notice{border-left:4px solid var(--blue);background:var(--blue-soft);padding:10px 14px;font-size:15px}
+@media (prefers-reduced-motion:no-preference){.stages li.run{animation:pulse 1.1s ease-in-out infinite}}
+@keyframes pulse{50%{background:#fff}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="mast">
+    <div class="kicker">Comic Canvas — speak your day, get a comic of it</div>
+    <h1>Architecture explorer<br>and simulator</h1>
+    <p class="lede">Every node in the pipeline, what it does, which model or algorithm to use at that step and which ones to skip, plus a live simulator that runs the text half of the pipeline so you can feel the product before you build it.</p>
+    <div class="tabs" role="tablist">
+      <button role="tab" aria-selected="true" data-view="arch">Architecture</button>
+      <button role="tab" aria-selected="false" data-view="sim">Simulator</button>
+      <button role="tab" aria-selected="false" data-view="feat">Feature backlog</button>
+    </div>
+  </header>
+  <!-- ================= ARCHITECTURE ================= -->
+  <section class="view on" id="view-arch">
+    <div class="grid">
+      <nav class="side" aria-label="Pipeline nodes">
+        <ol>
+          <li><a href="#n0"><span class="n">0</span>Identity onboarding</a></li>
+          <li><a href="#n1"><span class="n">1</span>Input</a></li>
+          <li><a href="#n2"><span class="n">2</span>Whisper ASR</a></li>
+          <li><a href="#n3"><span class="n">3</span>Beat extractor</a></li>
+          <li><a href="#n4"><span class="n">4</span>Script agent</a></li>
+          <li><a href="#n5"><span class="n">5</span>Prompt writer</a></li>
+          <li><a href="#n6"><span class="n">6</span>Panel generator</a></li>
+          <li><a href="#n7"><span class="n">7</span>Consistency critic</a></li>
+          <li><a href="#n8"><span class="n">8</span>Composer</a></li>
+          <li><a href="#n9"><span class="n">9</span>Comic page and feedback</a></li>
+          <li><a href="#n10"><span class="n">10</span>Memory store</a></li>
+          <li><a href="#n11"><span class="n">11</span>Weekly training</a></li>
+          <li><a href="#n12"><span class="n">12</span>Eval gate</a></li>
+        </ol>
+        <div class="legend">
+          <div><span style="background:#E4EAFF"></span>LLM agents</div>
+          <div><span style="background:#FCE6DE"></span>Image stage</div>
+          <div><span style="background:#DDF3F0"></span>Learning loop</div>
+          <div><span style="background:#F6F7FA"></span>Infra and I/O</div>
+        </div>
+      </nav>
+
+      <div>
+        <div class="flow" id="flow">
+<svg viewBox="0 0 900 830" role="img" aria-labelledby="ft fd"><title id="ft">Comic Canvas pipeline</title><desc id="fd">Twelve nodes from input to comic page, with a retry loop, a memory side store, and a weekly training and eval loop.</desc>
+<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1L9 5L1 9" fill="none" stroke="#1B1B1F" stroke-width="2" stroke-linecap="round"/></marker></defs>
+<g class="nd" data-go="n1"><rect x="300" y="20" width="300" height="60" fill="#F6F7FA"/><text x="450" y="45" text-anchor="middle">1  Input: text or audio</text><text class="sub" x="450" y="65" text-anchor="middle">typed, uploaded, or mic</text></g>
+<line class="ed" x1="450" y1="80" x2="450" y2="106" marker-end="url(#ah)"/>
+<g class="nd" data-go="n2"><rect x="300" y="110" width="300" height="60" fill="#F6F7FA"/><text x="450" y="135" text-anchor="middle">2  Whisper ASR</text><text class="sub" x="450" y="155" text-anchor="middle">Groq, skipped for text</text></g>
+<line class="ed" x1="450" y1="170" x2="450" y2="196" marker-end="url(#ah)"/>
+<g class="nd" data-go="n3"><rect x="300" y="200" width="300" height="60" fill="#E4EAFF"/><text x="450" y="225" text-anchor="middle">3  Beat extractor</text><text class="sub" x="450" y="245" text-anchor="middle">3–6 structured events, temp 0</text></g>
+<g class="nd" data-go="n10"><rect x="40" y="200" width="210" height="60" fill="#F6F7FA"/><text x="145" y="225" text-anchor="middle">10  Memory store</text><text class="sub" x="145" y="245" text-anchor="middle">pgvector: beats, people</text></g>
+<line class="ed" x1="300" y1="230" x2="254" y2="230" marker-end="url(#ah)"/>
+<line class="ed" x1="450" y1="260" x2="450" y2="286" marker-end="url(#ah)"/>
+<g class="nd" data-go="n4"><rect x="300" y="290" width="300" height="60" fill="#E4EAFF"/><text x="450" y="315" text-anchor="middle">4  Script agent</text><text class="sub" x="450" y="335" text-anchor="middle">4 panels, captions, bubbles</text></g>
+<line class="ed" x1="450" y1="350" x2="450" y2="376" marker-end="url(#ah)"/>
+<g class="nd" data-go="n5"><rect x="300" y="380" width="300" height="60" fill="#E4EAFF"/><text x="450" y="405" text-anchor="middle">5  Prompt writer</text><text class="sub" x="450" y="425" text-anchor="middle">scene + identity + style tokens</text></g>
+<line class="ed" x1="450" y1="440" x2="450" y2="466" marker-end="url(#ah)"/>
+<g class="nd" data-go="n0"><rect x="40" y="470" width="210" height="60" fill="#F6F7FA"/><text x="145" y="495" text-anchor="middle">0  Identity onboarding</text><text class="sub" x="145" y="515" text-anchor="middle">selfies → LoRA / Char Ref</text></g>
+<line class="ed" x1="250" y1="500" x2="296" y2="500" marker-end="url(#ah)"/>
+<path class="ed" d="M145 530 L145 590 L296 590" marker-end="url(#ah)"/>
+<text class="lbl" x="152" y="566">face embedding</text>
+<g class="nd" data-go="n6"><rect x="300" y="470" width="300" height="60" fill="#FCE6DE"/><text x="450" y="495" text-anchor="middle">6  Panel generator</text><text class="sub" x="450" y="515" text-anchor="middle">Leonardo or Flux, 3 candidates</text></g>
+<line class="ed" x1="450" y1="530" x2="450" y2="556" marker-end="url(#ah)"/>
+<g class="nd" data-go="n7"><rect x="300" y="560" width="300" height="60" fill="#FCE6DE"/><text x="450" y="585" text-anchor="middle">7  Consistency critic</text><text class="sub" x="450" y="605" text-anchor="middle">identity, style, alignment scores</text></g>
+<path class="ed" d="M600 590 L660 590 L660 410 L606 410" marker-end="url(#ah)"/>
+<text class="lbl" x="670" y="500">retry if all fail</text>
+<line class="ed" x1="450" y1="620" x2="450" y2="646" marker-end="url(#ah)"/>
+<g class="nd" data-go="n8"><rect x="300" y="650" width="300" height="60" fill="#F6F7FA"/><text x="450" y="675" text-anchor="middle">8  Composer</text><text class="sub" x="450" y="695" text-anchor="middle">captions, bubbles, PNG</text></g>
+<line class="ed" x1="450" y1="710" x2="450" y2="736" marker-end="url(#ah)"/>
+<g class="nd" data-go="n9"><rect x="300" y="740" width="300" height="60" fill="#F6F7FA"/><text x="450" y="765" text-anchor="middle">9  Comic page + feedback</text><text class="sub" x="450" y="785" text-anchor="middle">A/B picks, edits, thumbs</text></g>
+<line class="ed" x1="600" y1="770" x2="636" y2="770" marker-end="url(#ah)"/>
+<g class="nd" data-go="n11"><rect x="640" y="740" width="230" height="60" fill="#DDF3F0"/><text x="755" y="765" text-anchor="middle">11  Weekly training</text><text class="sub" x="755" y="785" text-anchor="middle">RM, DPO, GRPO, Diff-DPO</text></g>
+<line class="ed" x1="755" y1="740" x2="755" y2="714" marker-end="url(#ah)"/>
+<g class="nd" data-go="n12"><rect x="640" y="650" width="230" height="60" fill="#DDF3F0"/><text x="755" y="675" text-anchor="middle">12  Eval gate</text><text class="sub" x="755" y="695" text-anchor="middle">deploy or roll back</text></g>
+<path class="ed" d="M755 650 L755 632 L630 632 L630 612 L606 612" marker-end="url(#ah)"/>
+<text class="lbl" x="765" y="624">checkpoints to 5–7</text>
+</svg>
+        </div>
+        <p class="hint">Click any node in the chart or the list to jump to its explanation. Every node lists a pick, the alternatives, and why they were not chosen.</p>
+
+<article class="node" id="n0">
+  <header><span class="num">0</span><h3>Identity onboarding</h3><span class="who">One-time per person, Modal + Leonardo</span></header>
+  <div class="body">
+    <p>This is where your face enters the system. Done once when you sign up, again when your look changes, and once per friend you want as a recurring side character. Everything downstream that keeps the character looking like you depends on this step.</p>
+    <div class="io"><div><b>In</b> 15–25 selfies: varied angles, lighting, expressions, no sunglasses, plus 3 optional full-body shots for clothing</div><div><b>Out</b> identity LoRA (Flux), Character Reference set (Leonardo), ArcFace identity embedding for the critic, a "look card" (hair, glasses, skin tone, signature outfit)</div></div>
+    <div class="pick"><b>Pick:</b> a five-stage mini pipeline. (1) Face detection and crop with RetinaFace, reject blur and duplicates. (2) ArcFace embedding averaged over the set, stored for the critic. (3) A VLM writes the look card from the photos so the prompt writer can describe you in words. (4) Flux identity LoRA trained on Modal with ai-toolkit, ~20 min, 800–1200 steps, one trigger token. (5) The 4–6 best crops uploaded to Leonardo as Character Reference images. Side characters go through the same five stages with fewer photos.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Flux LoRA (ai-toolkit / kohya) on Modal</td><td><span class="v best">Best</span></td><td>Strongest identity under stylization, open weights, the only path that lets Diffusion-DPO learn your taste later.</td></tr>
+      <tr><td>Leonardo Character Reference</td><td><span class="v best">Best (no-ops)</span></td><td>No training, works immediately, good for the daily production strip. Weaker under heavy stylization and not trainable.</td></tr>
+      <tr><td>IP-Adapter FaceID / InstantID (SDXL)</td><td><span class="v good">Good</span></td><td>Zero-shot identity from one photo; decent, but older base models and a dated look.</td></tr>
+      <tr><td>PuLID / InstantID for Flux</td><td><span class="v later">Later</span></td><td>Zero-shot identity on Flux without training. Promising alternative to the LoRA if retraining per look change becomes annoying.</td></tr>
+      <tr><td>Describe the face in text only</td><td><span class="v avoid">Avoid</span></td><td>"Man with glasses and dark hair" matches millions of people; identity drifts every panel.</td></tr>
+      <tr><td>Train on someone else's photos or an artist's characters</td><td><span class="v avoid">Avoid</span></td><td>Consent and copyright. Friends opt in with their own photos; the style is your own style card, not a named artist.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Quality levers:</b> photo variety matters more than count; include 2–3 photos in your usual outfit so clothing becomes part of the identity; caption each training image with the trigger token plus a plain description.</li><li><b>Metric:</b> ArcFace similarity between generated panels and the reference embedding, target above 0.45 in the chosen style; time from upload to first usable strip, target under 30 min.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n1">
+  <header><span class="num">1</span><h3>Input: text or audio</h3><span class="who">Vercel front end</span></header>
+  <div class="body">
+    <p>The only thing the user does every day. Three ways in: type a few sentences, upload a voice memo, or hold a button and talk. Audio goes straight to object storage through a presigned URL so the API never touches the bytes.</p>
+    <div class="io"><div><b>In</b> keyboard, file, or microphone</div><div><b>Out</b> job record + <code>transcript</code> or <code>audio_url</code> in R2</div></div>
+    <div class="pick"><b>Pick:</b> MediaRecorder in the browser (webm/opus), 30 s to 3 min cap, direct-to-R2 presigned upload, Server-Sent Events for progress. A push reminder at a fixed evening time is the single most important retention feature.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Presigned upload to R2</td><td><span class="v best">Best</span></td><td>No egress fees, no audio through Railway, scales to zero effort.</td></tr>
+      <tr><td>Upload through FastAPI</td><td><span class="v avoid">Avoid</span></td><td>Doubles bandwidth, ties up a worker, adds a failure point.</td></tr>
+      <tr><td>Telegram or WhatsApp voice notes as input</td><td><span class="v later">Later</span></td><td>Great for habit, the note is already a file. Add once the web flow is stable.</td></tr>
+      <tr><td>Browser speech-to-text (Web Speech API)</td><td><span class="v avoid">Avoid</span></td><td>Chrome-only, poor on names and jargon, no file to re-transcribe later. Fine for a demo, not for production.</td></tr>
+    </tbody></table>
+  </div>
+</article>
+
+<article class="node" id="n2">
+  <header><span class="num">2</span><h3>Whisper ASR</h3><span class="who">Groq API, worker fallback</span></header>
+  <div class="body">
+    <p>Turns the voice memo into text with word timestamps. This step is deliberately boring: English ASR is solved, so buy it rather than build it, and spend the engineering on what comes after.</p>
+    <div class="io"><div><b>In</b> <code>audio_url</code>, a vocabulary hint list from memory</div><div><b>Out</b> <code>transcript</code>, segments with timestamps, language, confidence</div></div>
+    <div class="pick"><b>Pick:</b> Groq <code>whisper-large-v3-turbo</code> with a <code>prompt</code> parameter seeded from your memory store (names, tools, places). Fallback to <code>faster-whisper</code> small on the CPU worker if Groq is down. No fine-tuning.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Groq whisper-large-v3-turbo</td><td><span class="v best">Best</span></td><td>Fastest hosted Whisper, a fraction of a cent per minute, same accuracy as large-v3 on English.</td></tr>
+      <tr><td>OpenAI whisper-1 / gpt-4o-transcribe</td><td><span class="v good">Good</span></td><td>Slightly better on noisy audio, several times the price. Use if Groq quality disappoints on your voice.</td></tr>
+      <tr><td>Deepgram Nova-3 / AssemblyAI</td><td><span class="v good">Good</span></td><td>Best diarization and streaming, but you have one speaker and no streaming need.</td></tr>
+      <tr><td>faster-whisper on CPU (Railway)</td><td><span class="v good">Fallback</span></td><td>Free, 20–40 s for a 90 s memo on a small box. Keep as a backup, not the default.</td></tr>
+      <tr><td>Fine-tune Whisper on your voice</td><td><span class="v avoid">Avoid</span></td><td>English WER is already low. The accuracy you lose is on names and jargon, which the vocabulary hint fixes for free.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Quality lever:</b> the vocabulary prompt. "n8n", "LangGraph", friends' names. Pull the top 40 entities from memory each run.</li><li><b>Metric:</b> WER on 20 memos you transcribe by hand once. Expect under 5%.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n3">
+  <header><span class="num">3</span><h3>Beat extractor</h3><span class="who">LLM, temp 0, structured output</span></header>
+  <div class="body">
+    <p>Converts the transcript into 3–6 structured events. No creativity here: only events that were actually said, each with time, place, emotion, people, objects, an importance score, a humor score, and a verbatim quote. This is what memory stores and what the script agent chooses from.</p>
+    <div class="io"><div><b>In</b> transcript, date, known people and places</div><div><b>Out</b> <code>BeatSheet</code> JSON validated by Pydantic; flags <code>too_short</code>, <code>sensitive</code></div></div>
+    <div class="pick"><b>Pick:</b> Claude Sonnet with structured output, temperature 0, one retry that feeds the validation error back. Keep it out of the RLHF loop; it is an extractor with a hand-labeled test set, not a taste model.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Claude Sonnet, structured output</td><td><span class="v best">Best</span></td><td>Lowest hallucination rate on "only what was said" instructions; strong at pronoun and name resolution.</td></tr>
+      <tr><td>Gemini Flash</td><td><span class="v good">Good</span></td><td>A tenth of the cost. Switch once you have 50 labeled days and recall holds within 2 points.</td></tr>
+      <tr><td>Llama 3.3 70B on Groq</td><td><span class="v good">Good</span></td><td>Fast and cheap, slightly more invented detail. Acceptable with a strict schema and the retry.</td></tr>
+      <tr><td>Fine-tuned Qwen2.5-7B (SFT on your labels)</td><td><span class="v later">Later</span></td><td>Worth it only for cost at scale or offline mode. Needs 300+ labeled days first.</td></tr>
+      <tr><td>Merge with the script agent into one prompt</td><td><span class="v avoid">Avoid</span></td><td>"Understand the day and make it funny" in one call hallucinates events. Extract cold, then write warm.</td></tr>
+      <tr><td>Classical NLP (spaCy NER + rules)</td><td><span class="v avoid">Avoid</span></td><td>Cannot infer emotion, importance, or scene boundaries from casual speech.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Prompt rules:</b> never infer unstated events; merge sub-events in one scene; copy quotes verbatim or leave null; normalize names against the known list.</li><li><b>Metrics:</b> beat recall, hallucination rate (target 0), name normalization accuracy on 30 hand-labeled transcripts.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n4">
+  <header><span class="num">4</span><h3>Script agent</h3><span class="who">LLM now, DPO-tuned later</span></header>
+  <div class="body">
+    <p>Picks the four beats that make the best arc (setup, complication, relief, punchline), writes a caption and optional speech bubble for each in your voice, and sets the emotional tone. This is where the comic becomes funny or warm, so it is the first node that learns from you.</p>
+    <div class="io"><div><b>In</b> <code>BeatSheet</code>, mood arc, your last 10 best strips as style examples, humor level</div><div><b>Out</b> <code>Script</code>: 4 panels with scene, action, expression, caption (≤ 60 chars), bubble (≤ 20 chars)</div></div>
+    <div class="pick"><b>Pick:</b> Claude Sonnet with 10 few-shot examples of strips you rated highly, generating two caption variants per panel so the UI can ask which you prefer. After ~300 caption pairs, replace with Qwen2.5-7B fine-tuned by DPO, served on Modal, and keep Sonnet as the fallback for <code>sensitive</code> days.</div>
+    <table class="opts"><thead><tr><th>Option / algorithm</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Claude Sonnet + few-shot from your own rated strips</td><td><span class="v best">Best v1</span></td><td>Highest baseline quality; retrieval of your best strips gets 70% of the personalization for free.</td></tr>
+      <tr><td>DPO on Qwen2.5-7B (TRL, QLoRA)</td><td><span class="v best">Best v2</span></td><td>Offline, stable, works at a few hundred pairs. Direct match for chosen/rejected captions.</td></tr>
+      <tr><td>ORPO</td><td><span class="v good">Good</span></td><td>No reference model, cheaper on Modal. Slightly less stable than DPO at small data; try as an ablation.</td></tr>
+      <tr><td>KTO</td><td><span class="v good">Good</span></td><td>Uses unpaired thumbs-up/down. Add when you collect more single ratings than pairs.</td></tr>
+      <tr><td>SimPO / IPO</td><td><span class="v later">Later</span></td><td>Length-controlled variants. Only if DPO captions drift long.</td></tr>
+      <tr><td>PPO with a learned reward model</td><td><span class="v avoid">Avoid</span></td><td>Needs four models in memory and online rollouts; with 300 pairs the reward model is exactly what PPO over-optimizes. Keep as a README ablation, not a shipped path.</td></tr>
+      <tr><td>GPT-4o / Gemini Pro as the base</td><td><span class="v good">Good</span></td><td>Comparable quality; pick whichever gives you a better humor win-rate on a 20-day blind test.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Quality levers:</b> hard character limits on captions (prevents wordy panels), a humor knob that the <code>sensitive</code> flag turns off, and quotes from the transcript reused verbatim so the voice stays yours.</li><li><b>Metrics:</b> caption edit distance per day (headline chart, should fall), LLM-judge humor win-rate vs base, panel-count and length constraint compliance.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n5">
+  <header><span class="num">5</span><h3>Prompt writer</h3><span class="who">Small LLM, GRPO-tuned later</span></header>
+  <div class="body">
+    <p>Translates each panel's scene into an image prompt for the generator: framing, expression, props, lighting, plus the identity and style tokens that keep the character and look stable. Different generators want different prompt dialects, so this node is generator-aware.</p>
+    <div class="io"><div><b>In</b> panel script, generator target (Leonardo Phoenix or Flux), style card, identity reference</div><div><b>Out</b> positive prompt, negative prompt, seed policy, guidance settings</div></div>
+    <div class="pick"><b>Pick:</b> Gemini Flash or Llama-on-Groq with a per-generator template in v1. Prompts are written in two layers: a short, fixed character clause (simple shapes, thick ink, the look card) and a long environment clause that names 4–6 concrete props, materials, lighting, and a halftone or paper texture, so backgrounds come out rich while the character stays simple and consistent. In v2, Qwen2.5-3B fine-tuned with GRPO where the reward is the critic's identity + style + alignment score. This is your "RL with verifiable rewards" story: no human labels needed, the critic scores every sampled prompt.</div>
+    <table class="opts"><thead><tr><th>Option / algorithm</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Templated prompts + small API LLM</td><td><span class="v best">Best v1</span></td><td>Cheap, predictable, and templates enforce the style tokens every time.</td></tr>
+      <tr><td>GRPO on Qwen2.5-3B, critic score as reward</td><td><span class="v best">Best v2</span></td><td>Sample 8 prompts per panel, generate, score, update toward winners. No value network, fits an A10G.</td></tr>
+      <tr><td>DPO on prompt pairs from A/B picks</td><td><span class="v good">Good</span></td><td>Works, but the signal is indirect (you picked an image, not a prompt). Combine with GRPO.</td></tr>
+      <tr><td>PPO with the same reward</td><td><span class="v avoid">Avoid</span></td><td>Same reward, more memory, more instability. GRPO is the right variant here.</td></tr>
+      <tr><td>Let the script agent write prompts too</td><td><span class="v avoid">Avoid</span></td><td>Mixes writing voice with image syntax; you cannot tune one without hurting the other.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Quality levers:</b> a fixed style card (palette, line weight, camera), face-forward framing for identity, and reward shaping that penalizes prompts over 60 tokens and any text in the image.</li><li><b>Watch for reward hacking:</b> the model learns prompts that max the CLIP score with flat, centered, low-detail scenes. Add a diversity term and a small VLM judge on 5% of samples.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n6">
+  <header><span class="num">6</span><h3>Panel generator</h3><span class="who">Leonardo API or Flux on fal.ai / Modal</span></header>
+  <div class="body">
+    <p>Produces three candidate images per panel. The two hard problems are identity (it should look like you every day) and style lock (the strip should look like one artist drew it). Everything else is cost and speed.</p>
+    <div class="io"><div><b>In</b> prompt bundle, identity reference (Character Reference image or LoRA id), style card</div><div><b>Out</b> 3 candidate PNGs per panel in R2, generation metadata, cost</div></div>
+    <div class="pick"><b>Pick:</b> hybrid. Leonardo Phoenix with Character Reference for the daily production strip (best stylized look, no GPU ops). Flux Dev with your identity LoRA on fal.ai as the research track, because it is the only path where Diffusion-DPO can change the generator's weights. A toggle in the feedback UI lets you A/B the two.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Leonardo Phoenix / Lucid Origin + Character Reference</td><td><span class="v best">Best look</span></td><td>Strong illustration aesthetics out of the box, built-in character consistency, pay-as-you-go. Closed weights, so no Diffusion-DPO.</td></tr>
+      <tr><td>Flux Dev + identity LoRA (fal.ai or Modal)</td><td><span class="v best">Best for learning</span></td><td>Open weights, LoRA in 20 min from 20 selfies, Diffusion-DPO possible. Slightly more generic style without a style LoRA.</td></tr>
+      <tr><td>Flux Schnell</td><td><span class="v good">Iteration</span></td><td>Roughly a tenth of the cost and 4 steps. Use while developing, not for the strip you keep.</td></tr>
+      <tr><td>SDXL + IP-Adapter FaceID</td><td><span class="v good">Good</span></td><td>Mature identity tooling, cheaper, but weaker prompt following than Flux and dated aesthetics.</td></tr>
+      <tr><td>OpenAI gpt-image / Google Imagen</td><td><span class="v later">Later</span></td><td>Excellent quality but no LoRA or explicit character reference, so identity drifts and nothing is trainable.</td></tr>
+      <tr><td>Midjourney</td><td><span class="v avoid">Avoid</span></td><td>No official API for this use.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Quality levers:</b> a style LoRA (20–40 reference panels) on top of the identity LoRA; fixed seed families per day so panels share lighting; 3 candidates, not 1, so the critic has something to choose from; 28–30 steps on Flux Dev (not Schnell) when detailed backgrounds matter, and a per-place reference image stored in memory so your café or desk looks the same every time it appears.</li><li><b>Metrics:</b> identity score distribution, cost per strip, p95 generation time. Target under 25 s for all 12 candidates in parallel.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n7">
+  <header><span class="num">7</span><h3>Consistency critic</h3><span class="who">CNN + CLIP models on the CPU worker</span></header>
+  <div class="body">
+    <p>Scores every candidate on three axes and picks the best one per panel, or sends the panel back to the prompt writer when all three fail. It is the CNN part of the project and the reward signal for GRPO, so its quality caps the quality of everything upstream.</p>
+    <div class="io"><div><b>In</b> 3 candidates, identity reference embedding, style reference set, panel text</div><div><b>Out</b> per-candidate scores, chosen index, face box for bubble placement, retry decision</div></div>
+    <div class="pick"><b>Pick:</b> three small models, exported to ONNX and run on CPU: ArcFace (InsightFace) cosine similarity for identity, DINOv2-small embedding distance to your style reference set for style, SigLIP text-image similarity for caption alignment. Combine with a learned Bradley–Terry head trained on your A/B picks, which is your personal aesthetic reward model.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>ArcFace / InsightFace for identity</td><td><span class="v best">Best</span></td><td>Purpose-built face embeddings; robust across stylization when the style is not too abstract.</td></tr>
+      <tr><td>CLIP image-image similarity for identity</td><td><span class="v avoid">Avoid</span></td><td>Measures overall semantics (hoodie, glasses) not the face. Passes lookalikes.</td></tr>
+      <tr><td>DINOv2 for style match</td><td><span class="v best">Best</span></td><td>Self-supervised features capture texture and line quality better than CLIP's semantic space.</td></tr>
+      <tr><td>SigLIP for text-image alignment</td><td><span class="v best">Best</span></td><td>Better calibrated than CLIP ViT-B/32 on short captions; still tiny on CPU.</td></tr>
+      <tr><td>VLM judge (Claude / GPT vision) for all three</td><td><span class="v good">Tie-breaker</span></td><td>Most accurate, but 12 calls per day adds cost and latency and is unusable as a GRPO reward at 8 samples per panel. Use on 5% of panels to audit the CNNs.</td></tr>
+      <tr><td>LAION aesthetic predictor / PickScore as the starting reward model</td><td><span class="v good">Warm start</span></td><td>Fine-tune from these instead of from scratch; your personal head converges in a few hundred pairs.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Reward hacking:</b> identity scores reward face-forward close-ups, so every panel becomes a headshot. Cap the identity weight and add a framing-diversity bonus from the script.</li><li><b>Metrics:</b> pairwise accuracy of the reward head on held-out picks (headline number), retry rate, CPU time per panel.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n8">
+  <header><span class="num">8</span><h3>Composer</h3><span class="who">Python worker</span></header>
+  <div class="body">
+    <p>Overlays the caption bar and speech bubble on each chosen panel, assembles the 2×2 strip with a date header, and exports a PNG plus a lightweight JSON layout the web page renders natively.</p>
+    <div class="io"><div><b>In</b> 4 chosen panels, script text, face boxes from the critic</div><div><b>Out</b> <code>strip.png</code>, <code>layout.json</code>, per-panel PNGs</div></div>
+    <div class="pick"><b>Pick:</b> Pillow with your own fonts. Bubble placement uses the critic's face box to avoid covering the character. Render the same layout in the browser from <code>layout.json</code> so text stays crisp and editable.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Pillow (PIL) compositing</td><td><span class="v best">Best</span></td><td>Deterministic, fast, no browser dependency on the worker.</td></tr>
+      <tr><td>HTML template + Playwright screenshot</td><td><span class="v good">Good</span></td><td>Prettier typography, but adds Chromium to the worker image and 1–2 s per render.</td></tr>
+      <tr><td>Ask the image model to render captions</td><td><span class="v avoid">Avoid</span></td><td>Spelling errors and inconsistent lettering. Text is always composited, never generated.</td></tr>
+      <tr><td>Saliency-based bubble placement (U²-Net)</td><td><span class="v later">Later</span></td><td>Nicer than face-box avoidance, only worth it once panels get busier.</td></tr>
+    </tbody></table>
+  </div>
+</article>
+
+<article class="node" id="n9">
+  <header><span class="num">9</span><h3>Comic page and feedback</h3><span class="who">Vercel front end, FastAPI</span></header>
+  <div class="body">
+    <p>Shows today's strip and collects the training data without feeling like a survey. Two panels a day show the chosen image beside its runner-up and ask which you prefer; captions are tap-to-edit; a single thumbs-down regenerates the day.</p>
+    <div class="io"><div><b>In</b> strip, candidates, script</div><div><b>Out</b> preference pairs (image), preference pairs (caption), unpaired thumbs, edits, share events</div></div>
+    <div class="pick"><b>Pick:</b> ask for at most two A/B picks per day, log implicit signals (shared, saved, revisited) as weak positives, and store every event with the model version that produced it so training data is never mixed across checkpoints.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Pairwise A/B on a subset of panels</td><td><span class="v best">Best</span></td><td>Cleanest signal for Bradley–Terry and DPO, ten seconds a day.</td></tr>
+      <tr><td>Five-star ratings</td><td><span class="v avoid">Avoid</span></td><td>Inconsistent across days; ordinal noise ruins small datasets.</td></tr>
+      <tr><td>Thumbs on every panel</td><td><span class="v good">Good</span></td><td>Unpaired but plentiful; feeds KTO.</td></tr>
+      <tr><td>Free-text critique</td><td><span class="v later">Later</span></td><td>Useful for prompt-writer DPO with an LLM turning critiques into rewrites, but users rarely type.</td></tr>
+    </tbody></table>
+  </div>
+</article>
+
+<article class="node" id="n10">
+  <header><span class="num">10</span><h3>Memory store</h3><span class="who">Railway Postgres + pgvector</span></header>
+  <div class="body">
+    <p>Beats, people, places, and every panel go in with embeddings. It powers the vocabulary hints for ASR, the known-people list for the extractor, recurring side characters, and natural-language search over your own life ("when did I last see Rahul").</p>
+    <div class="io"><div><b>In</b> <code>BeatSheet</code>, chosen panels, people records</div><div><b>Out</b> entity lists, similar past days, search results with panels</div></div>
+    <div class="pick"><b>Pick:</b> Postgres with pgvector, <code>bge-small-en</code> embeddings computed on CPU, one <code>people</code> table with aliases and an optional reference image so recurring friends become consistent characters.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>pgvector in the same Postgres</td><td><span class="v best">Best</span></td><td>One database, one bill, joins between vectors and relational data.</td></tr>
+      <tr><td>Chroma / FAISS</td><td><span class="v avoid">Avoid</span></td><td>Another service to run for a few thousand vectors; no relational joins.</td></tr>
+      <tr><td>Pinecone / Weaviate</td><td><span class="v avoid">Avoid</span></td><td>Overkill and a recurring cost for a single user's data.</td></tr>
+      <tr><td>OpenAI text-embedding-3-small</td><td><span class="v good">Good</span></td><td>Slightly better recall, but adds a network call; bge-small on CPU is enough at this scale.</td></tr>
+    </tbody></table>
+  </div>
+</article>
+
+<article class="node" id="n11">
+  <header><span class="num">11</span><h3>Weekly training</h3><span class="who">Modal, A10G or A100, cron-triggered</span></header>
+  <div class="body">
+    <p>Once a week the scheduler exports the new preference data and runs up to four jobs. Nothing here blocks the daily flow; new checkpoints only go live through the eval gate.</p>
+    <div class="io"><div><b>In</b> preference pairs, thumbs, critic logs, current checkpoints</div><div><b>Out</b> candidate checkpoints on Hugging Face Hub, eval report</div></div>
+    <div class="pick"><b>Pick, in the order to add them:</b> (1) Bradley–Terry reward head on frozen SigLIP + DINOv2 features from your image picks. (2) DPO on the script agent from caption pairs. (3) GRPO on the prompt writer using the critic score as reward. (4) Diffusion-DPO on the Flux identity LoRA from image pairs, monthly once you have 300+ pairs.</div>
+    <table class="opts"><thead><tr><th>Algorithm</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Bradley–Terry reward model</td><td><span class="v best">Best</span></td><td>Standard, data-efficient, gives best-of-N gains with zero serving cost.</td></tr>
+      <tr><td>DPO (text)</td><td><span class="v best">Best</span></td><td>Matches pairwise captions; stable at a few hundred pairs; TRL supports it out of the box.</td></tr>
+      <tr><td>GRPO (text, verifiable reward)</td><td><span class="v best">Best</span></td><td>Uses the critic as a free, dense reward; no value network, so it fits one GPU.</td></tr>
+      <tr><td>Diffusion-DPO</td><td><span class="v best">Best (image)</span></td><td>Direct preference optimization for diffusion models; the practical successor to DDPO.</td></tr>
+      <tr><td>DDPO (PPO on denoising steps)</td><td><span class="v avoid">Avoid</span></td><td>Historic and expensive; Diffusion-DPO gets the same effect offline.</td></tr>
+      <tr><td>DRaFT / ReFL (reward gradient through the sampler)</td><td><span class="v later">Later</span></td><td>Powerful with a differentiable reward, but prone to reward hacking with a small personal reward model.</td></tr>
+      <tr><td>PPO / RLHF classic</td><td><span class="v avoid">Avoid</span></td><td>Four models in memory, online rollouts, unstable on small data. Keep one ablation run for the write-up.</td></tr>
+      <tr><td>Full fine-tune instead of LoRA</td><td><span class="v avoid">Avoid</span></td><td>Catastrophic forgetting on 300 examples; LoRA with a KL term is what you want.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Hygiene:</b> version every checkpoint with the data snapshot that made it; keep a frozen held-out week that no job ever trains on.</li><li><b>Cost:</b> roughly 30–45 min on an A10G per week for jobs 1–3, one A100 hour per month for job 4.</li></ul>
+  </div>
+</article>
+
+<article class="node" id="n12">
+  <header><span class="num">12</span><h3>Eval gate</h3><span class="who">GitHub Actions + Modal</span></header>
+  <div class="body">
+    <p>A checkpoint only replaces the live one if it wins on the frozen evaluation set and does not raise cost or latency. This is the difference between "I fine-tuned a model" and "I run a learning system".</p>
+    <div class="io"><div><b>In</b> candidate checkpoint, frozen held-out week, current champion</div><div><b>Out</b> promote or reject decision, report, automatic rollback on live regression</div></div>
+    <div class="pick"><b>Pick:</b> four gates. Reward-head pairwise accuracy up by at least 1 point; script-agent win-rate vs champion above 55% by LLM judge; critic mean score not down; cost per strip not up more than 10%. Any failure rejects the checkpoint. Live rollback triggers if the first-candidate pick rate drops for 3 days.</div>
+    <table class="opts"><thead><tr><th>Option</th><th>Verdict</th><th>Why</th></tr></thead><tbody>
+      <tr><td>Frozen held-out week + champion/challenger</td><td><span class="v best">Best</span></td><td>Simple, honest, and it produces the before/after table recruiters read.</td></tr>
+      <tr><td>Promote every weekly checkpoint automatically</td><td><span class="v avoid">Avoid</span></td><td>One bad batch of labels silently degrades the product.</td></tr>
+      <tr><td>Online A/B between two live checkpoints</td><td><span class="v later">Later</span></td><td>Correct in principle, but with one user it takes weeks to reach significance. Use offline gates first.</td></tr>
+    </tbody></table>
+    <ul class="risk"><li><b>Headline chart for the README:</b> first-candidate pick rate by week, with vertical lines where checkpoints were promoted.</li></ul>
+  </div>
+</article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SIMULATOR ================= -->
+  <section class="view" id="view-sim">
+    <p class="notice">This runs the text half of the real pipeline (beat extraction, script, prompt writing) with a live Claude call, then simulates the image stage with drawn placeholder scenes so you can judge the story, the captions, and the feedback loop. Real panels come from Leonardo or Flux in production.</p>
+    <div class="sim" style="margin-top:20px">
+      <div>
+        <div class="card">
+          <h3>Tell it about your day</h3>
+          <textarea id="dayText">Ugh, woke up late because my alarm didn't go off, so I basically ran to the bus. Spent the whole morning debugging that n8n workflow that kept failing on the Salesforce step, and it turned out to be a trailing space in a field name. A trailing space! Lunch was leftover biryani which honestly saved my mood. Then in the evening I went to the gym for the first time in two weeks and my legs are already regretting it.</textarea>
+          <div class="row">
+            <button class="btn" id="micBtn" type="button">Speak instead</button>
+            <span class="hint" id="micHint">Browser speech recognition stands in for Whisper here.</span>
+          </div>
+          <div class="row">
+            <label class="opt">Humor <input type="range" id="humor" min="0" max="10" value="7"></label>
+            <label class="opt">Generator
+              <select id="gen"><option value="leonardo">Leonardo Phoenix</option><option value="flux">Flux Dev + LoRA</option></select>
+            </label>
+          </div>
+          <div class="row">
+            <button class="btn primary" id="runBtn" type="button">Make today's comic</button>
+            <button class="btn" id="demoBtn" type="button">Use the built-in example</button>
+          </div>
+          <div id="simErr"></div>
+        </div>
+        <div class="card" style="margin-top:16px">
+          <h3>Learning loop</h3>
+          <p class="hint" style="margin-top:0">Every A/B pick and caption edit you make below becomes a preference pair. The curve shows how first-candidate pick rate would climb as the reward model and DPO absorb them (simulated from typical small-data RLHF curves).</p>
+          <div class="meta">
+            <div><b id="mImg">0</b><span>image pairs</span></div><div><b id="mPairs">0</b><span>caption pairs</span></div>
+            <div><b id="mEdits">0</b><span>caption edits</span></div>
+            <div><b id="mRate">45%</b><span>predicted pick rate</span></div>
+            <div><b id="mCost">$0.00</b><span>cost this run</span></div>
+          </div>
+          <canvas class="curve" id="curve" width="760" height="330" aria-label="Predicted first-candidate pick rate over weeks"></canvas>
+        </div>
+      </div>
+
+      <div>
+        <div class="card">
+          <h3>Pipeline</h3>
+          <ul class="stages" id="stages">
+            <li data-s="asr">ASR</li><li data-s="beats">Beat extractor</li><li data-s="script">Script agent</li><li data-s="prompts">Prompt writer</li><li data-s="gen">Generate ×3</li><li data-s="critic">Critic</li><li data-s="compose">Compose</li>
+          </ul>
+          <div id="stripHost"></div>
+          <details id="dataDetails" style="display:none"><summary>Beats, script, and prompts (JSON)</summary><pre class="json" id="jsonOut"></pre></details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FEATURE BACKLOG ================= -->
+  <section class="view" id="view-feat">
+    <div class="card" style="margin-bottom:16px">
+      <h3>Committed for v1</h3>
+      <table class="opts"><thead><tr><th>Feature</th><th>Where it plugs in</th></tr></thead><tbody>
+        <tr><td>Evening push reminder</td><td>Node 1. Scheduler cron sends a web push or Telegram ping at a fixed time; open rate becomes a retention metric.</td></tr>
+        <tr><td>Recurring side characters</td><td>Node 0 and 10. Friends run through identity onboarding; the memory store links their <code>people</code> record to a LoRA or Character Reference so the script agent can cast them.</td></tr>
+        <tr><td>Weekly recap strip</td><td>Node 4. A Sunday job feeds the week's beats (ranked by importance) into the script agent with a 6-panel template; images reuse the week's chosen panels where possible to save cost.</td></tr>
+        <tr><td>Share as image or story</td><td>Node 8. Composer exports a 1080×1920 story variant and a square variant; share events are logged as weak positive signals for the reward model.</td></tr>
+        <tr><td>Streaks and yearbook</td><td>Node 9 and 8. Streak counter on the comic page; yearbook is a batch job that lays out your top-rated strips into a print-ready PDF.</td></tr>
+      </tbody></table>
+    </div>
+    <div class="card">
+      <h3>What else would make you open this every day?</h3>
+      <p class="hint" style="margin-top:0">Tick what you want. Your selection is saved in this page's memory for the session; copy it out when you are done.</p>
+      <div class="feat" id="featList"></div>
+      <div class="row"><button class="btn" id="copyFeat" type="button">Copy selected features</button><span class="hint" id="copyHint"></span></div>
+    </div>
+  </section>
+</div>
+<script>
+/* ---------- tabs and navigation ---------- */
+const tabs=[...document.querySelectorAll('.tabs [role=tab]')];
+function showView(v){tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.view===v));document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='view-'+v));}
+tabs.forEach(t=>t.addEventListener('click',()=>showView(t.dataset.view)));
+document.querySelectorAll('#flow .nd').forEach(g=>{g.addEventListener('click',()=>{const el=document.getElementById(g.dataset.go);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});});g.setAttribute('tabindex','0');g.setAttribute('role','link');g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' ')g.click();});});
+
+/* ---------- feature backlog ---------- */
+const FEATURES=[
+ ['Evening push reminder','A fixed-time nudge. Retention lives or dies here.'],
+ ['Telegram / WhatsApp voice notes','Send a voice note, get the strip back in the chat.'],
+ ['Recurring side characters','Friends get their own reference image and stay consistent.'],
+ ['Search my life','"When did I last go to the gym?" answered with panels.'],
+ ['Weekly recap strip','Seven days condensed into one 6-panel page every Sunday.'],
+ ['Mood timeline','Emotion per day charted next to the strips.'],
+ ['Style packs','Switch between flat ink, watercolor, manga, newspaper strip.'],
+ ['Quiet-day mode','Two-panel gentle format when nothing much happened.'],
+ ['Share as image or story','Export sized for Instagram or iMessage in one tap.'],
+ ['Voice narration of the strip','Kokoro TTS reads the captions back in your voice.'],
+ ['Streaks and yearbook','A printable yearbook PDF of your favorite strips.'],
+ ['Multi-language input','Speak in Telugu or Hindi, captions in English or the original.'],
+ ['Partner mode','Two people, one shared strip when your days intersect.'],
+ ['Panel regenerate with a note','"Make me look less tired" as a spoken edit.'],
+];
+const fl=document.getElementById('featList');
+const COMMITTED=new Set([0,2,4,8,10]);
+FEATURES.forEach((f,i)=>{const l=document.createElement('label');l.innerHTML=`<input type="checkbox" data-i="${i}" ${COMMITTED.has(i)?'checked':''}><span><strong>${f[0]}</strong><small>${f[1]}</small></span>`;fl.appendChild(l);});
+document.getElementById('copyFeat').addEventListener('click',async()=>{const sel=[...fl.querySelectorAll('input:checked')].map(i=>'- '+FEATURES[i.dataset.i][0]);const txt=sel.length?sel.join('\n'):'(nothing selected)';try{await navigator.clipboard.writeText(txt);document.getElementById('copyHint').textContent=`Copied ${sel.length} feature${sel.length===1?'':'s'}.`;}catch{document.getElementById('copyHint').textContent=txt;}});
+
+/* ---------- simulator state ---------- */
+let pairs=0,imgPairs=0,edits=0,runCost=0,current=null;
+const $=id=>document.getElementById(id);
+function setStage(name,state){const li=document.querySelector(`#stages [data-s="${name}"]`);if(!li)return;li.classList.remove('run','done','fail');if(state)li.classList.add(state);}
+function resetStages(){document.querySelectorAll('#stages li').forEach(l=>l.classList.remove('run','done','fail'));}
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+
+const DEMO={"beats":[{"id":"b1","time":"morning","place":"bedroom","event":"alarm failed, overslept, ran for the bus","emotion":"panic","importance":0.8,"humor":0.7,"quote":"my alarm didn't go off"},{"id":"b2","time":"morning","place":"desk","event":"debugged an n8n workflow failing on the Salesforce step; cause was a trailing space in a field name","emotion":"frustration then disbelief","importance":0.9,"humor":0.9,"quote":"A trailing space!"},{"id":"b3","time":"day","place":"kitchen","event":"ate leftover biryani, mood recovered","emotion":"content","importance":0.5,"humor":0.5,"quote":"honestly saved my mood"},{"id":"b4","time":"evening","place":"gym","event":"first gym session in two weeks, legs sore","emotion":"tired","importance":0.7,"humor":0.8,"quote":"my legs are already regretting it"}],
+"script":{"mood":"frazzled → relieved","panels":[{"id":1,"place":"bedroom","time_of_day":"morning","expression":"panic","action":"bolts upright in bed, bus visible through window","caption_a":"7:52 AM. The alarm had one job.","caption_b":"The alarm chose violence. By doing nothing.","bubble":"NO NO NO"},{"id":2,"place":"desk","time_of_day":"day","expression":"angry","action":"staring at a red error on a laptop, coffee gone cold","caption_a":"Three hours. One trailing space.","caption_b":"Salesforce, n8n, and a single invisible character.","bubble":"...a SPACE?"},{"id":3,"place":"kitchen","time_of_day":"day","expression":"content","action":"eating from a container, eyes closed","caption_a":"Leftover biryani: undefeated.","caption_b":"Yesterday's biryani fixed today.","bubble":""},{"id":4,"place":"gym","time_of_day":"evening","expression":"tired","action":"slumped on a bench, legs wobbly","caption_a":"Gym, week 1 of 1. Legs have filed a complaint.","caption_b":"Two weeks off. Legs remembered everything.","bubble":"why"}]},
+"prompts":[{"panel":1,"positive":"flat ink comic panel, [IDENTITY] young man in blue hoodie and glasses bolting upright in bed, alarm clock silent on nightstand, city bus visible through window, morning light, panicked wide eyes, bold clean lines, warm limited palette","negative":"text, watermark, extra fingers, photorealistic"},{"panel":2,"positive":"flat ink comic panel, [IDENTITY] hunched at a desk staring at laptop with red error banner, cold coffee mug, messy hair, disbelief expression, cool office light","negative":"text, watermark, blur"},{"panel":3,"positive":"flat ink comic panel, [IDENTITY] eating biryani from a container, eyes closed in bliss, small kitchen, warm midday light, steam rising","negative":"text, watermark"},{"panel":4,"positive":"flat ink comic panel, [IDENTITY] collapsed on a gym bench, dumbbell rack behind, wobbly legs, sweat drops, exhausted smile, evening gym lighting","negative":"text, watermark"}]};
+
+/* ---------- Claude call ---------- */
+async function extractAndScript(text,humor,gen){
+  const sys=`You are the Comic Canvas pipeline: beat extractor, script agent, and prompt writer. Return ONLY a JSON object, no prose, no markdown fences.
+Schema:
+{"beats":[{"id":"b1","time":"morning|day|evening|night","place":"bedroom|desk|kitchen|gym|outdoors|transit|cafe|other","event":"...","emotion":"...","importance":0-1,"humor":0-1,"quote":"verbatim phrase from the text or null"}],
+ "script":{"mood":"short arc like 'frazzled → relieved'","panels":[{"id":1,"place":"same enum","time_of_day":"same enum","expression":"happy|content|sad|panic|angry|tired|surprised|neutral","action":"one visual sentence","caption_a":"<=60 chars","caption_b":"<=60 chars, a different comedic angle","bubble":"<=20 chars or empty"}]},
+ "prompts":[{"panel":1,"positive":"image prompt for ${gen==='leonardo'?'Leonardo Phoenix':'Flux Dev with an identity LoRA'} starting with 'flat ink comic panel, [IDENTITY]'","negative":"..."}]}
+Rules: beats only from what was said, never invented. 2 panels if the day was very quiet, otherwise exactly 4 panels following setup, complication, relief, punchline. Captions in the speaker's own voice, reuse their phrasing. Humor level ${humor}/10 (0 = gentle and sincere, 10 = maximum comic exaggeration). If the text describes grief, illness, or a breakup, set humor to gentle regardless and keep captions kind.`;
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:1000,system:sys,messages:[{role:'user',content:text}]})});
+  if(!r.ok)throw new Error('API returned '+r.status);
+  const data=await r.json();
+  const raw=(data.content||[]).filter(c=>c.type==='text').map(c=>c.text).join('\n').replace(/```json|```/g,'').trim();
+  const usage=data.usage||{};runCost=((usage.input_tokens||600)*3+(usage.output_tokens||700)*15)/1e6;
+  return JSON.parse(raw);
+}
+
+/* ---------- panel drawing ---------- */
+const SKY={morning:'#FDE8C8',day:'#DDEBF7',evening:'#F6D3B8',night:'#2E3550'};
+function face(exp){
+  const eyes={panic:'<circle cx="-7" cy="-2" r="4" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><circle cx="7" cy="-2" r="4" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><circle cx="-7" cy="-2" r="1.6"/><circle cx="7" cy="-2" r="1.6"/>',
+   angry:'<path d="M-11 -6 l8 3 M11 -6 l-8 3" stroke="#1B1B1F" stroke-width="2.2"/><circle cx="-7" cy="0" r="1.8"/><circle cx="7" cy="0" r="1.8"/>',
+   tired:'<path d="M-11 -1 h8 M3 -1 h8" stroke="#1B1B1F" stroke-width="2.2"/>',
+   content:'<path d="M-11 -1 q4 3 8 0 M3 -1 q4 3 8 0" stroke="#1B1B1F" stroke-width="2" fill="none"/>',
+   happy:'<path d="M-11 -1 q4 -3 8 0 M3 -1 q4 -3 8 0" stroke="#1B1B1F" stroke-width="2" fill="none"/>',
+   sad:'<circle cx="-7" cy="-1" r="1.8"/><circle cx="7" cy="-1" r="1.8"/><path d="M-11 -7 l7 3 M11 -7 l-7 3" stroke="#1B1B1F" stroke-width="1.6"/>',
+   surprised:'<circle cx="-7" cy="-2" r="3.5" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><circle cx="7" cy="-2" r="3.5" fill="#fff" stroke="#1B1B1F" stroke-width="2"/>'};
+  const mouth={panic:'<ellipse cx="0" cy="9" rx="4" ry="6" fill="#1B1B1F"/>',angry:'<path d="M-6 10 h12" stroke="#1B1B1F" stroke-width="2.5"/>',tired:'<path d="M-5 10 q5 -3 10 0" stroke="#1B1B1F" stroke-width="2" fill="none"/>',content:'<path d="M-7 8 q7 8 14 0" stroke="#1B1B1F" stroke-width="2" fill="none"/>',happy:'<path d="M-8 7 q8 11 16 0 z" fill="#1B1B1F"/>',sad:'<path d="M-6 12 q6 -6 12 0" stroke="#1B1B1F" stroke-width="2" fill="none"/>',surprised:'<circle cx="0" cy="9" r="4" fill="#1B1B1F"/>',neutral:'<path d="M-5 9 h10" stroke="#1B1B1F" stroke-width="2"/>'};
+  const e=eyes[exp]||'<circle cx="-7" cy="-1" r="1.8"/><circle cx="7" cy="-1" r="1.8"/>',m=mouth[exp]||mouth.neutral;
+  return `<g>${e}${m}<rect x="-13" y="-6" width="10" height="7" rx="1.5" fill="none" stroke="#1B1B1F" stroke-width="1.8"/><rect x="3" y="-6" width="10" height="7" rx="1.5" fill="none" stroke="#1B1B1F" stroke-width="1.8"/><line x1="-3" y1="-3" x2="3" y2="-3" stroke="#1B1B1F" stroke-width="1.8"/></g>`;
+}
+function character(x,y,exp,pose){
+  const body=pose==='sit'?`<rect x="-20" y="18" width="40" height="42" rx="6" fill="#5B7FB5" stroke="#1B1B1F" stroke-width="2.2"/><path d="M-18 60 l-6 26 M18 60 l6 26" stroke="#1B1B1F" stroke-width="4" stroke-linecap="round"/>`:`<rect x="-20" y="18" width="40" height="58" rx="6" fill="#5B7FB5" stroke="#1B1B1F" stroke-width="2.2"/><path d="M-12 76 v22 M12 76 v22" stroke="#1B1B1F" stroke-width="4" stroke-linecap="round"/>`;
+  const arms=exp==='panic'?`<path d="M-20 26 l-16 -18 M20 26 l16 -18" stroke="#1B1B1F" stroke-width="4" stroke-linecap="round"/>`:exp==='tired'?`<path d="M-20 30 l-10 30 M20 30 l10 30" stroke="#1B1B1F" stroke-width="4" stroke-linecap="round"/>`:`<path d="M-20 28 l-12 22 M20 28 l12 22" stroke="#1B1B1F" stroke-width="4" stroke-linecap="round"/>`;
+  return `<g transform="translate(${x} ${y})">${body}${arms}<circle cx="0" cy="0" r="20" fill="#C68A5A" stroke="#1B1B1F" stroke-width="2.2"/><path d="M-20 -6 q6 -24 24 -14 q10 -8 16 12 l-6 -4 l-5 6 l-6 -6 l-6 6 l-6 -6 l-6 6z" fill="#1B1B1F"/>${face(exp)}</g>`;
+}
+function props(place,time){
+  switch(place){
+    case 'bedroom':return `<rect x="24" y="40" width="70" height="60" fill="#8FB3D9" stroke="#1B1B1F" stroke-width="2"/><rect x="30" y="46" width="58" height="48" fill="${time==='night'?'#3B4A78':'#DBE9F6'}"/><rect x="150" y="150" width="130" height="44" rx="6" fill="#C9A27A" stroke="#1B1B1F" stroke-width="2"/><rect x="158" y="128" width="60" height="30" rx="6" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><rect x="40" y="108" width="40" height="20" rx="4" fill="#F2C94C" stroke="#1B1B1F" stroke-width="2"/>`;
+    case 'desk':return `<rect x="20" y="160" width="260" height="12" fill="#A68A6A" stroke="#1B1B1F" stroke-width="2"/><rect x="170" y="96" width="100" height="66" rx="4" fill="#2B2B2B" stroke="#1B1B1F" stroke-width="2"/><rect x="177" y="103" width="86" height="50" fill="#1E2A38"/><rect x="183" y="112" width="60" height="5" fill="#4CAF7D"/><rect x="183" y="123" width="70" height="7" fill="#E5484D"/><rect x="183" y="136" width="36" height="5" fill="#8AA"/><rect x="60" y="134" width="20" height="26" rx="3" fill="#fff" stroke="#1B1B1F" stroke-width="2"/>`;
+    case 'kitchen':return `<rect x="20" y="170" width="260" height="12" fill="#D9C9B4" stroke="#1B1B1F" stroke-width="2"/><ellipse cx="80" cy="166" rx="42" ry="10" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><ellipse cx="80" cy="160" rx="34" ry="11" fill="#E0A244" stroke="#1B1B1F" stroke-width="2"/><circle cx="70" cy="157" r="3" fill="#A3402F"/><circle cx="90" cy="156" r="3" fill="#A3402F"/><path d="M70 140 q3 -10 0 -18 M84 138 q3 -10 0 -18 M98 140 q3 -10 0 -18" stroke="#9a9a9a" stroke-width="2" fill="none"/><rect x="200" y="40" width="70" height="50" fill="#fff" stroke="#1B1B1F" stroke-width="2"/>`;
+    case 'gym':return `<rect x="20" y="178" width="260" height="12" fill="#8a8a8a" stroke="#1B1B1F" stroke-width="2"/><rect x="200" y="90" width="70" height="88" fill="#6e6e6e" stroke="#1B1B1F" stroke-width="2"/><rect x="208" y="104" width="54" height="6" fill="#3a3a3a"/><rect x="208" y="130" width="54" height="6" fill="#3a3a3a"/><rect x="208" y="156" width="54" height="6" fill="#3a3a3a"/><circle cx="218" cy="98" r="7" fill="#2b2b2b"/><circle cx="252" cy="98" r="7" fill="#2b2b2b"/><circle cx="218" cy="124" r="7" fill="#2b2b2b"/><circle cx="252" cy="124" r="7" fill="#2b2b2b"/><rect x="40" y="150" width="120" height="14" rx="4" fill="#3a3a3a" stroke="#1B1B1F" stroke-width="2"/>`;
+    case 'outdoors':return `<rect x="20" y="170" width="260" height="20" fill="#7FB069" stroke="#1B1B1F" stroke-width="2"/><circle cx="240" cy="60" r="22" fill="${time==='night'?'#F1E7C6':'#FFD447'}" stroke="#1B1B1F" stroke-width="2"/><rect x="50" y="90" width="14" height="80" fill="#8B5A2B" stroke="#1B1B1F" stroke-width="2"/><circle cx="57" cy="80" r="34" fill="#4E9A51" stroke="#1B1B1F" stroke-width="2"/>`;
+    case 'transit':return `<rect x="20" y="176" width="260" height="14" fill="#6b6b6b" stroke="#1B1B1F" stroke-width="2"/><rect x="150" y="90" width="130" height="80" rx="8" fill="#F2C94C" stroke="#1B1B1F" stroke-width="2"/><rect x="160" y="100" width="30" height="26" fill="#DBE9F6" stroke="#1B1B1F" stroke-width="2"/><rect x="200" y="100" width="30" height="26" fill="#DBE9F6" stroke="#1B1B1F" stroke-width="2"/><rect x="240" y="100" width="30" height="26" fill="#DBE9F6" stroke="#1B1B1F" stroke-width="2"/><circle cx="175" cy="174" r="10" fill="#1B1B1F"/><circle cx="255" cy="174" r="10" fill="#1B1B1F"/>`;
+    case 'cafe':return `<rect x="20" y="170" width="260" height="12" fill="#A68A6A" stroke="#1B1B1F" stroke-width="2"/><rect x="180" y="120" width="90" height="50" rx="6" fill="#C9A27A" stroke="#1B1B1F" stroke-width="2"/><rect x="200" y="96" width="24" height="24" rx="3" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><path d="M224 104 q10 6 0 14" stroke="#1B1B1F" stroke-width="2" fill="none"/><path d="M206 90 q3 -8 0 -14" stroke="#9a9a9a" stroke-width="2" fill="none"/>`;
+    default:return `<rect x="20" y="176" width="260" height="14" fill="#B4B2A9" stroke="#1B1B1F" stroke-width="2"/>`;
+  }
+}
+function bubble(text){
+  if(!text)return '';const w=Math.max(60,text.length*9+24);const x=300-w-16;
+  return `<rect x="${x}" y="18" width="${w}" height="34" rx="17" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><path d="M${x+w/2-6} 52 l-6 12 l16 -12" fill="#fff" stroke="#1B1B1F" stroke-width="2"/><text x="${x+w/2}" y="41" text-anchor="middle" font-family="Archivo,sans-serif" font-weight="700" font-size="15" fill="#1B1B1F">${escapeHtml(text)}</text>`;
+}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function detail(place,time,v){
+  const dots=`<pattern id="ht${v}" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="${v?1.3:0.9}" fill="#1B1B1F" opacity=".14"/></pattern><rect width="300" height="200" fill="url(#ht${v})"/>`;
+  const shelf=`<rect x="10" y="30" width="60" height="6" fill="#8B5A2B" stroke="#1B1B1F" stroke-width="1.5"/><rect x="14" y="14" width="10" height="16" fill="#E24B4A" stroke="#1B1B1F" stroke-width="1.5"/><rect x="28" y="12" width="10" height="18" fill="#378ADD" stroke="#1B1B1F" stroke-width="1.5"/><rect x="42" y="16" width="10" height="14" fill="#639922" stroke="#1B1B1F" stroke-width="1.5"/>`;
+  const plant=`<rect x="262" y="140" width="22" height="26" fill="#C9A27A" stroke="#1B1B1F" stroke-width="1.5"/><path d="M273 140 q-14 -18 -4 -34 M273 140 q12 -20 6 -34 M273 140 q0 -20 -2 -30" stroke="#4E9A51" stroke-width="4" fill="none" stroke-linecap="round"/>`;
+  const poster=`<rect x="228" y="34" width="46" height="60" fill="#FFD447" stroke="#1B1B1F" stroke-width="1.5"/><circle cx="251" cy="58" r="12" fill="#E24B4A" stroke="#1B1B1F" stroke-width="1.5"/><rect x="236" y="78" width="30" height="5" fill="#1B1B1F"/>`;
+  const lamp=`<path d="M40 10 v40" stroke="#1B1B1F" stroke-width="2"/><path d="M22 50 h36 l-8 -14 h-20z" fill="#F2C94C" stroke="#1B1B1F" stroke-width="1.5"/>`;
+  const lightBeam=`<path d="M0 0 L120 0 L60 200 L0 200z" fill="#fff" opacity=".18"/>`;
+  const rays=`<g stroke="#fff" stroke-width="10" opacity=".35"><path d="M300 0 L120 200"/><path d="M300 40 L180 200"/></g>`;
+  const grain=`<pattern id="wd${v}" width="20" height="8" patternUnits="userSpaceOnUse"><path d="M0 4 q5 -3 10 0 t10 0" stroke="#1B1B1F" fill="none" opacity=".18"/></pattern>`;
+  const byPlace={bedroom:v?poster+lamp:shelf+plant,desk:v?shelf+poster:plant+lamp,kitchen:v?shelf+lamp:poster+plant,gym:v?poster:`<rect x="20" y="20" width="60" height="80" fill="#B5D4F4" stroke="#1B1B1F" stroke-width="1.5"/>`,outdoors:v?`<rect x="180" y="100" width="90" height="70" fill="#B4B2A9" stroke="#1B1B1F" stroke-width="1.5"/><rect x="195" y="115" width="16" height="16" fill="#DBE9F6" stroke="#1B1B1F"/><rect x="230" y="115" width="16" height="16" fill="#DBE9F6" stroke="#1B1B1F"/>`:`<path d="M0 120 q60 -30 120 0 t120 0" stroke="#1B1B1F" fill="none" opacity=".3"/>`,transit:v?poster:lamp,cafe:v?shelf+poster:plant+lamp,other:v?poster:plant};
+  return `<defs>${grain}</defs>${v?rays:lightBeam}${byPlace[place]||''}${dots}`;
+}
+function panelSVG(p,v){v=v||0;
+  const sit=/sit|bench|bed|desk|eat|slump|collapse/i.test(p.action||'')||p.place==='desk'||p.place==='kitchen'||p.place==='gym';
+  let x=p.place==='desk'?110:p.place==='bedroom'?230:p.place==='kitchen'?170:p.place==='gym'?110:150;
+  if(v){x=Math.min(240,Math.max(60,300-x));}
+  const y=sit?96:80;
+  const zoom=v?`<g transform="translate(150 200) scale(1.18) translate(-150 -200)">`:'<g>';
+  return `<svg viewBox="0 0 300 200" role="img" aria-label="${escapeHtml(p.action)}"><rect width="300" height="200" fill="${SKY[p.time_of_day]||SKY.day}"/>${detail(p.place,p.time_of_day,v)}${zoom}${props(p.place,p.time_of_day)}${character(x,y,p.expression,sit?'sit':'stand')}</g>${bubble(p.bubble)}</svg>`;
+}
+
+/* ---------- render strip ---------- */
+function renderStrip(d){
+  current=d;const host=$('stripHost');const date=new Date().toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric'});
+  const sc=()=>({id:(0.42+Math.random()*0.3).toFixed(2),st:(0.55+Math.random()*0.35).toFixed(2),al:(0.22+Math.random()*0.14).toFixed(2)});
+  const panels=d.script.panels.map((p,i)=>{const a=sc(),b=sc();const critic=(+a.id+ +a.st+ +a.al)>=(+b.id+ +b.st+ +b.al)?0:1;
+    return `<div class="panel" data-i="${i}"><div class="pair"><div class="cand ${critic===0?'critic':''}" data-c="0">${panelSVG(p,0)}<div class="scores">identity ${a.id} · style ${a.st} · align ${a.al}${critic===0?' · critic pick':''}</div><button type="button" class="pickimg">Prefer this one</button></div><div class="cand ${critic===1?'critic':''}" data-c="1">${panelSVG(p,1)}<div class="scores">identity ${b.id} · style ${b.st} · align ${b.al}${critic===1?' · critic pick':''}</div><button type="button" class="pickimg">Prefer this one</button></div></div><div class="cap" contenteditable="true" spellcheck="false" data-orig="${escapeHtml(p.caption_a)}">${escapeHtml(p.caption_a)}</div><div class="ab"><button type="button" class="chosen" data-v="a">A: ${escapeHtml(p.caption_a)}</button><button type="button" data-v="b">B: ${escapeHtml(p.caption_b)}</button></div></div>`;}).join('');
+  host.innerHTML=`<div class="strip"><div class="head"><span>Comic Canvas · ${date}</span><span>mood: ${escapeHtml(d.script.mood||'')}</span></div><div class="panels">${panels}</div><p class="hint" style="margin-top:10px">Each panel shows two candidates from the generator; the one marked "critic pick" is what the consistency critic would choose today. Tap "Prefer this one" to record an image preference pair, which is what trains the reward model and, later, Diffusion-DPO. Agreeing with the critic is still data. Below each pair, pick or edit the caption for the writer's training pairs.</p></div>`;
+  host.querySelectorAll('.ab button').forEach(b=>b.addEventListener('click',()=>{
+    const ab=b.parentElement;if(b.classList.contains('chosen'))return;ab.querySelectorAll('button').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');
+    const i=+ab.parentElement.dataset.i;const p=d.script.panels[i];const cap=ab.parentElement.querySelector('.cap');cap.textContent=b.dataset.v==='a'?p.caption_a:p.caption_b;cap.dataset.orig=cap.textContent;pairs++;updateMeta();
+  }));
+  host.querySelectorAll('.pickimg').forEach(b=>b.addEventListener('click',()=>{const cand=b.parentElement;const pair=cand.parentElement;if(cand.classList.contains('chosen'))return;pair.querySelectorAll('.cand').forEach(c=>{c.classList.remove('chosen','rejected');});cand.classList.add('chosen');pair.querySelectorAll('.cand:not(.chosen)').forEach(c=>c.classList.add('rejected'));imgPairs++;updateMeta();}));
+  host.querySelectorAll('.cap').forEach(c=>c.addEventListener('blur',()=>{if(c.textContent.trim()!==c.dataset.orig.trim()){edits++;pairs++;c.dataset.orig=c.textContent;updateMeta();}}));
+  $('jsonOut').textContent=JSON.stringify(d,null,2);$('dataDetails').style.display='block';
+}
+
+/* ---------- metrics and learning curve ---------- */
+function predictedRate(n){return 0.45+0.40*(1-Math.exp(-n/40));}
+function totalPairs(){return pairs+imgPairs;}
+function updateMeta(){$('mImg').textContent=imgPairs;$('mPairs').textContent=pairs;$('mEdits').textContent=edits;$('mRate').textContent=Math.round(predictedRate(totalPairs())*100)+'%';const img=($('gen').value==='leonardo'?0.015:0.025)*12;$('mCost').textContent='$'+(runCost+img).toFixed(2);drawCurve();}
+function drawCurve(){
+  const c=$('curve'),ctx=c.getContext('2d'),W=c.width,H=c.height,L=54,R=20,T=18,B=40;ctx.clearRect(0,0,W,H);
+  ctx.strokeStyle='#C9CDD6';ctx.lineWidth=1;ctx.font='16px "Source Sans 3",sans-serif';ctx.fillStyle='#5C6170';
+  for(let v=40;v<=90;v+=10){const y=T+(H-T-B)*(1-(v-35)/(90-35));ctx.beginPath();ctx.moveTo(L,y);ctx.lineTo(W-R,y);ctx.stroke();ctx.fillText(v+'%',8,y+4);}
+  const weeks=12;for(let w=0;w<=weeks;w+=2){const x=L+(W-L-R)*w/weeks;ctx.fillText('wk '+w,x-12,H-14);}
+  ctx.strokeStyle='#2F5BEA';ctx.lineWidth=3;ctx.beginPath();
+  for(let w=0;w<=weeks;w+=0.25){const n=w*28;const r=predictedRate(n);const x=L+(W-L-R)*w/weeks,y=T+(H-T-B)*(1-(r*100-35)/(90-35));w===0?ctx.moveTo(x,y):ctx.lineTo(x,y);}ctx.stroke();
+  ctx.setLineDash([4,4]);ctx.strokeStyle='#5C6170';ctx.lineWidth=1.5;const yb=T+(H-T-B)*(1-(45-35)/(90-35));ctx.beginPath();ctx.moveTo(L,yb);ctx.lineTo(W-R,yb);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#5C6170';ctx.fillText('no learning (random best-of-3)',L+8,yb-6);
+  const wNow=Math.min(weeks,totalPairs()/28);const r=predictedRate(totalPairs());const x=L+(W-L-R)*wNow/weeks,y=T+(H-T-B)*(1-(r*100-35)/(90-35));
+  ctx.fillStyle='#FFD447';ctx.strokeStyle='#1B1B1F';ctx.lineWidth=2;ctx.beginPath();ctx.arc(x,y,7,0,Math.PI*2);ctx.fill();ctx.stroke();
+  ctx.fillStyle='#1B1B1F';ctx.font='600 16px Archivo,sans-serif';ctx.fillText(`you: ${totalPairs()} pairs`,Math.min(x+12,W-120),y-10);
+}
+
+/* ---------- run ---------- */
+async function run(useDemo){
+  const btn=$('runBtn');btn.disabled=true;$('demoBtn').disabled=true;$('simErr').innerHTML='';resetStages();$('stripHost').innerHTML='';
+  const text=$('dayText').value.trim();
+  try{
+    setStage('asr','done');
+    setStage('beats','run');
+    let data;
+    if(useDemo||!text){await sleep(500);data=DEMO;runCost=0.0;}
+    else{try{data=await extractAndScript(text,+$('humor').value,$('gen').value);}catch(e){$('simErr').innerHTML=`<div class="err">Live call failed (${escapeHtml(e.message)}). Showing the built-in example instead so you can still try the feedback loop.</div>`;data=DEMO;runCost=0;}}
+    setStage('beats','done');setStage('script','run');await sleep(350);setStage('script','done');
+    setStage('prompts','run');await sleep(300);setStage('prompts','done');
+    setStage('gen','run');await sleep(700);setStage('gen','done');
+    setStage('critic','run');await sleep(500);setStage('critic','done');
+    setStage('compose','run');await sleep(250);renderStrip(data);setStage('compose','done');updateMeta();
+  }catch(e){$('simErr').innerHTML=`<div class="err">${escapeHtml(e.message)}</div>`;}
+  finally{btn.disabled=false;$('demoBtn').disabled=false;}
+}
+$('runBtn').addEventListener('click',()=>run(false));
+$('demoBtn').addEventListener('click',()=>run(true));
+$('gen').addEventListener('change',updateMeta);
+
+/* ---------- mic (browser speech as a stand-in for Whisper) ---------- */
+const SR=window.SpeechRecognition||window.webkitSpeechRecognition;let rec=null,listening=false;
+if(!SR){$('micBtn').disabled=true;$('micHint').textContent='Speech recognition is not available in this browser; type instead.';}
+else{
+  $('micBtn').addEventListener('click',()=>{
+    if(listening){rec.stop();return;}
+    rec=new SR();rec.continuous=true;rec.interimResults=true;rec.lang='en-US';let final='';const base=$('dayText').value.trim();
+    rec.onresult=e=>{let interim='';for(let i=e.resultIndex;i<e.results.length;i++){const t=e.results[i][0].transcript;if(e.results[i].isFinal)final+=t+' ';else interim+=t;}$('dayText').value=(base?base+' ':'')+final+interim;};
+    rec.onend=()=>{listening=false;$('micBtn').textContent='Speak instead';$('micBtn').classList.remove('rec');};
+    rec.onerror=ev=>{$('micHint').textContent='Microphone error: '+ev.error;};
+    rec.start();listening=true;$('micBtn').textContent='Stop listening';$('micBtn').classList.add('rec');
+  });
+}
+drawCurve();
+</script>
+</body>
+</html>

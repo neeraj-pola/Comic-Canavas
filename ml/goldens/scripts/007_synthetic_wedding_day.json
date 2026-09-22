@@ -1,0 +1,128 @@
+{
+  "id": "007_synthetic_wedding_day",
+  "source_transcript_id": "012_synthetic_wedding_day",
+  "beat_sheet": {
+    "date": "2026-09-19",
+    "mood_arc": [
+      "moved",
+      "joyful"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "outdoors",
+        "place_detail": "an outdoor wedding ceremony under a large oak tree",
+        "event": "Attended Nora and Devon's outdoor wedding ceremony, where Nora's speech made everyone cry",
+        "emotion": "moved",
+        "people": [
+          "Nora",
+          "Devon"
+        ],
+        "objects": [],
+        "importance": 0.9,
+        "humor": 0.0,
+        "quote": "Nora cried through her whole speech, which made everyone else cry too"
+      },
+      {
+        "id": "b2",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "a wedding reception with a dance floor",
+        "event": "Danced much more than planned at the wedding reception",
+        "emotion": "joyful",
+        "people": [
+          "Nora",
+          "Devon"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.3,
+        "quote": "my feet are destroyed but completely worth it"
+      }
+    ],
+    "people_mentioned": [
+      "Nora",
+      "Devon"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "moved to joyful",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "an outdoor wedding under an oak tree",
+          "time_of_day": "afternoon",
+          "expression": "sad",
+          "action": "Nora's voice cracks mid-speech; everyone tears up.",
+          "framing": "wide",
+          "caption_a": "Nora's speech had the whole yard crying.",
+          "caption_b": "Best ceremony I've been to in years.",
+          "bubble": "",
+          "cast": [
+            "Nora",
+            "Devon"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a wedding reception dance floor",
+          "time_of_day": "evening",
+          "expression": "happy",
+          "action": "Spinning on the dance floor long past planned.",
+          "framing": "close",
+          "caption_a": "Danced way more than I meant to.",
+          "caption_b": "Feet destroyed, completely worth it.",
+          "bubble": "",
+          "cast": [
+            "Nora",
+            "Devon"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "a wedding to remember",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "an outdoor ceremony under a large tree",
+          "time_of_day": "afternoon",
+          "expression": "happy",
+          "action": "Nora and Devon exchange vows under the oak.",
+          "framing": "close",
+          "caption_a": "One of the best days in years.",
+          "caption_b": "Nora and Devon, finally married.",
+          "bubble": "",
+          "cast": [
+            "Nora",
+            "Devon"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a reception dance floor at night",
+          "time_of_day": "night",
+          "expression": "surprised",
+          "action": "Still dancing as the band plays one more song.",
+          "framing": "wide",
+          "caption_a": "My feet are done. No regrets.",
+          "caption_b": "Danced far more than planned.",
+          "bubble": "",
+          "cast": [
+            "Nora",
+            "Devon"
+          ]
+        }
+      ]
+    }
+  ]
+}

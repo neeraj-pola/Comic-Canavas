@@ -1,0 +1,107 @@
+{
+  "id": "009_synthetic_got_a_raise",
+  "source_transcript_id": "015_synthetic_got_a_raise",
+  "beat_sheet": {
+    "date": "2026-10-01",
+    "mood_arc": [
+      "stunned",
+      "celebratory"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "a manager's office delivering unexpected good news",
+        "event": "Manager told them they're getting a raise and a title bump next cycle",
+        "emotion": "stunned",
+        "people": [],
+        "objects": [],
+        "importance": 0.8,
+        "humor": 0.0,
+        "quote": "I genuinely did not see that coming"
+      },
+      {
+        "id": "b2",
+        "time": "evening",
+        "place": "cafe",
+        "place_detail": "a nice restaurant for a celebratory dinner",
+        "event": "Treated themselves to a nice dinner to celebrate the raise",
+        "emotion": "celebratory",
+        "people": [],
+        "objects": [],
+        "importance": 0.4,
+        "humor": 0.0,
+        "quote": "treated myself to a really nice dinner to celebrate"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "stunned then celebrating",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a manager's office",
+          "time_of_day": "afternoon",
+          "expression": "surprised",
+          "action": "Manager delivers the raise news, deadpan at first.",
+          "framing": "close",
+          "caption_a": "Did not see that coming at all.",
+          "caption_b": "A raise and a title bump, out of nowhere.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a nice restaurant table",
+          "time_of_day": "evening",
+          "expression": "happy",
+          "action": "Toasting alone with a celebratory dinner.",
+          "framing": "wide",
+          "caption_a": "Treated myself. Fully earned it.",
+          "caption_b": "Dinner out to celebrate the raise.",
+          "bubble": "Cheers!",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "good news, good dinner",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "an office, mid-conversation with a manager",
+          "time_of_day": "afternoon",
+          "expression": "surprised",
+          "action": "Still processing the news an hour later.",
+          "framing": "wide",
+          "caption_a": "Still a little stunned, an hour later.",
+          "caption_b": "Raise AND a title bump. Wow.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a restaurant",
+          "time_of_day": "evening",
+          "expression": "content",
+          "action": "Raising a glass alone at a nice table.",
+          "framing": "close",
+          "caption_a": "A dinner this good doesn't need company.",
+          "caption_b": "Celebrated solo, and that was perfect.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    }
+  ]
+}

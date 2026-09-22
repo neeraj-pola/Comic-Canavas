@@ -1,0 +1,151 @@
+{
+  "$defs": {
+    "FeatureCheck": {
+      "description": "One look-card line, judged present or not on one face crop.",
+      "properties": {
+        "expected": {
+          "title": "Expected",
+          "type": "string"
+        },
+        "feature": {
+          "enum": [
+            "hair",
+            "glasses",
+            "skin_tone",
+            "face_shape",
+            "signature_outfit",
+            "distinguishing"
+          ],
+          "title": "Feature",
+          "type": "string"
+        },
+        "mandatory": {
+          "title": "Mandatory",
+          "type": "boolean"
+        },
+        "note": {
+          "default": "",
+          "title": "Note",
+          "type": "string"
+        },
+        "present": {
+          "title": "Present",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "feature",
+        "expected",
+        "present",
+        "mandatory"
+      ],
+      "title": "FeatureCheck",
+      "type": "object"
+    },
+    "FeatureChecklistResult": {
+      "description": "The identity metric: \"is every feature of the approved character\npresent\" rather than \"is this geometrically the same face\" \u2014 a VLM\nchecklist result, crossing from master ranking into the critic.",
+      "properties": {
+        "artifact_note": {
+          "default": "",
+          "title": "Artifact Note",
+          "type": "string"
+        },
+        "artifacts_clean": {
+          "title": "Artifacts Clean",
+          "type": "boolean"
+        },
+        "checks": {
+          "items": {
+            "$ref": "#/$defs/FeatureCheck"
+          },
+          "title": "Checks",
+          "type": "array"
+        },
+        "image_sha256": {
+          "title": "Image Sha256",
+          "type": "string"
+        },
+        "mandatory_passed": {
+          "title": "Mandatory Passed",
+          "type": "boolean"
+        },
+        "model": {
+          "title": "Model",
+          "type": "string"
+        },
+        "score": {
+          "title": "Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "checks",
+        "score",
+        "mandatory_passed",
+        "artifacts_clean",
+        "image_sha256",
+        "model"
+      ],
+      "title": "FeatureChecklistResult",
+      "type": "object"
+    }
+  },
+  "description": "One ranked stylized master-design candidate. Crosses into the\nonboarding \"which one feels like you\" screen, so it's a contract, not a\nlocal dataclass. `prompt`/`seed` are kept so a later character sheet can\nregenerate from the exact phrasing the approved master came from.",
+  "properties": {
+    "arcface_agreement": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "Arcface Agreement"
+    },
+    "checklist": {
+      "$ref": "#/$defs/FeatureChecklistResult"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "prompt": {
+      "title": "Prompt",
+      "type": "string"
+    },
+    "rank_score": {
+      "title": "Rank Score",
+      "type": "number"
+    },
+    "seed": {
+      "title": "Seed",
+      "type": "integer"
+    },
+    "source_crop_index": {
+      "title": "Source Crop Index",
+      "type": "integer"
+    },
+    "style_score": {
+      "title": "Style Score",
+      "type": "number"
+    },
+    "url": {
+      "title": "Url",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "url",
+    "seed",
+    "source_crop_index",
+    "prompt",
+    "checklist",
+    "style_score",
+    "arcface_agreement",
+    "rank_score"
+  ],
+  "title": "MasterCandidate",
+  "type": "object"
+}

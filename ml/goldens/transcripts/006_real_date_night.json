@@ -1,0 +1,42 @@
+{
+  "id": "006_real_date_night",
+  "category": "real",
+  "known_people": ["Alex"],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Alex planned this whole surprise dinner thing at that little Italian place we went to on our first date, which I did not expect on a random Tuesday. We ended up talking for like three hours and closed the place down basically. Really needed a night like that.",
+  "expected": {
+    "date": "2026-06-10",
+    "mood_arc": ["surprised", "warm"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "evening",
+        "place": "cafe",
+        "place_detail": "a small Italian restaurant, the site of their first date",
+        "event": "Alex surprised them with dinner at the Italian place from their first date",
+        "emotion": "surprised",
+        "people": ["Alex"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.1,
+        "quote": "did not expect on a random Tuesday"
+      },
+      {
+        "id": "b2",
+        "time": "night",
+        "place": "cafe",
+        "place_detail": "the same restaurant, lingering after most other tables had cleared",
+        "event": "Talked with Alex for about three hours until the restaurant closed",
+        "emotion": "warm",
+        "people": ["Alex"],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.1,
+        "quote": "closed the place down basically"
+      }
+    ],
+    "people_mentioned": ["Alex"],
+    "flags": []
+  }
+}

@@ -1,0 +1,69 @@
+[project]
+name = "comiccanvas-ml"
+version = "0.1.0"
+description = "ML pipelines: identity (face/LoRA), evals, reward model, preference learning (ml/)"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "numpy>=1.26",
+    "opencv-python-headless>=4.10",
+    "onnxruntime>=1.19",
+    "insightface>=0.7.3",
+    "imagehash>=4.3",
+    "pillow>=11.0",
+    "pillow-heif>=0.18",
+    "modal>=1.0",
+    "huggingface-hub>=0.25",
+    # `ml/identity/leonardo_ref.py` already imported this undeclared;
+    # `fal_jobs.py` (task 5.7/5.8) is the second real user.
+    "httpx>=0.27",
+    # DINOv2-small style scoring (task 5.7/5.8, ml/identity/style_score.py)
+    # — CPU-only, no CUDA extras needed for a 22M-param ViT-S/14.
+    # torchvision is a real, load-bearing dependency here even though this
+    # code never imports it directly: transformers' AutoImageProcessor
+    # requires it to be importable at all (confirmed live 2026-09-14 — it
+    # raises ImportError without it, not a lazy/optional path).
+    "torch>=2.4",
+    "torchvision>=0.19",
+    "transformers>=4.44",
+    # Task 9.1/9.2: `ml/data_export.py`/`ml/reward_model/train.py` read
+    # real preference data straight from Postgres. Raw psycopg (this
+    # project's convention everywhere) rather than the `app.db`
+    # sys.path-bootstrap trick `ml/identity/lookcard.py` uses for its one
+    # LLM call — that trick is genuinely unsafe once a service's own
+    # `app` package might already be loaded in the same process (a real
+    # bug found and fixed in Phase 8, ADR 0019); these modules are
+    # self-contained instead, like `ml/identity/faces.py`.
+    "psycopg[binary]>=3.2",
+    "python-dotenv>=1.0",
+    # Task 9.10: experiment tracking. Code-complete, NOT live-verified —
+    # no real WANDB_API_KEY exists in this project yet (`.env`'s own
+    # entry is commented out), matching this project's precedent for an
+    # unverified-but-real integration (task 4.4's fal_flux.py, blocked on
+    # a real FAL_KEY at the time).
+    "wandb>=0.18",
+]
+
+[tool.uv]
+# Unlike services/{api,worker,scheduler} (deliberately not installed —
+# they share the top-level name `app`, see CLAUDE.md §2), `ml` IS a real
+# installed package: `ml.identity.faces` etc. should resolve the same way
+# regardless of cwd or how a script is invoked, not rely on sys.path
+# bootstrapping the way `ml/evals/*.py` (pre-existing, Phase 2/3) does.
+package = true
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+# This pyproject.toml sits *inside* the package it describes (ml/__init__.py
+# is a sibling, not one level down like packages/contracts's own layout) —
+# `where=[".."]` searches ml/'s parent (the repo root) for a package
+# literally named `ml`, rather than setuptools' flat-layout auto-discovery
+# finding every subdirectory (evals, identity, dpo, ...) as its own
+# top-level package and refusing to guess. `ml/goldens/` is data (frozen
+# eval fixtures, CLAUDE.md §4), not code — excluded the same way ruff/mypy
+# already exclude it (root pyproject.toml).
+where = [".."]
+include = ["ml", "ml.*"]
+exclude = ["ml.goldens", "ml.goldens.*"]

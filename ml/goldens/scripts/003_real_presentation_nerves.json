@@ -1,0 +1,142 @@
+{
+  "id": "003_real_presentation_nerves",
+  "source_transcript_id": "004_real_presentation_nerves",
+  "beat_sheet": {
+    "date": "2026-05-08",
+    "mood_arc": [
+      "anxious",
+      "relieved",
+      "proud"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "night",
+        "place": "bedroom",
+        "place_detail": "lying awake in bed the night before a big presentation",
+        "event": "Barely slept the night before, dreading the leadership presentation",
+        "emotion": "anxious",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "I barely slept last night I was so nervous about it"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "desk",
+        "place_detail": "a conference room presenting a deck to leadership",
+        "event": "Got through the whole presentation to leadership, with Marcus backing up the numbers question",
+        "emotion": "relieved",
+        "people": [
+          "Marcus"
+        ],
+        "objects": [],
+        "importance": 0.8,
+        "humor": 0.0,
+        "quote": "Marcus backed me up on the numbers question"
+      },
+      {
+        "id": "b3",
+        "time": "afternoon",
+        "place": "desk",
+        "place_detail": "an office hallway conversation with a manager after the meeting",
+        "event": "The manager said it was one of the clearer pitches she'd seen this quarter",
+        "emotion": "proud",
+        "people": [],
+        "objects": [],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "one of the clearer pitches she's seen this quarter"
+      }
+    ],
+    "people_mentioned": [
+      "Marcus"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "anxious to proud",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "lying awake in bed at night",
+          "time_of_day": "night",
+          "expression": "panic",
+          "action": "Staring at the ceiling, wide awake before the big pitch.",
+          "framing": "close",
+          "caption_a": "Couldn't sleep. Kept rehearsing slide four.",
+          "caption_b": "Barely slept, dreading today.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a conference room presenting to leadership",
+          "time_of_day": "midday",
+          "expression": "surprised",
+          "action": "Marcus jumps in on the numbers question.",
+          "framing": "wide",
+          "caption_a": "Marcus had my back on the hard question.",
+          "caption_b": "Marcus saved the numbers slide.",
+          "bubble": "Thanks!",
+          "cast": [
+            "Marcus"
+          ]
+        },
+        {
+          "id": 3,
+          "beat_id": "b3",
+          "place": "an office hallway",
+          "time_of_day": "afternoon",
+          "expression": "happy",
+          "action": "Manager stops me in the hallway with a compliment.",
+          "framing": "medium",
+          "caption_a": "\"One of the clearer pitches this quarter.\"",
+          "caption_b": "Turns out I didn't need to panic.",
+          "bubble": "",
+          "cast": []
+        }
+      ]
+    },
+    {
+      "mood": "nerves that paid off",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a bedroom at night",
+          "time_of_day": "night",
+          "expression": "tired",
+          "action": "Awake at 2am, running through the deck again.",
+          "framing": "wide",
+          "caption_a": "Sleep lost to a deck I already knew.",
+          "caption_b": "Too nervous to sleep before the pitch.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a conference room",
+          "time_of_day": "midday",
+          "expression": "happy",
+          "action": "Getting through the whole presentation, relieved.",
+          "framing": "close",
+          "caption_a": "Made it through \u2014 Marcus backed me up.",
+          "caption_b": "The dreaded pitch, actually fine.",
+          "bubble": "Phew.",
+          "cast": [
+            "Marcus"
+          ]
+        }
+      ]
+    }
+  ]
+}

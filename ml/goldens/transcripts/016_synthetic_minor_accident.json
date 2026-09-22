@@ -1,0 +1,42 @@
+{
+  "id": "016_synthetic_minor_accident",
+  "category": "synthetic",
+  "known_people": [],
+  "known_places": [],
+  "known_vocab": [],
+  "transcript": "Classic morning, spilled an entire cup of coffee down my shirt right before a video call so I had to change in like ninety seconds. Then stubbed my toe on the same table leg I always stub it on, you'd think I'd learn. Otherwise a completely normal, forgettable day.",
+  "expected": {
+    "date": "2026-05-14",
+    "mood_arc": ["flustered", "amused"],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "kitchen",
+        "place_detail": "a kitchen, coffee spilled right before a video call",
+        "event": "Spilled coffee down their shirt right before a video call and had to change in ninety seconds",
+        "emotion": "flustered",
+        "people": [],
+        "objects": ["coffee"],
+        "importance": 0.1,
+        "humor": 0.7,
+        "quote": "had to change in like ninety seconds"
+      },
+      {
+        "id": "b2",
+        "time": "morning",
+        "place": "other",
+        "place_detail": "a familiar table leg that keeps catching a toe",
+        "event": "Stubbed their toe on the same table leg they always stub it on",
+        "emotion": "amused",
+        "people": [],
+        "objects": ["table"],
+        "importance": 0.1,
+        "humor": 0.6,
+        "quote": "you'd think I'd learn"
+      }
+    ],
+    "people_mentioned": [],
+    "flags": []
+  }
+}

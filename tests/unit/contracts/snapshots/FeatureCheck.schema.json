@@ -1,0 +1,42 @@
+{
+  "description": "One look-card line, judged present or not on one face crop.",
+  "properties": {
+    "expected": {
+      "title": "Expected",
+      "type": "string"
+    },
+    "feature": {
+      "enum": [
+        "hair",
+        "glasses",
+        "skin_tone",
+        "face_shape",
+        "signature_outfit",
+        "distinguishing"
+      ],
+      "title": "Feature",
+      "type": "string"
+    },
+    "mandatory": {
+      "title": "Mandatory",
+      "type": "boolean"
+    },
+    "note": {
+      "default": "",
+      "title": "Note",
+      "type": "string"
+    },
+    "present": {
+      "title": "Present",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "feature",
+    "expected",
+    "present",
+    "mandatory"
+  ],
+  "title": "FeatureCheck",
+  "type": "object"
+}

@@ -1,0 +1,272 @@
+/* Ported verbatim from comiccanvas-dashboard.html's `.shell`/`.side`/
+ * `.navcard`/`.streak`/`.main`/`.top`/`.search`/`.tags`/`.user` rules —
+ * the app shell. */
+
+.dashboard-scope .shell {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  min-height: 100vh;
+}
+@media (max-width: 900px) {
+  .dashboard-scope .shell {
+    grid-template-columns: 1fr;
+  }
+}
+.dashboard-scope .side {
+  padding: 24px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+@media (max-width: 900px) {
+  .dashboard-scope .side {
+    position: static;
+    height: auto;
+  }
+}
+.dashboard-scope .brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  font-size: 20px;
+  padding: 6px 10px;
+}
+.dashboard-scope .brand i {
+  width: 30px;
+  height: 4px;
+  background: var(--mustard);
+  border-radius: 2px;
+  display: block;
+}
+.dashboard-scope .navcard {
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r);
+  padding: 10px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dashboard-scope .navcard a,
+.dashboard-scope .navcard button {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 13px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 16.5px;
+  color: var(--ink);
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+}
+.dashboard-scope .navcard a svg,
+.dashboard-scope .navcard button svg {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+.dashboard-scope .navcard a:hover {
+  background: var(--field);
+}
+.dashboard-scope .navcard a.on {
+  background: var(--mustard-soft);
+  border: 1px solid var(--mustard-deep);
+  padding: 12px 17px;
+}
+.dashboard-scope .navcard .sep {
+  height: 1px;
+  background: var(--rule-soft);
+  margin: 6px 8px;
+}
+.dashboard-scope .navcard .out {
+  margin-top: auto;
+  justify-content: center;
+  cursor: pointer;
+  background: var(--charcoal);
+  color: #fff;
+  border-radius: 999px;
+}
+.dashboard-scope .navcard .out:hover {
+  background: #000;
+}
+.dashboard-scope .streak {
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: var(--r);
+  padding: 18px 20px;
+  box-shadow: var(--shadow);
+  font-size: 15px;
+}
+.dashboard-scope .streak b {
+  font-size: 30px;
+  font-weight: 800;
+  display: block;
+  line-height: 1;
+}
+.dashboard-scope .main {
+  padding: 20px 24px 60px;
+  max-width: 1240px;
+  width: 100%;
+  /* The frozen design's own `.main` rule (design/comiccanvas-
+     dashboard.html) has no centering either — on a wide-enough viewport
+     it sits flush left in the `.shell` grid's second (1fr) column,
+     leaving visible empty space on the right. Real, explicit user
+     request to center it instead — a layout adjustment, not new UI.
+     `justify-self: center`, not `margin: 0 auto` — verified live that
+     plain auto margins do NOT resolve to centering here: `.main` is a
+     grid item of `.shell` (display:grid), and a grid item's default
+     `justify-self: stretch` sizes it to fill the full 1fr track before
+     max-width even gets a chance to leave room for auto margins to
+     distribute, so the computed margin came out 0px on both sides.
+     `justify-self: center` is the correct per-item grid alignment
+     property for exactly this case. */
+  justify-self: center;
+}
+.dashboard-scope .top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 14px;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.dashboard-scope .search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  padding: 8px 8px 8px 16px;
+  box-shadow: var(--shadow);
+}
+.dashboard-scope .search input {
+  border: 0;
+  outline: 0;
+  flex: 1;
+  background: transparent;
+  min-width: 0;
+}
+.dashboard-scope .tags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--mute);
+  margin: 8px 16px 0;
+}
+.dashboard-scope .user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card);
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+  padding: 5px 14px 5px 5px;
+  box-shadow: var(--shadow);
+  font-weight: 600;
+  font-size: 14px;
+}
+.dashboard-scope .user svg {
+  width: 32px;
+  height: 32px;
+}
+/* The person's own master as the profile picture. `object-position` keeps
+   the face (the master is a head-and-shoulders portrait) centered. */
+.dashboard-scope .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: 50% 32%;
+  border: 1.5px solid var(--ink);
+  background: var(--mustard-soft);
+  flex: none;
+  display: block;
+}
+.dashboard-scope .head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 6px 0 18px;
+  flex-wrap: wrap;
+}
+.dashboard-scope .head p {
+  color: var(--mute);
+  max-width: 60ch;
+}
+
+/* The source design has no bottom-nav treatment at all — its own @media
+ * rules only ever stack `.side` to full width, never turn it into a bar —
+ * so this is new responsive work on top of the existing components, not a
+ * port. Sidebar becomes a fixed bottom bar: icon+tiny-label items in a
+ * row, horizontal scroll if they overflow (more nav items than fit at
+ * once on a narrow phone without either shrinking below legibility or
+ * inventing a "more" menu the frozen design never specifies — a
+ * scrollable row keeps every item reachable without inventing new UI).
+ * `.brand`/`.streak` are dropped at this width: `.brand` is pure chrome
+ * (no functional loss), and `.streak` is already an honest "—"
+ * placeholder with no real data to lose. `.main` gets bottom padding so
+ * page content isn't hidden behind the fixed bar. */
+@media (max-width: 700px) {
+  .dashboard-scope .brand,
+  .dashboard-scope .streak {
+    display: none;
+  }
+  .dashboard-scope .side {
+    position: fixed;
+    inset: auto 0 0 0;
+    height: auto;
+    padding: 0;
+    z-index: 40;
+    gap: 0;
+  }
+  .dashboard-scope .navcard {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0;
+    padding: 4px 6px;
+    border-radius: 0;
+    border-width: 1.5px 0 0;
+    overflow-x: auto;
+  }
+  .dashboard-scope .navcard a,
+  .dashboard-scope .navcard button {
+    flex-direction: column;
+    flex: none;
+    width: auto; /* the base rule's 100% made each item a full screen wide */
+    min-width: 62px;
+    align-items: center;
+    gap: 3px;
+    padding: 6px 10px;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .dashboard-scope .navcard a.on {
+    padding: 5px 9px;
+  }
+  .dashboard-scope .navcard a svg,
+  .dashboard-scope .navcard button svg {
+    width: 18px;
+    height: 18px;
+  }
+  .dashboard-scope .navcard .sep {
+    display: none;
+  }
+  .dashboard-scope .navcard .out {
+    margin-top: 0;
+    border-radius: 999px;
+  }
+  .dashboard-scope .main {
+    padding: 16px 16px 88px;
+  }
+}

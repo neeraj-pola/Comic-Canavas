@@ -1,0 +1,123 @@
+{
+  "id": "008_synthetic_work_conflict",
+  "source_transcript_id": "014_synthetic_work_conflict",
+  "beat_sheet": {
+    "date": "2026-04-23",
+    "mood_arc": [
+      "hurt",
+      "resolved"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "desk",
+        "place_detail": "a design review meeting room",
+        "event": "Trevor dismissed three weeks of work in a tense design review",
+        "emotion": "hurt",
+        "people": [
+          "Trevor"
+        ],
+        "objects": [],
+        "importance": 0.6,
+        "humor": 0.0,
+        "quote": "dismissed three weeks of work in about thirty seconds and it stung"
+      },
+      {
+        "id": "b2",
+        "time": "afternoon",
+        "place": "cafe",
+        "place_detail": "getting coffee with a coworker to talk through a disagreement",
+        "event": "Talked it through with Trevor over coffee and learned he had misread the brief",
+        "emotion": "resolved",
+        "people": [
+          "Trevor"
+        ],
+        "objects": [
+          "coffee"
+        ],
+        "importance": 0.4,
+        "humor": 0.1,
+        "quote": "turns out he'd misread the brief"
+      }
+    ],
+    "people_mentioned": [
+      "Trevor"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "hurt then resolved",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a design review meeting room",
+          "time_of_day": "morning",
+          "expression": "sad",
+          "action": "Trevor waves off three weeks of work in seconds.",
+          "framing": "close",
+          "caption_a": "Three weeks, dismissed in thirty seconds.",
+          "caption_b": "That review really stung.",
+          "bubble": "",
+          "cast": [
+            "Trevor"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "getting coffee with a coworker",
+          "time_of_day": "afternoon",
+          "expression": "content",
+          "action": "Trevor admits he misread the brief over coffee.",
+          "framing": "wide",
+          "caption_a": "Turns out he'd misread the brief.",
+          "caption_b": "We talked it through, mostly fine now.",
+          "bubble": "",
+          "cast": [
+            "Trevor"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "a rough morning, a better afternoon",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a tense design review",
+          "time_of_day": "morning",
+          "expression": "angry",
+          "action": "Sitting through Trevor's blunt dismissal, stone-faced.",
+          "framing": "wide",
+          "caption_a": "Didn't expect the review to go like that.",
+          "caption_b": "Trevor dismissed the work fast.",
+          "bubble": "",
+          "cast": [
+            "Trevor"
+          ]
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "a coffee shop table",
+          "time_of_day": "afternoon",
+          "expression": "content",
+          "action": "Trevor explaining the misread brief, apologetic.",
+          "framing": "close",
+          "caption_a": "Coffee fixed what the review broke.",
+          "caption_b": "We cleared the air over coffee.",
+          "bubble": "",
+          "cast": [
+            "Trevor"
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,144 @@
+{
+  "id": "006_real_gym_errands_call",
+  "source_transcript_id": "009_real_gym_errands_call",
+  "beat_sheet": {
+    "date": "2026-01-28",
+    "mood_arc": [
+      "accomplished",
+      "neutral",
+      "happy"
+    ],
+    "beats": [
+      {
+        "id": "b1",
+        "time": "morning",
+        "place": "gym",
+        "place_detail": "a gym before the workday, tired but pushing through a workout",
+        "event": "Went to the gym before work despite feeling tired",
+        "emotion": "accomplished",
+        "people": [],
+        "objects": [],
+        "importance": 0.3,
+        "humor": 0.0,
+        "quote": "felt good even though I was dragging the whole time"
+      },
+      {
+        "id": "b2",
+        "time": "midday",
+        "place": "other",
+        "place_detail": "running routine errands around town during lunch",
+        "event": "Ran several routine errands during lunch",
+        "emotion": "neutral",
+        "people": [],
+        "objects": [],
+        "importance": 0.1,
+        "humor": 0.0,
+        "quote": "nothing exciting"
+      },
+      {
+        "id": "b3",
+        "time": "evening",
+        "place": "other",
+        "place_detail": "at home on a long phone call with a sibling",
+        "event": "Called Jordan and caught up for almost two hours after weeks of not talking properly",
+        "emotion": "happy",
+        "people": [
+          "Jordan"
+        ],
+        "objects": [
+          "phone"
+        ],
+        "importance": 0.5,
+        "humor": 0.0,
+        "quote": "ended up on the phone for almost two hours just catching up"
+      }
+    ],
+    "people_mentioned": [
+      "Jordan"
+    ],
+    "flags": []
+  },
+  "reference_scripts": [
+    {
+      "mood": "small wins to a good call",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a gym before work",
+          "time_of_day": "morning",
+          "expression": "tired",
+          "action": "Dragging through one more rep before work.",
+          "framing": "medium",
+          "caption_a": "Tired the whole time, went anyway.",
+          "caption_b": "Made it to the gym for once.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b2",
+          "place": "running errands around town",
+          "time_of_day": "midday",
+          "expression": "neutral",
+          "action": "Checking off a list at three different stores.",
+          "framing": "wide",
+          "caption_a": "Errands: forgettable but done.",
+          "caption_b": "Nothing exciting, just errands.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 3,
+          "beat_id": "b3",
+          "place": "at home on a long phone call",
+          "time_of_day": "evening",
+          "expression": "happy",
+          "action": "Curled up on the couch, still on the phone.",
+          "framing": "close",
+          "caption_a": "Two hours with Jordan, finally caught up.",
+          "caption_b": "Talked to Jordan for two hours.",
+          "bubble": "",
+          "cast": [
+            "Jordan"
+          ]
+        }
+      ]
+    },
+    {
+      "mood": "routine day, good ending",
+      "quiet_day": false,
+      "panels": [
+        {
+          "id": 1,
+          "beat_id": "b1",
+          "place": "a gym",
+          "time_of_day": "morning",
+          "expression": "content",
+          "action": "Pushing through a tired morning workout.",
+          "framing": "wide",
+          "caption_a": "Gym before work, dragging but did it.",
+          "caption_b": "Tired, but I actually went.",
+          "bubble": "",
+          "cast": []
+        },
+        {
+          "id": 2,
+          "beat_id": "b3",
+          "place": "home, on a long phone call",
+          "time_of_day": "evening",
+          "expression": "happy",
+          "action": "Laughing on the phone, feet up on the couch.",
+          "framing": "close",
+          "caption_a": "Weeks of silence, undone in one call.",
+          "caption_b": "Jordan and I finally caught up.",
+          "bubble": "",
+          "cast": [
+            "Jordan"
+          ]
+        }
+      ]
+    }
+  ]
+}

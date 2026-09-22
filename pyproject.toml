@@ -1,0 +1,128 @@
+[project]
+name = "comiccanvas"
+version = "0.1.0"
+description = "Comic Canvas — a diary that draws itself"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    # Task 8.1: `make migrate` (repo-root command, not owned by one
+    # service). Raw-SQL migrations via psycopg (already the project's
+    # driver everywhere, e.g. app/db.py) — no SQLAlchemy ORM/autogenerate,
+    # nothing else in this codebase uses one.
+    "alembic>=1.13",
+    "psycopg[binary]>=3.2",
+    "python-dotenv>=1.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8",
+    "mypy>=1.13",
+    "pytest>=8.3",
+    "pytest-asyncio>=0.24",
+    "pytest-socket>=0.7",
+    "pytest-cov>=6.0",
+    "pre-commit>=4.0",
+    "honcho>=2.0",
+    "boto3-stubs[s3]>=1.35",
+    "types-pyyaml>=6.0.12.20260906",
+]
+
+[tool.uv.workspace]
+members = [
+    "packages/contracts",
+    "packages/storage",
+    "services/api",
+    "services/worker",
+    "services/scheduler",
+    "ml",
+]
+
+# ---------------------------------------------------------------------------
+# ruff — see `make lint`
+# ---------------------------------------------------------------------------
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+# CLAUDE.md and docs/adr/*.md embed illustrative ```python fences (contract
+# sketches, not real modules); newer ruff formats code blocks inside
+# Markdown by default, which would rewrite those hand-authored, checked-in
+# docs as a side effect of `make lint`. Source .py files are never *.md.
+extend-exclude = ["ml/goldens", "*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = []
+
+[tool.ruff.lint.isort]
+known-first-party = ["contracts", "app", "ml"]
+
+[tool.ruff.lint.per-file-ignores]
+# FastAPI's own recommended dependency-injection idiom IS `param: X =
+# Depends(...)` — bugbear's B008 ("no function calls in defaults") is a
+# real false positive here, not a real bug (FastAPI special-cases
+# `Depends()`/`Query()`/etc. in defaults; they're evaluated per-request,
+# not once at import time the way B008 assumes).
+"services/api/app/routers/*.py" = ["B008"]
+"services/api/app/deps.py" = ["B008"]
+
+# ---------------------------------------------------------------------------
+# mypy --strict — see `make lint`
+# ---------------------------------------------------------------------------
+[tool.mypy]
+strict = true
+plugins = ["pydantic.mypy"]
+python_version = "3.12"
+namespace_packages = true
+explicit_package_bases = true
+exclude = ["ml/goldens", "\\.venv"]
+
+[[tool.mypy.overrides]]
+# Third-party libs without inline types / stubs; tightened as each is added
+# for real in later phases instead of blanket-ignored forever.
+module = ["arq.*", "honcho.*", "insightface.*", "pillow_heif.*", "onnxruntime.*"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+# transformers ships a py.typed marker, but its Auto* classes are built via
+# dynamic dispatch (metaclass-based .from_pretrained() registration) that
+# mypy can't resolve calling conventions for ("not callable"/"untyped call",
+# confirmed live 2026-09-14 — ignore_missing_imports doesn't help here since
+# the package genuinely isn't missing stubs, mypy just can't type-check
+# through the dynamic-dispatch pattern). Scoped to the one module that
+# actually calls into it (ml/identity/style_score.py) rather than every
+# module transitively touching transformers.
+module = ["ml.identity.style_score", "app.critic.alignment"]
+disallow_untyped_calls = false
+warn_return_any = false
+
+[[tool.mypy.overrides]]
+# Task 9.2: torch's own stubs leave `nn.Module.__call__`/`Tensor.backward`
+# under-typed (`Any`-returning / untyped-call from mypy's perspective) —
+# a real, narrow stub gap in torch itself, not a bug in this module.
+module = ["ml.reward_model.train"]
+disallow_untyped_calls = false
+warn_return_any = false
+
+# ---------------------------------------------------------------------------
+# pytest — see `make test`, which runs `scripts/test-all.sh`, not a bare
+# `pytest`. pytest-socket blocks network calls so unit tests can never
+# silently hit a real provider (task 1.5's accept criterion) — asyncio's
+# own event loop needs a unix-domain self-pipe, hence --allow-unix-socket;
+# that doesn't reopen real (TCP/UDP) network access.
+#
+# testpaths deliberately excludes tests/unit/llm (and any future
+# tests/unit/<service>) and tests/unit/ml: those import a service's
+# `app.*` package (tests/unit/ml via ml/evals/*, which bootstraps it) or
+# `ml.*` itself, both of which need `python -m pytest` — not the plain
+# `pytest` console script, which adds neither cwd nor the repo root to
+# sys.path — see scripts/test-all.sh's header comment for the full split.
+# Collecting them from a bare `pytest` run at the repo root fails with
+# "No module named 'app'"/"'ml'", so they're only ever run through that
+# script.
+[tool.pytest.ini_options]
+addopts = "-q --disable-socket --allow-unix-socket"
+asyncio_mode = "auto"
+testpaths = ["tests/unit/contracts", "tests/unit/storage", "tests/integration", "packages"]
+
+[tool.coverage.run]
+source = ["services/api/app", "services/worker/app", "services/scheduler/app", "packages/contracts/contracts"]

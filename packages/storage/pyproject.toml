@@ -1,0 +1,15 @@
+[project]
+name = "comiccanvas-storage"
+version = "0.1.0"
+description = "Storage interface (task 0.2b): LocalFileStorage (dev) and R2Storage (Phase 12), same contract."
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "boto3>=1.35",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["storage"]
