@@ -4,9 +4,7 @@ A diary that draws itself. Type your day → a four-panel comic with a consisten
 of you in it → two quick taps a day teach it your taste, and it slowly leans your daily strips
 toward what you actually pick.
 
-[CLAUDE.md](./CLAUDE.md) is the full build log and single source of truth for this project —
-architecture, every decision made and why, and a dated, numbered history of real bugs found and
-fixed. This README only covers what you need to clone it, fill in your own keys, and run it.
+This README covers what you need to clone it, fill in your own keys, and run it.
 
 ## What this is
 
@@ -20,8 +18,6 @@ fixed. This README only covers what you need to clone it, fill in your own keys,
   toward what you keep choosing.
 - **Single-user, local-only, no login.** There is no sign-up flow and no per-user accounts — the
   whole app is built to run on your own machine, against your own local Postgres, for one person.
-  See CLAUDE.md's dated entries for why (originally built with Clerk auth for a multi-user
-  product; deliberately stripped out later for a personal local copy).
 
 ## Setup
 
@@ -121,8 +117,6 @@ golden-set evals against real provider keys and print real spend before you conf
 
 ## Repository layout
 
-See [CLAUDE.md §2](./CLAUDE.md#2-repository-layout) for the full breakdown. In short:
-
 - `packages/contracts`, `packages/storage` — shared Pydantic contracts and the storage interface
   (`LocalFileStorage` for dev, `R2Storage` for a real deployment).
 - `services/api`, `services/worker`, `services/scheduler` — the three Python services, each with
@@ -130,24 +124,8 @@ See [CLAUDE.md §2](./CLAUDE.md#2-repository-layout) for the full breakdown. In 
 - `apps/web` — the Next.js frontend.
 - `ml/` — identity/character pipeline, evals, the preference-learning model's offline tooling.
 - `migrations/` — Alembic, one real migration per schema change, in order.
-- `design/` — the two frozen prototype HTML files the frontend was ported from pixel-for-pixel;
-  see [design/README.md](./design/README.md).
 
-## What's real and what's a known gap
-
-This was built and hardened through real day-to-day personal use, not a spec written once and
-left alone — CLAUDE.md's dated entries are the honest record of what broke and what was fixed.
-A few things worth knowing before you rely on this:
-
-- **No login, no multi-user support.** Anyone who can reach the API can read/write the one
-  account's data. Fine for a local personal tool; not something to expose on the open internet.
-- **Voice input (ASR) is not built.** Text entries only.
-- **The weekly PDF export is large** (embeds full-resolution images) — expect several MB, not the
-  original 2MB target.
-- **A few backend edge cases are flagged, not fixed** — CLAUDE.md's later entries name them
-  directly (e.g. no automatic recovery if the worker process dies mid-job).
 
 ## License
 
-No license file is included; treat this as "all rights reserved, source available for reference"
-unless the repository's owner says otherwise.
+[Apache License 2.0](./LICENSE).

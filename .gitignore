@@ -66,3 +66,6 @@ tests/
 CLAUDE.md
 .claude/
 .github/
+
+# --- Kept locally only, not pushed (61MB of eval fixture images, ml/evals/checklist.py) ---
+ml/goldens/checklist/images/
