@@ -86,7 +86,13 @@ export function WeeklyBook({
     document.body.style.overflowX = "hidden";
 
     function update() {
-      const vh = window.innerHeight;
+      // `visualViewport.height`, not `window.innerHeight`: on mobile Safari,
+      // `innerHeight` lags a couple of seconds behind the real visible
+      // height while the address-bar chrome animates in/out during scroll,
+      // which made the book briefly show the wrong page after scrolling had
+      // already stopped. `visualViewport` tracks the actual visible area
+      // and fires its own resize event promptly when the chrome settles.
+      const vh = window.visualViewport?.height ?? window.innerHeight;
       const sy = window.scrollY;
       const total = pin!.offsetHeight - vh;
       const p = clamp(total > 0 ? sy / total : 0, 0, 1);
@@ -131,11 +137,13 @@ export function WeeklyBook({
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", update);
+    window.visualViewport?.addEventListener("resize", onScroll);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", update);
+      window.visualViewport?.removeEventListener("resize", onScroll);
       document.body.style.overflowX = previousOverflowX;
     };
   }, [sheets]);

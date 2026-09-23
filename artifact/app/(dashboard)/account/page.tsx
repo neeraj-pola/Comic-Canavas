@@ -20,7 +20,6 @@ export default function AccountPage() {
   const [exportError, setExportError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [confirmingDelete, setConfirmingDelete] = useState(false);
-  const [deleted, setDeleted] = useState(false);
 
   async function handleExport() {
     setExportError(null);
@@ -46,7 +45,10 @@ export default function AccountPage() {
     setDeleting(true);
     try {
       await apiFetch("/account", token, { method: "DELETE" });
-      setDeleted(true);
+      // Public demo: apiFetch only shows the notice modal and never really
+      // deletes anything, so the UI shouldn't flip to "deleted" either —
+      // that would tell a visitor something happened when it didn't.
+      setConfirmingDelete(false);
     } finally {
       setDeleting(false);
     }
@@ -79,27 +81,21 @@ export default function AccountPage() {
         </div>
         <div className="card s12 stack" style={{ borderColor: "#C9722E" }}>
           <h2>Delete everything</h2>
-          {deleted ? (
-            <p className="mono">Done. Your photos, strips and training pairs are gone.</p>
-          ) : (
-            <>
-              <p style={{ color: "var(--mute)" }}>
-                Removes your account, photos, strips, and training pairs from our systems.
-                Recurring characters you invited are notified.
-              </p>
-              <div>
-                <button
-                  type="button"
-                  className="btn sm"
-                  style={{ borderColor: "#C9722E", color: "#7A3E10" }}
-                  onClick={handleDelete}
-                  disabled={deleting}
-                >
-                  {confirmingDelete ? "Click again to confirm" : "Delete my diary"}
-                </button>
-              </div>
-            </>
-          )}
+          <p style={{ color: "var(--mute)" }}>
+            Removes your account, photos, strips, and training pairs from our systems. Recurring
+            characters you invited are notified.
+          </p>
+          <div>
+            <button
+              type="button"
+              className="btn sm"
+              style={{ borderColor: "#C9722E", color: "#7A3E10" }}
+              onClick={handleDelete}
+              disabled={deleting}
+            >
+              {confirmingDelete ? "Click again to confirm" : "Delete my diary"}
+            </button>
+          </div>
         </div>
       </div>
     </>
