@@ -717,3 +717,61 @@ body.showspine .brand {
   flex-wrap: wrap;
   gap: 10px;
 }
+@media (max-width: 700px) {
+  .landing-scope footer.site {
+    padding-left: 24px;
+  }
+}
+
+/* ---------- mobile/static path (see LandingBook.tsx) ----------
+   A separate, simpler layout, not a shrunk desktop one: a small
+   decorative cover with no embedded text, then a condensed hero in
+   normal page flow. Nothing here depends on a container height matching
+   a media query exactly, which is what made the previous mobile path
+   fragile. */
+.landing-scope .mobile-cover {
+  position: relative;
+  margin: 64px auto 0;
+  max-width: 360px;
+  padding: 40px 24px 28px;
+  background: radial-gradient(120% 90% at 20% 10%, #f2e070, var(--mustard) 55%, var(--mustard-deep));
+  border-radius: var(--r);
+  box-shadow: var(--shadow), inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  color: var(--ink);
+}
+.landing-scope .mobile-cover .mark {
+  width: 88px;
+  margin: 0 auto 14px;
+  display: block;
+}
+.landing-scope .mobile-cover-title {
+  font-weight: 800;
+  font-size: clamp(26px, 7vw, 34px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.landing-scope .mobile-cover-title u {
+  text-decoration: none;
+  background: linear-gradient(transparent 60%, #fff 60%);
+}
+.landing-scope .mobile-cover-sub {
+  margin-top: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+.landing-scope .mobile-hero {
+  max-width: 480px;
+  margin: 28px auto 0;
+  padding: 0 24px;
+  display: grid;
+  gap: 14px;
+}
+.landing-scope .mobile-hero h2 {
+  font-size: clamp(24px, 7vw, 32px);
+}
+.landing-scope .mobile-hero p {
+  color: #2e3140;
+  font-size: 15px;
+}

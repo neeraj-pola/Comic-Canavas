@@ -55,3 +55,6 @@ reports/
 .vscode/*
 !.vscode/extensions.json
 .idea/
+
+comic-blog/
+sample blog/

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import { Person } from "../illustration/Person";
 import { HalftonePattern } from "../illustration/HalftonePattern";
 import { FLOW_SECTIONS, FlowContent, HeroContent, Endpaper } from "./content";
@@ -33,6 +34,31 @@ const END_START = DWELL + FLIPS * PER;
 const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
+/**
+ * The mobile/static path's own condensed hero — not `HeroContent` shrunk
+ * down, a genuinely shorter version: no drop-cap paragraph, no tags row,
+ * no byline. Trying to fit the full desktop copy inside the book's cover
+ * face (or any fixed-height box) is the actual repeat failure here across
+ * more than one attempt — the fix is less text, not a cleverer container.
+ */
+function MobileHero() {
+  return (
+    <div className="mobile-hero">
+      <span className="kick">Daily · Spoken · Drawn</span>
+      <h2>Speak your day. Get a comic of it.</h2>
+      <p>One minute about your day becomes a four-panel strip, with a character that looks like you.</p>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        <Link className="pill pink" href="/today">
+          Open your diary
+        </Link>
+        <a className="pill" href="#flow">
+          How it works
+        </a>
+      </div>
+    </div>
+  );
+}
+
 function CoverFace() {
   return (
     <div className="face front cover">
@@ -47,33 +73,6 @@ function CoverFace() {
         <div className="sub">a diary that draws itself, one strip a day</div>
       </div>
       <Person hair="curly" shirt="#E9D24A" mood="smile" className="mark" />
-    </div>
-  );
-}
-
-function BookChrome({
-  sheetStyle,
-  bookStyle,
-}: {
-  sheetStyle?: React.CSSProperties;
-  bookStyle?: React.CSSProperties;
-}) {
-  return (
-    <div className="book" style={bookStyle}>
-      <div className="backboard" />
-      <div className="board">
-        <HeroContent />
-      </div>
-      <div className="sheet" data-i="0" style={sheetStyle}>
-        <CoverFace />
-        <Endpaper />
-        <div className="edge" />
-      </div>
-      <div className="spiral">
-        {Array.from({ length: 14 }).map((_, i) => (
-          <i key={i} />
-        ))}
-      </div>
     </div>
   );
 }
@@ -251,6 +250,16 @@ export function LandingBook() {
   }
 
   if (staticLayout) {
+    // Not a shrunk-down version of the desktop book — the recurring
+    // failure across more than one earlier fix was trying to fit the
+    // full-length hero copy inside a fixed-height book-cover box on a
+    // real phone (mismatched heights between the wrapping div and the
+    // portrait-only `.book` CSS override, real overflow clipping the
+    // text). This is a genuinely different, simpler layout instead: a
+    // small decorative cover (no embedded text to overflow), the
+    // condensed `MobileHero` in normal page flow below it, then the same
+    // flow sections. No 3D transforms, no scroll-jacking, nothing that
+    // depends on a container height matching a CSS media query exactly.
     return (
       <div className="landing-scope">
         <HalftonePattern />
@@ -258,9 +267,14 @@ export function LandingBook() {
           <i />
           Comic Canvas
         </div>
-        <div style={{ position: "relative", height: "min(90vh, 66vw)" }}>
-          <BookChrome sheetStyle={{ transform: "rotateY(-180deg)" }} bookStyle={{ opacity: 1 }} />
+        <div className="mobile-cover">
+          <Person hair="curly" shirt="#E9D24A" mood="smile" className="mark" />
+          <div className="mobile-cover-title">
+            Comic <u>Canvas</u>
+          </div>
+          <div className="mobile-cover-sub">a diary that draws itself, one strip a day</div>
         </div>
+        <MobileHero />
         <main className="flow" style={{ marginTop: 0 }} id="flow">
           {FLOW_SECTIONS.map((key) => (
             <section key={key} className="frame-host" style={{ opacity: 1 }}>

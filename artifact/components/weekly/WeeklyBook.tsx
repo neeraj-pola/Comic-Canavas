@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { preload } from "react-dom";
 import "./weekly-book.css";
 
@@ -31,12 +31,19 @@ const dayName = (iso: string) =>
  * image; the back face is decorative paper texture (matching
  * `LandingBook`'s own cover/endpaper convention — the actual "next page"
  * is a separate sheet sitting underneath, not the flipped sheet's own
- * back). `prefers-reduced-motion` isn't specially handled here with a
- * static fallback the way the landing page's cover is — for N real
- * content pages (not one decorative cover), the pages themselves are
- * already reachable in the Library without this viewer at all, so a
- * reduced-motion visitor loses a nice-to-have flourish, not access to
- * real content.
+ * back).
+ *
+ * `prefers-reduced-motion` and narrow/phone viewports get a genuinely
+ * different, simpler layout — not a shrunk version of the 3D flip. This
+ * component previously had no such fallback at all (the sticky-pinned,
+ * perspective-transformed, `container-type: size`-based flip ran
+ * unconditionally on every device), and a scroll-jacked 3D animation like
+ * that is exactly the kind of thing that's fragile on a real phone —
+ * address-bar chrome resizing mid-scroll, touch-scroll capture, GPU
+ * compositing differences across mobile browsers — in a way simulated
+ * desktop testing doesn't catch. The static path below is a plain
+ * vertical list: every day's real strip, in normal document flow, no
+ * transforms, no scroll listeners.
  */
 
 const RUNOFF = 0.7;
@@ -69,6 +76,23 @@ export function WeeklyBook({
     () => [{ kind: "cover" }, ...pages.map((page) => ({ kind: "day", page }) as const)],
     [pages],
   );
+
+  // Same detection as LandingBook: reduced motion OR a narrow/phone
+  // viewport gets the plain static list instead of the 3D flip.
+  const [staticLayout, setStaticLayout] = useState<boolean | null>(null);
+  useEffect(() => {
+    const motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const widthMql = window.matchMedia("(max-width: 760px)");
+    const recompute = () => setStaticLayout(motionMql.matches || widthMql.matches);
+    recompute();
+    motionMql.addEventListener("change", recompute);
+    widthMql.addEventListener("change", recompute);
+    return () => {
+      motionMql.removeEventListener("change", recompute);
+      widthMql.removeEventListener("change", recompute);
+    };
+  }, []);
+
   // Every page's <img> is already in the DOM from mount, not added as you
   // scroll to it — but a page that isn't visible yet can still be fetched
   // at a lower priority by the browser's own heuristics, which on a real
@@ -76,21 +100,23 @@ export function WeeklyBook({
   // downloading by the time their flip reveals them (looking exactly like
   // a stuck animation, even though the flip itself already finished).
   // Explicitly requesting all of them at once, at high priority, closes
-  // that gap regardless of scroll position.
-  for (const page of pages) preload(page.stripUrl, { as: "image", fetchPriority: "high" });
+  // that gap regardless of scroll position. Only worth doing for the
+  // animated path — the static list below loads each image normally, in
+  // the order it actually appears on the page.
+  if (staticLayout === false) {
+    for (const page of pages) preload(page.stripUrl, { as: "image", fetchPriority: "high" });
+  }
 
   const pinRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
   const sheetRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
+    if (staticLayout !== false) return;
     if (sheets.length <= 1) return;
     const pin = pinRef.current;
     const book = bookRef.current;
     if (!pin || !book) return;
-
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    if (mql.matches) return;
 
     const { dwell, per, endStart } = pageMath(sheets.length);
     const previousOverflowX = document.body.style.overflowX;
@@ -157,9 +183,43 @@ export function WeeklyBook({
       window.visualViewport?.removeEventListener("resize", onScroll);
       document.body.style.overflowX = previousOverflowX;
     };
-  }, [sheets]);
+  }, [sheets, staticLayout]);
 
   if (pages.length === 0) return null;
+
+  if (staticLayout === null) {
+    // matchMedia hasn't resolved yet on the client; avoid a flash of the
+    // wrong (animated vs. static) variant, same as LandingBook.
+    return null;
+  }
+
+  if (staticLayout) {
+    return (
+      <div className="weekly-book wb-static">
+        <div className="wb-static-cover">
+          <span className="wb-cover-kick">Comic Canvas</span>
+          <b>The Week</b>
+          {dateRange && <span className="wb-cover-range">{dateRange}</span>}
+        </div>
+        <div className="wb-static-list">
+          {pages.map((page, i) => (
+            <div className="wb-static-day" key={page.date}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={page.stripUrl} alt={`${page.date} strip`} loading="lazy" decoding="async" />
+              <div className="wb-caption">
+                <span>
+                  {dayName(page.date)}
+                  {page.mood ? ` · ${page.mood}` : ""}
+                </span>
+                <span>{i + 1}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="wb-hint">That&apos;s the week — all caught up</p>
+      </div>
+    );
+  }
 
   return (
     <div className="weekly-book">
