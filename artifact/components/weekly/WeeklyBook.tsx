@@ -33,17 +33,14 @@ const dayName = (iso: string) =>
  * is a separate sheet sitting underneath, not the flipped sheet's own
  * back).
  *
- * `prefers-reduced-motion` and narrow/phone viewports get a genuinely
- * different, simpler layout — not a shrunk version of the 3D flip. This
- * component previously had no such fallback at all (the sticky-pinned,
- * perspective-transformed, `container-type: size`-based flip ran
- * unconditionally on every device), and a scroll-jacked 3D animation like
- * that is exactly the kind of thing that's fragile on a real phone —
- * address-bar chrome resizing mid-scroll, touch-scroll capture, GPU
- * compositing differences across mobile browsers — in a way simulated
- * desktop testing doesn't catch. The static path below is a plain
- * vertical list: every day's real strip, in normal document flow, no
- * transforms, no scroll listeners.
+ * `prefers-reduced-motion` gets a genuinely different, simpler static
+ * layout — not a shrunk version of the 3D flip, a plain vertical list:
+ * every day's real strip, in normal document flow, no transforms, no
+ * scroll listeners. Every other visitor, including phones, gets the real
+ * animated flip: `visualViewport.height` (not `window.innerHeight`) is
+ * what actually makes that reliable on mobile Safari, where innerHeight
+ * lags behind the true visible height while the address-bar chrome
+ * animates in/out mid-scroll.
  */
 
 const RUNOFF = 0.7;
@@ -77,19 +74,19 @@ export function WeeklyBook({
     [pages],
   );
 
-  // Same detection as LandingBook: reduced motion OR a narrow/phone
-  // viewport gets the plain static list instead of the 3D flip.
+  // Only `prefers-reduced-motion` gets the plain static list now — a real
+  // accessibility need. The same 3D flip runs at every screen size,
+  // including phones; each page here is just one image + a short caption,
+  // so there's no equivalent of the landing hero's "too much text to fit"
+  // problem driving a separate narrow-width treatment.
   const [staticLayout, setStaticLayout] = useState<boolean | null>(null);
   useEffect(() => {
     const motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const widthMql = window.matchMedia("(max-width: 760px)");
-    const recompute = () => setStaticLayout(motionMql.matches || widthMql.matches);
+    const recompute = () => setStaticLayout(motionMql.matches);
     recompute();
     motionMql.addEventListener("change", recompute);
-    widthMql.addEventListener("change", recompute);
     return () => {
       motionMql.removeEventListener("change", recompute);
-      widthMql.removeEventListener("change", recompute);
     };
   }, []);
 
@@ -196,25 +193,32 @@ export function WeeklyBook({
   if (staticLayout) {
     return (
       <div className="weekly-book wb-static">
-        <div className="wb-static-cover">
-          <span className="wb-cover-kick">Comic Canvas</span>
-          <b>The Week</b>
-          {dateRange && <span className="wb-cover-range">{dateRange}</span>}
-        </div>
-        <div className="wb-static-list">
-          {pages.map((page, i) => (
-            <div className="wb-static-day" key={page.date}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={page.stripUrl} alt={`${page.date} strip`} loading="lazy" decoding="async" />
-              <div className="wb-caption">
-                <span>
-                  {dayName(page.date)}
-                  {page.mood ? ` · ${page.mood}` : ""}
-                </span>
-                <span>{i + 1}</span>
+        {/* Still a real notebook (spiral binding down the left edge, pages
+            rounded only on the right, like a page actually bound there) —
+            just not 3D or scroll-jacked. A flat list here read as "no book
+            at all"; this keeps the book identity while staying reliable. */}
+        <div className="wb-notebook">
+          <div className="wb-notebook-spiral" aria-hidden="true" />
+          <div className="wb-static-cover">
+            <span className="wb-cover-kick">Comic Canvas</span>
+            <b>The Week</b>
+            {dateRange && <span className="wb-cover-range">{dateRange}</span>}
+          </div>
+          <div className="wb-static-list">
+            {pages.map((page, i) => (
+              <div className="wb-static-day" key={page.date}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={page.stripUrl} alt={`${page.date} strip`} loading="lazy" decoding="async" />
+                <div className="wb-caption">
+                  <span>
+                    {dayName(page.date)}
+                    {page.mood ? ` · ${page.mood}` : ""}
+                  </span>
+                  <span>{i + 1}</span>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         <p className="wb-hint">That&apos;s the week — all caught up</p>
       </div>

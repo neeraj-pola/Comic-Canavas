@@ -35,15 +35,18 @@ const clamp = (v: number, a: number, b: number) => Math.max(a, Math.min(b, v));
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 /**
- * The mobile/static path's own condensed hero — not `HeroContent` shrunk
- * down, a genuinely shorter version: no drop-cap paragraph, no tags row,
- * no byline. Trying to fit the full desktop copy inside the book's cover
- * face (or any fixed-height box) is the actual repeat failure here across
- * more than one attempt — the fix is less text, not a cleverer container.
+ * The condensed hero copy — not `HeroContent` shrunk down, a genuinely
+ * shorter version: no drop-cap paragraph, no tags row, no byline. Used in
+ * two different structural contexts, so it's the bare content only, no
+ * wrapper: `MobileHero` (below) wraps it for normal page flow (the
+ * reduced-motion static path); `NarrowHeroInBoard` wraps it in `.pg` for
+ * `.board`'s own absolute-fill, overflow-safe layout (the real animated
+ * book, narrow screens). Less text is the actual fix that keeps either
+ * container from overflowing — not a cleverer wrapper.
  */
-function MobileHero() {
+function HeroBody() {
   return (
-    <div className="mobile-hero">
+    <>
       <span className="kick">Daily · Spoken · Drawn</span>
       <h2>Speak your day. Get a comic of it.</h2>
       <p>One minute about your day becomes a four-panel strip, with a character that looks like you.</p>
@@ -55,6 +58,23 @@ function MobileHero() {
           How it works
         </a>
       </div>
+    </>
+  );
+}
+
+function MobileHero() {
+  return (
+    <div className="mobile-hero">
+      <HeroBody />
+    </div>
+  );
+}
+
+/** Same condensed copy, but wrapped for `.board`'s own layout (see `HeroBody`). */
+function NarrowHeroInBoard() {
+  return (
+    <div className="pg">
+      <HeroBody />
     </div>
   );
 }
@@ -77,15 +97,46 @@ function CoverFace() {
   );
 }
 
+/**
+ * The mobile/static path's own cover — still genuinely looks like a book
+ * (spiral binding down the left edge, the same embossed mustard cover
+ * face as the desktop version), just not 3D or animated: no rotateY, no
+ * scroll-jacking, no clipped-height container. A flat plain card here
+ * read as "no book at all" — this keeps the actual book identity while
+ * staying static and reliable.
+ */
+function MobileCover() {
+  return (
+    <div className="mobile-book">
+      <div className="mobile-book-spiral" aria-hidden="true">
+        {Array.from({ length: 9 }).map((_, i) => (
+          <i key={i} />
+        ))}
+      </div>
+      <div className="mobile-cover">
+        <div className="mobile-cover-emboss" />
+        <div className="mobile-cover-kick">Diary · 2026</div>
+        <div>
+          <div className="mobile-cover-title">
+            Comic <u>Canvas</u>
+          </div>
+          <div className="mobile-cover-sub">a diary that draws itself, one strip a day</div>
+        </div>
+        <Person hair="curly" shirt="#E9D24A" mood="smile" className="mark" />
+      </div>
+    </div>
+  );
+}
+
 export function LandingBook() {
-  // Same static rendering path for prefers-reduced-motion AND narrow
-  // screens: the pinned/sticky scroll-jack traps the hero's own internal
-  // overflow scroll in a way that fights with a real phone's touch-scroll
-  // capture (verified only in simulated/mouse-driven testing, not on an
-  // actual device) — skipping the scroll-jack there entirely, the same way
-  // reduced-motion already does, sidesteps that fight completely rather
-  // than trying to patch it further.
+  // Only `prefers-reduced-motion` gets the static layout now — a real
+  // accessibility need, not a mobile workaround. The same animated 3D
+  // flip now runs at every screen size, including phones; `narrow` below
+  // only picks which hero copy renders inside `.board` (shorter on small
+  // screens, so there's less text for that box to ever have to fit), it
+  // doesn't change which of these two branches renders.
   const [staticLayout, setStaticLayout] = useState<boolean | null>(null);
+  const [narrow, setNarrow] = useState(false);
 
   const pinRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
@@ -99,13 +150,15 @@ export function LandingBook() {
   useEffect(() => {
     const motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
     const widthMql = window.matchMedia("(max-width: 760px)");
-    const recompute = () => setStaticLayout(motionMql.matches || widthMql.matches);
-    recompute();
-    motionMql.addEventListener("change", recompute);
-    widthMql.addEventListener("change", recompute);
+    const recomputeMotion = () => setStaticLayout(motionMql.matches);
+    const recomputeWidth = () => setNarrow(widthMql.matches);
+    recomputeMotion();
+    recomputeWidth();
+    motionMql.addEventListener("change", recomputeMotion);
+    widthMql.addEventListener("change", recomputeWidth);
     return () => {
-      motionMql.removeEventListener("change", recompute);
-      widthMql.removeEventListener("change", recompute);
+      motionMql.removeEventListener("change", recomputeMotion);
+      widthMql.removeEventListener("change", recomputeWidth);
     };
   }, []);
 
@@ -162,7 +215,11 @@ export function LandingBook() {
     }
 
     function update() {
-      const vh = window.innerHeight;
+      // `visualViewport.height`, not `window.innerHeight` — on mobile
+      // Safari, `innerHeight` lags behind the real visible height while
+      // the address-bar chrome animates in/out during scroll, the same
+      // real bug WeeklyBook's own animation already fixed this way.
+      const vh = window.visualViewport?.height ?? window.innerHeight;
       const sy = window.scrollY;
       document.body.classList.toggle("scrolled", sy > 40);
       const total = pin!.offsetHeight - vh;
@@ -233,11 +290,15 @@ export function LandingBook() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
+    // Fires promptly when the address-bar chrome finishes animating,
+    // which a plain `resize` listener alone can miss/lag on mobile Safari.
+    window.visualViewport?.addEventListener("resize", onScroll);
 
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
+      window.visualViewport?.removeEventListener("resize", onScroll);
       document.body.classList.remove("scrolled", "showspine");
       document.body.style.overflowX = previousOverflowX;
     };
@@ -250,16 +311,11 @@ export function LandingBook() {
   }
 
   if (staticLayout) {
-    // Not a shrunk-down version of the desktop book — the recurring
-    // failure across more than one earlier fix was trying to fit the
-    // full-length hero copy inside a fixed-height book-cover box on a
-    // real phone (mismatched heights between the wrapping div and the
-    // portrait-only `.book` CSS override, real overflow clipping the
-    // text). This is a genuinely different, simpler layout instead: a
-    // small decorative cover (no embedded text to overflow), the
-    // condensed `MobileHero` in normal page flow below it, then the same
-    // flow sections. No 3D transforms, no scroll-jacking, nothing that
-    // depends on a container height matching a CSS media query exactly.
+    // `prefers-reduced-motion` only, now — a real accessibility need, not
+    // a mobile workaround (the animated book below runs on phones too).
+    // Still the same simpler, non-3D layout for that visitor: a small
+    // decorative cover, the condensed `MobileHero` in normal page flow
+    // below it, then the same flow sections.
     return (
       <div className="landing-scope">
         <HalftonePattern />
@@ -267,13 +323,7 @@ export function LandingBook() {
           <i />
           Comic Canvas
         </div>
-        <div className="mobile-cover">
-          <Person hair="curly" shirt="#E9D24A" mood="smile" className="mark" />
-          <div className="mobile-cover-title">
-            Comic <u>Canvas</u>
-          </div>
-          <div className="mobile-cover-sub">a diary that draws itself, one strip a day</div>
-        </div>
+        <MobileCover />
         <MobileHero />
         <main className="flow" style={{ marginTop: 0 }} id="flow">
           {FLOW_SECTIONS.map((key) => (
@@ -312,7 +362,11 @@ export function LandingBook() {
           <div className="book" ref={bookRef}>
             <div className="backboard" />
             <div className="board">
-              <HeroContent />
+              {/* The same animated book at every width — only the copy
+                  inside it changes on narrow screens, to less text that's
+                  less likely to ever need `.board`'s own overflow scroll
+                  (the `@media (max-aspect-ratio: 1/1)` rule below) at all. */}
+              {narrow ? <NarrowHeroInBoard /> : <HeroContent />}
             </div>
             <div className="sheet" ref={sheetRef} data-i="0">
               <CoverFace />
