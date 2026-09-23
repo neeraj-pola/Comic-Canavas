@@ -58,3 +58,11 @@ reports/
 
 comic-blog/
 sample blog/
+
+# --- Kept locally, not pushed to GitHub ---
+docs/
+design/
+tests/
+CLAUDE.md
+.claude/
+.github/
