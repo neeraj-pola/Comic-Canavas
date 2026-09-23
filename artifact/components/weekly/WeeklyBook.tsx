@@ -43,7 +43,15 @@ const dayName = (iso: string) =>
  * animates in/out mid-scroll.
  */
 
-const RUNOFF = 0.7;
+// Small — just enough scroll room for the last day's flip to fully settle
+// before the pin ends. There's no end-of-book board to reveal anymore
+// (removed: it sat behind every sheet with no real content of its own once
+// you'd actually flipped through the week, and was the real source of a
+// z-index/stacking bug that briefly flashed it in front of the wrong day
+// mid-flip on a real phone — no board at all is a stronger fix than
+// stacking it more carefully). Once the last day settles, the page just
+// continues in normal scroll into the plain "scroll down" hint below.
+const RUNOFF = 0.15;
 
 function pageMath(numPages: number) {
   const dwell = 1 / (1 + 1.5 * numPages + RUNOFF);
@@ -115,7 +123,7 @@ export function WeeklyBook({
     const book = bookRef.current;
     if (!pin || !book) return;
 
-    const { dwell, per, endStart } = pageMath(sheets.length);
+    const { dwell, per } = pageMath(sheets.length);
     const previousOverflowX = document.body.style.overflowX;
     document.body.style.overflowX = "hidden";
 
@@ -150,10 +158,9 @@ export function WeeklyBook({
               ? String(i)
               : String(sheets.length + 50);
       });
-
-      const tail = clamp((p - endStart) / (1 - endStart), 0, 1);
-      const scale = 1 + 0.03 * ease(tail); // small: the book already fills its container
-      book!.style.transform = `scale(${scale})`;
+      // No end-of-book zoom flourish anymore — that was the removed
+      // board's own reveal effect; `book` itself is still used above only
+      // as the mount guard.
     }
 
     pin.style.height = `${(1 + 1.5 * sheets.length + RUNOFF) * 100}vh`;
@@ -246,13 +253,6 @@ export function WeeklyBook({
         <div className="wb-stage">
           <div className="wb-book" ref={bookRef}>
             <div className="wb-backboard" />
-            <div className="wb-board">
-              <div className="wb-board-content stack">
-                <div className="kick">That&apos;s the week</div>
-                <h2>All caught up</h2>
-                <p>Scroll back up to flip through again, or download every day below.</p>
-              </div>
-            </div>
             {sheets.map((sheet, i) => (
               <div
                 className="wb-sheet"
@@ -303,6 +303,10 @@ export function WeeklyBook({
           </div>
         </div>
       </div>
+      {/* Plain, static, normal document flow — not part of the 3D flip at
+          all, so there's nothing here that can ever mis-stack or flash.
+          Once the last day settles, this is just what's next on the page. */}
+      <p className="wb-hint">That&apos;s the week — scroll down for the recap.</p>
     </div>
   );
 }

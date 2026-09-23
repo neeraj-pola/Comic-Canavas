@@ -182,43 +182,31 @@ function LearnContent() {
 }
 
 function CastContent() {
+  // Just names and icons — the intro paragraph and the per-card subtitle
+  // line were real, measured content, but on narrower widths the `c3`
+  // grid only had room to format about half of it before the text ran
+  // out of space. Less text here, not a cleverer grid.
   return (
     <div className="pg">
       <span className="kick">Your cast</span>
       <h2>Friends become characters</h2>
-      <p>
-        Anyone who shows up often can opt in with a few photos and become a recurring character who
-        looks the same every time.
-      </p>
       <div className="cards c3">
         <div className="card">
           <div className="person">
             <Person hair="curly" shirt="#fff" mood="smile" />
-            <div>
-              <b>You</b>
-              <br />
-              <span style={{ color: "var(--mute)" }}>21 selfies · look card set</span>
-            </div>
+            <b>You</b>
           </div>
         </div>
         <div className="card pink">
           <div className="person">
             <Person hair="bun" shirt="#fff" mood="oh" />
-            <div>
-              <b>Friend</b>
-              <br />
-              <span style={{ color: "var(--mute)" }}>appears Tuesdays</span>
-            </div>
+            <b>Friend</b>
           </div>
         </div>
         <div className="card blue">
           <div className="person">
             <Person hair="fringe" shirt="#fff" mood="flat" />
-            <div>
-              <b>Coach</b>
-              <br />
-              <span style={{ color: "var(--mute)" }}>legs, complaints</span>
-            </div>
+            <b>Coach</b>
           </div>
         </div>
       </div>

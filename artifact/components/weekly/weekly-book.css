@@ -51,38 +51,12 @@
   }
 }
 
-.dashboard-scope .wb-board {
-  position: absolute;
-  left: 50%;
-  top: 0;
-  width: 50%;
-  height: 100%;
-  border-radius: 0 14px 14px 0;
-  background: var(--paper);
-  box-shadow:
-    var(--shadow),
-    inset 0 0 0 1px var(--rule);
-  display: grid;
-  place-items: center;
-  text-align: center;
-  padding: 24px;
-  /* Explicitly behind every sheet, always — without this, a flipped
-     sheet's own z-index (which the flip math can legitimately set as low
-     as 0, e.g. the cover once it's fully turned) sits at the same
-     stacking level as this board's default `auto`, and 3D-transformed
-     siblings (`transform-style: preserve-3d` on `.wb-sheet`) can resolve
-     that tie inconsistently across browser engines — the real, visible
-     bug this fixes: "All caught up" flashing through mid-flip on a real
-     phone before the correct page settles back on top. */
-  z-index: -1;
-}
-.dashboard-scope .wb-board-content h2 {
-  margin: 8px 0;
-}
-.dashboard-scope .wb-board-content p {
-  color: var(--mute);
-  max-width: 32ch;
-}
+/* No more `.wb-board` — it sat behind every sheet showing "All caught up",
+   and was the real source of a z-index/stacking bug that briefly flashed
+   it in front of the wrong day mid-flip on a real phone. Removed
+   entirely rather than stacked more carefully: once the last day settles,
+   the page just continues into the plain `.wb-hint` text below the book,
+   real static content, nothing left that can ever mis-stack. */
 
 .dashboard-scope .wb-backboard {
   position: absolute;

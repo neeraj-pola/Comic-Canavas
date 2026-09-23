@@ -126,10 +126,12 @@ body.scrolled .hintscroll {
   box-shadow:
     var(--shadow),
     inset 0 0 0 1px var(--rule);
-  /* Explicitly behind the cover sheet, always — same real fix as
-     WeeklyBook's own `.wb-board` (see its comment): a 3D-transformed
+  /* Explicitly behind the cover sheet, always — a 3D-transformed
      sibling's z-index can tie/lose against this board's default `auto`
-     in a way that's inconsistent across browser engines. */
+     in a way that's inconsistent across browser engines. (WeeklyBook's
+     own equivalent board was removed entirely rather than kept fixed
+     this way — see weekly-book.css — but this board still holds real
+     hero content, so it stays, with this defensive fix in place.) */
   z-index: -1;
 }
 @media (max-aspect-ratio: 1/1) {
@@ -553,10 +555,19 @@ body.scrolled .hintscroll {
   outline: 3px solid var(--mustard);
   outline-offset: -3px;
 }
+/* Only used inside the cast section's cards (`content.tsx`'s `CastContent`).
+   Stacked and centered, not a side-by-side row: a 3-column grid at narrow
+   widths gives each card ~80px, not enough room for a 40px icon next to a
+   word like "Friend" — a row silently clipped the text against the card's
+   own `overflow: hidden` (found by measuring real rendered widths, not by
+   eye). Stacking is also the more natural fit for a small square icon
+   above a short label. */
 .landing-scope .person {
   display: flex;
-  gap: 10px;
+  flex-direction: column;
+  gap: 8px;
   align-items: center;
+  text-align: center;
 }
 .landing-scope .person svg {
   width: 40px;
