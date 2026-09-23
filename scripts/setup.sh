@@ -117,8 +117,10 @@ fi
 ok "database is up to date"
 echo
 
-bold "Done. Start the app with two terminals:"
-info "make dev             # api + worker + scheduler"
-info "cd apps/web && pnpm dev   # frontend, in a second terminal"
+bold "Done. Start the app:"
+info "make start            # api + worker + scheduler + web, one command, one terminal"
 echo
-info "Then open the URL pnpm dev prints (usually http://localhost:3000)."
+info "Then open http://localhost:3000 (make start prints the real URL if 3000 is busy)."
+echo
+info "Prefer two separate terminals instead? make dev (backend only) and, separately,"
+info "cd apps/web && pnpm dev (frontend only) still work exactly as before."

@@ -1,0 +1,4 @@
+api: cd services/api && uv run uvicorn app.main:app --reload --port 8000
+worker: cd services/worker && uv run python -m arq app.worker.WorkerSettings
+scheduler: cd services/scheduler && uv run python -m app.main
+web: cd apps/web && PORT=3000 pnpm dev

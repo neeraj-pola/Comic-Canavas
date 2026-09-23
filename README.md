@@ -42,7 +42,7 @@ first time you run it — stops with a short checklist if `DATABASE_URL`/`REDIS_
 in yet (pointing at [Neon](https://neon.com) + [Upstash](https://upstash.com)'s free tiers, since
 that's the one path that's identical on every OS and needs no native Postgres/pgvector/Redis
 build). Fill those two lines in, add an LLM key if you want real generation, and re-run the
-script — it finishes with the exact two commands to start the app. Everything below this is what
+script — it finishes with the exact single command to start the app. Everything below this is what
 the script automates, for anyone who wants to do it by hand or understand what it's doing.
 
 You need:
@@ -82,15 +82,16 @@ cp .env.example .env
 make install     # uv sync --all-packages && pnpm install && symlinks apps/web/.env -> ../../.env
                  # (Next.js only reads .env files from its own directory)
 make migrate     # creates every table in your database (alembic upgrade head)
-make dev         # api (uvicorn --reload :8000) + worker (arq) + scheduler, via honcho
-
-# in a second terminal:
-pnpm dev         # apps/web (Next.js) on :3001 — a free port next to :3000/8000
+make start       # single command: api + worker + scheduler + web, all in one terminal
 ```
 
 `GET http://localhost:8000/health` should return `{"status": "ok", "db": true, "redis": true}`.
-Open `http://localhost:3001` (or whatever port `pnpm dev` prints) — you land straight on the
+Open `http://localhost:3000` (`make start` prints the real URL) — you land straight on the
 onboarding wizard the first time (no character yet), or Today once one exists.
+
+Prefer two separate terminals (e.g. to keep frontend logs out of the backend's), or want to run
+just the backend, `make dev` (backend only, api + worker + scheduler) and, separately, `pnpm dev`
+(frontend only) still work exactly as before, see [Commands](#commands) below.
 
 ### First run: building your character
 
@@ -106,8 +107,9 @@ and zero real cost, which is also exactly what `make test` uses.
 ## Commands
 
 ```bash
-make dev          # api + worker + scheduler (honcho), backend only
-pnpm dev           # the frontend, run separately (see Setup above)
+make start         # api + worker + scheduler + web, all one command, one terminal (honcho, Procfile.full)
+make dev           # api + worker + scheduler only (honcho, Procfile.dev), backend only
+pnpm dev           # the frontend only, run separately from `make dev` (see Setup above)
 make test          # unit + integration, mock providers only, zero network calls
 make migrate       # alembic upgrade head
 make seed          # loads fixtures: one user, 7 days, cast of 3

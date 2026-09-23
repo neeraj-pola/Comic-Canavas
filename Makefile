@@ -15,8 +15,11 @@ install: ## Install Python (uv) and Node (pnpm) dependencies for the whole works
 	@# here on every install rather than committed.
 	@[ -L apps/web/.env ] || [ -f apps/web/.env ] || ln -s ../../.env apps/web/.env
 
-dev: ## Run api (uvicorn --reload) + worker (arq) + scheduler via honcho (Procfile.dev)
+dev: ## Run api (uvicorn --reload) + worker (arq) + scheduler via honcho (Procfile.dev), backend only
 	uv run honcho start -f Procfile.dev
+
+start: ## Single command: api + worker + scheduler + web (Next.js), all via honcho (Procfile.full)
+	uv run honcho start -f Procfile.full
 
 test: ## Unit + integration tests, mock providers only (zero network calls)
 	./scripts/test-all.sh
