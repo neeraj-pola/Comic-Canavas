@@ -79,7 +79,14 @@ function BookChrome({
 }
 
 export function LandingBook() {
-  const [reducedMotion, setReducedMotion] = useState<boolean | null>(null);
+  // Same static rendering path for prefers-reduced-motion AND narrow
+  // screens: the pinned/sticky scroll-jack traps the hero's own internal
+  // overflow scroll in a way that fights with a real phone's touch-scroll
+  // capture (verified only in simulated/mouse-driven testing, not on an
+  // actual device) — skipping the scroll-jack there entirely, the same way
+  // reduced-motion already does, sidesteps that fight completely rather
+  // than trying to patch it further.
+  const [staticLayout, setStaticLayout] = useState<boolean | null>(null);
 
   const pinRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
@@ -91,15 +98,20 @@ export function LandingBook() {
   const inkLenRef = useRef(0);
 
   useEffect(() => {
-    const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mql.matches);
-    const onChange = () => setReducedMotion(mql.matches);
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
+    const motionMql = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const widthMql = window.matchMedia("(max-width: 760px)");
+    const recompute = () => setStaticLayout(motionMql.matches || widthMql.matches);
+    recompute();
+    motionMql.addEventListener("change", recompute);
+    widthMql.addEventListener("change", recompute);
+    return () => {
+      motionMql.removeEventListener("change", recompute);
+      widthMql.removeEventListener("change", recompute);
+    };
   }, []);
 
   useEffect(() => {
-    if (reducedMotion !== false) return;
+    if (staticLayout !== false) return;
     const pin = pinRef.current;
     const book = bookRef.current;
     const sheet = sheetRef.current;
@@ -230,15 +242,15 @@ export function LandingBook() {
       document.body.classList.remove("scrolled", "showspine");
       document.body.style.overflowX = previousOverflowX;
     };
-  }, [reducedMotion]);
+  }, [staticLayout]);
 
-  if (reducedMotion === null) {
+  if (staticLayout === null) {
     // matchMedia hasn't resolved yet on the client; avoid a flash of the
     // wrong (animated vs. static) variant by rendering nothing briefly.
     return null;
   }
 
-  if (reducedMotion) {
+  if (staticLayout) {
     return (
       <div className="landing-scope">
         <HalftonePattern />

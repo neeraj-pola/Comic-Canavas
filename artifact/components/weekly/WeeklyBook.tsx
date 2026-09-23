@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef } from "react";
+import { preload } from "react-dom";
 import "./weekly-book.css";
 
 export type WeeklyBookPage = { date: string; stripUrl: string; mood: string | null };
@@ -68,6 +69,16 @@ export function WeeklyBook({
     () => [{ kind: "cover" }, ...pages.map((page) => ({ kind: "day", page }) as const)],
     [pages],
   );
+  // Every page's <img> is already in the DOM from mount, not added as you
+  // scroll to it — but a page that isn't visible yet can still be fetched
+  // at a lower priority by the browser's own heuristics, which on a real
+  // phone's real connection can mean the last day or two are still
+  // downloading by the time their flip reveals them (looking exactly like
+  // a stuck animation, even though the flip itself already finished).
+  // Explicitly requesting all of them at once, at high priority, closes
+  // that gap regardless of scroll position.
+  for (const page of pages) preload(page.stripUrl, { as: "image", fetchPriority: "high" });
+
   const pinRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
   const sheetRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -188,7 +199,12 @@ export function WeeklyBook({
                   <div className="wb-face wb-front wb-pagefront">
                     <div className="wb-figure">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src={sheet.page.stripUrl} alt={`${sheet.page.date} strip`} />
+                      <img
+                        src={sheet.page.stripUrl}
+                        alt={`${sheet.page.date} strip`}
+                        fetchPriority="high"
+                        decoding="sync"
+                      />
                     </div>
                     <div className="wb-caption">
                       <span>
