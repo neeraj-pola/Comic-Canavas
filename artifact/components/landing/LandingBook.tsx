@@ -290,15 +290,26 @@ export function LandingBook() {
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onResize);
-    // Fires promptly when the address-bar chrome finishes animating,
-    // which a plain `resize` listener alone can miss/lag on mobile Safari.
-    window.visualViewport?.addEventListener("resize", onScroll);
+    // `visualViewport` fires its own `resize` repeatedly while a real
+    // phone's address-bar chrome animates in/out mid-scroll — reacting to
+    // every one of those immediately (each with a momentarily different,
+    // not-yet-settled `vh`) transiently mis-computes the flip position
+    // before the true height settles (the same real bug WeeklyBook's own
+    // flip had). Debouncing to the *last* event in a burst uses only the
+    // final, settled height.
+    let viewportSettleTimer: number | undefined;
+    const onViewportResize = () => {
+      if (viewportSettleTimer !== undefined) window.clearTimeout(viewportSettleTimer);
+      viewportSettleTimer = window.setTimeout(update, 120);
+    };
+    window.visualViewport?.addEventListener("resize", onViewportResize);
 
     return () => {
       cancelAnimationFrame(raf);
+      if (viewportSettleTimer !== undefined) window.clearTimeout(viewportSettleTimer);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
-      window.visualViewport?.removeEventListener("resize", onScroll);
+      window.visualViewport?.removeEventListener("resize", onViewportResize);
       document.body.classList.remove("scrolled", "showspine");
       document.body.style.overflowX = previousOverflowX;
     };

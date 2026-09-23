@@ -171,13 +171,27 @@ export function WeeklyBook({
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", update);
-    window.visualViewport?.addEventListener("resize", onScroll);
+    // `visualViewport` fires its own `resize` repeatedly while a real
+    // phone's address-bar chrome animates in/out mid-scroll — reacting to
+    // every one of those immediately (each with a momentarily different,
+    // not-yet-settled `vh`) is the real cause of "All caught up" and
+    // other pages flashing through for a couple of seconds: transient
+    // bad `vh` readings transiently mis-flip every sheet before the true
+    // height settles. Debouncing to the *last* event in a burst uses only
+    // the final, settled height.
+    let viewportSettleTimer: number | undefined;
+    const onViewportResize = () => {
+      if (viewportSettleTimer !== undefined) window.clearTimeout(viewportSettleTimer);
+      viewportSettleTimer = window.setTimeout(update, 120);
+    };
+    window.visualViewport?.addEventListener("resize", onViewportResize);
 
     return () => {
       cancelAnimationFrame(raf);
+      if (viewportSettleTimer !== undefined) window.clearTimeout(viewportSettleTimer);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", update);
-      window.visualViewport?.removeEventListener("resize", onScroll);
+      window.visualViewport?.removeEventListener("resize", onViewportResize);
       document.body.style.overflowX = previousOverflowX;
     };
   }, [sheets, staticLayout]);

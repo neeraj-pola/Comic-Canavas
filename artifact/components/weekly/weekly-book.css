@@ -66,6 +66,15 @@
   place-items: center;
   text-align: center;
   padding: 24px;
+  /* Explicitly behind every sheet, always — without this, a flipped
+     sheet's own z-index (which the flip math can legitimately set as low
+     as 0, e.g. the cover once it's fully turned) sits at the same
+     stacking level as this board's default `auto`, and 3D-transformed
+     siblings (`transform-style: preserve-3d` on `.wb-sheet`) can resolve
+     that tie inconsistently across browser engines — the real, visible
+     bug this fixes: "All caught up" flashing through mid-flip on a real
+     phone before the correct page settles back on top. */
+  z-index: -1;
 }
 .dashboard-scope .wb-board-content h2 {
   margin: 8px 0;
