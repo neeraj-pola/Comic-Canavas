@@ -66,8 +66,8 @@ export default function AccountPage() {
         <div className="card s6 stack">
           <h2>Export</h2>
           <p>
-            Everything, in your hands: strips as PNG, transcripts and beats as JSON, the weekly
-            PDFs, and your identity photos.
+            Everything, in your hands: strips as PNG, your diary entries and beats as JSON, the
+            weekly PDFs, and your identity photos.
           </p>
           <div className="row">
             <button type="button" className="btn sm" onClick={handleExport} disabled={exporting}>

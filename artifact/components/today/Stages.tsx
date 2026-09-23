@@ -18,7 +18,7 @@ export const REAL_STAGES = [
 ] as const;
 
 const LABELS: Record<(typeof REAL_STAGES)[number], string> = {
-  input: "Listen",
+  input: "Read",
   beats: "Beats",
   script: "Script",
   prompts: "Prompts",

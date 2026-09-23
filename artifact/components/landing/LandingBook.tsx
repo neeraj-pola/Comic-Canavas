@@ -47,8 +47,8 @@ const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 
 function HeroBody() {
   return (
     <>
-      <span className="kick">Daily · Spoken · Drawn</span>
-      <h2>Speak your day. Get a comic of it.</h2>
+      <span className="kick">Daily · Written · Drawn</span>
+      <h2>Type your day. Get a comic of it.</h2>
       <p>One minute about your day becomes a four-panel strip, with a character that looks like you.</p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <Link className="pill pink" href="/today">

@@ -71,7 +71,7 @@ export default function DayDetailPage({ params }: { params: Promise<{ date: stri
           </p>
         </div>
         <div className="card s4 stack">
-          <h2>What you said</h2>
+          <h2>What you wrote</h2>
           <p>{day.transcript ?? day.text ?? "None"}</p>
         </div>
         <div className="card s12 stack">

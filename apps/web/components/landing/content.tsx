@@ -19,8 +19,8 @@ export function Endpaper() {
       <div className="pat" />
       <div className="note">
         <b>This diary writes itself. Well, draws.</b>
-        Every evening you talk for a minute. It listens, finds the four moments that matter, and
-        draws them as a strip with you in it. Turn the page.
+        Every evening you write a few lines about your day. It finds the four moments that matter,
+        and draws them as a strip with you in it. Turn the page.
       </div>
     </div>
   );
@@ -29,15 +29,15 @@ export function Endpaper() {
 export function HeroContent() {
   return (
     <div className="pg">
-      <span className="kick">Daily · Spoken · Drawn</span>
+      <span className="kick">Daily · Written · Drawn</span>
       <h2>
-        Speak your day.
+        Type your day.
         <br />
         Get a comic of it.
       </h2>
       <p>
-        <span className="dc">Y</span>ou talk for sixty seconds about what actually happened. Comic
-        Canvas transcribes it, picks the setup, the complication, the relief and the punchline, and
+        <span className="dc">Y</span>ou type a few lines about what actually happened. Comic
+        Canvas reads it, picks the setup, the complication, the relief and the punchline, and
         draws a four-panel strip in a style that stays yours, with a character that looks like you.
       </p>
       <div className="tags">#daily #comic #text #yours</div>
@@ -50,7 +50,7 @@ export function HeroContent() {
         </a>
       </div>
       <div className="byline">
-        <Person hair="bun" shirt="#E9D24A" mood="smile" />
+        <Person hair="curly" shirt="#E9D24A" mood="smile" />
         <div>
           <b>Made for one reader: you</b>
           <span>No feed. No likes. A book you keep.</span>
@@ -68,7 +68,7 @@ function HowContent() {
       <div className="cards c3">
         <div className="card">
           <div className="num">1</div>
-          <h3>Say it</h3>
+          <h3>Type it</h3>
           <p>A few lines about your day, in your own words.</p>
         </div>
         <div className="card pink">
